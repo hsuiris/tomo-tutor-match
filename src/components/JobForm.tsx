@@ -1,0 +1,195 @@
+"use client";
+
+import { useActionState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { createJob } from "@/app/jobs/actions";
+import { SUBJECTS, LEVELS, REGIONS } from "@/lib/constants";
+import { SubmitButton } from "@/components/ui/form";
+import type { ActionState } from "@/lib/types";
+
+const initialState: ActionState = {};
+
+export default function JobForm() {
+  const router = useRouter();
+  const [state, formAction] = useActionState(createJob, initialState);
+  const err = state.fieldErrors;
+
+  // 發布成功後導轉到案件頁
+  useEffect(() => {
+    if (state.redirectTo) router.push(state.redirectTo);
+  }, [state.redirectTo, router]);
+
+  const inputCls =
+    "w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line";
+  const textareaCls =
+    "w-full rounded-2xl border border-line px-3 py-2 text-sm outline-none focus:border-line";
+
+  return (
+    <form action={formAction} className="space-y-5">
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          標題 <span className="text-red-500">*</span>
+        </label>
+        <input
+          name="title"
+          placeholder="例如：高一數學,加強三角函數"
+          className={inputCls}
+        />
+        {err?.title?.map((e) => (
+          <p key={e} className="mt-1 text-xs text-red-500">
+            {e}
+          </p>
+        ))}
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-1 block text-sm font-medium text-ink/80">
+            科目 <span className="text-red-500">*</span>
+          </label>
+          <select name="subject" defaultValue="" className={inputCls}>
+            <option value="" disabled>
+              請選擇
+            </option>
+            {SUBJECTS.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          {err?.subject?.map((e) => (
+            <p key={e} className="mt-1 text-xs text-red-500">
+              {e}
+            </p>
+          ))}
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium text-ink/80">
+            學生年級 <span className="text-red-500">*</span>
+          </label>
+          <select name="level" defaultValue="" className={inputCls}>
+            <option value="" disabled>
+              請選擇
+            </option>
+            {LEVELS.map((lv) => (
+              <option key={lv} value={lv}>
+                {lv}
+              </option>
+            ))}
+          </select>
+          {err?.level?.map((e) => (
+            <p key={e} className="mt-1 text-xs text-red-500">
+              {e}
+            </p>
+          ))}
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium text-ink/80">
+            地區 <span className="text-red-500">*</span>
+          </label>
+          <select name="region" defaultValue="" className={inputCls}>
+            <option value="" disabled>
+              請選擇
+            </option>
+            {REGIONS.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
+          {err?.region?.map((e) => (
+            <p key={e} className="mt-1 text-xs text-red-500">
+              {e}
+            </p>
+          ))}
+        </div>
+        <div>
+          <label className="mb-1 block text-sm font-medium text-ink/80">
+            授課方式
+          </label>
+          <select name="mode" defaultValue="BOTH" className={inputCls}>
+            <option value="BOTH">線上 / 實體皆可</option>
+            <option value="ONLINE">僅線上</option>
+            <option value="IN_PERSON">僅實體</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          預算（每小時,新台幣）
+        </label>
+        <input
+          name="budget"
+          type="number"
+          placeholder="例如 800（可留空）"
+          className={inputCls}
+        />
+        {err?.budget?.map((e) => (
+          <p key={e} className="mt-1 text-xs text-red-500">
+            {e}
+          </p>
+        ))}
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          學生狀況 <span className="text-red-500">*</span>
+        </label>
+        <textarea
+          name="studentStatus"
+          rows={3}
+          placeholder="例如：高一升高二,數學基礎較弱,段考約 60 分,想跟上進度"
+          className={textareaCls}
+        />
+        {err?.studentStatus?.map((e) => (
+          <p key={e} className="mt-1 text-xs text-red-500">
+            {e}
+          </p>
+        ))}
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          家長訴求 <span className="text-red-500">*</span>
+        </label>
+        <textarea
+          name="parentNeeds"
+          rows={3}
+          placeholder="例如：希望加強三角函數與考試技巧,耐心、能引導思考的老師"
+          className={textareaCls}
+        />
+        {err?.parentNeeds?.map((e) => (
+          <p key={e} className="mt-1 text-xs text-red-500">
+            {e}
+          </p>
+        ))}
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          其他補充說明
+        </label>
+        <textarea
+          name="description"
+          rows={4}
+          placeholder="上課時間偏好、其他希望的老師條件等"
+          className={textareaCls}
+        />
+        {err?.description?.map((e) => (
+          <p key={e} className="mt-1 text-xs text-red-500">
+            {e}
+          </p>
+        ))}
+      </div>
+
+      {state.error && (
+        <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
+          {state.error}
+        </p>
+      )}
+
+      <SubmitButton>發布需求</SubmitButton>
+    </form>
+  );
+}

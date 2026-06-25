@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── 柔和友善風・鼠尾草綠 × 暖米白 ───────────────────────────── */
+@theme {
+  /* 卡片＝純白；頁面底＝暖米色（兩者對比出柔和層次） */
+  --color-paper: #ffffff; /* 卡片／表面 */
+  --color-canvas: #eef2e6; /* 頁面底色（淡綠） */
+  --color-ink: #3f3a33;
+  --color-line: #e9e3d6; /* 柔和暖灰邊框 */
+
+  /* 主色：鼠尾草綠 */
+  --color-sun: #7d9a5b;
+  --color-sun-dark: #6b8649;
+  --color-sun-soft: #eef2e6; /* 淡綠底（標籤、柔色塊） */
+
+  /* 點綴色（皆轉柔和） */
+  --color-cobalt: #5f7d54; /* 深綠（連結 hover、強調） */
+  --color-mint: #9cc4a0; /* 柔綠 */
+  --color-mintbg: #eaf0e1; /* 淺鼠尾草區段底 */
+  --color-blush: #e0a081; /* 暖陶土橘（暖色點綴） */
+  --color-blushbg: #f6ece2; /* 淺暖橘區段底 */
+
+  /* 字型 */
+  --font-serif: var(--font-playfair), var(--font-serif-tc), "Noto Serif TC",
+    serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  /* 卡片柔陰影 */
+  --shadow-card: 0 4px 16px rgba(60, 55, 45, 0.06);
+  --shadow-card-hover: 0 10px 30px rgba(60, 55, 45, 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* serif 標題：柔和不過黑 */
+.font-serif {
+  letter-spacing: -0.01em;
+}
+
+/* 文字選取：淡綠底 */
+::selection {
+  background: var(--color-sun-soft);
+  color: var(--color-ink);
+}
+
+/* 細緻捲軸 */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d8d3c4;
+  border-radius: 9999px;
+  border: 3px solid var(--color-paper);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b9b3a1;
+}
+
+/* 鍵盤聚焦 */
+:focus-visible {
+  outline: 2px solid var(--color-sun);
+  outline-offset: 2px;
+}
+
+/* 標籤膠囊 #tag */
+.tag-pill::before {
+  content: "#";
+  opacity: 0.5;
 }

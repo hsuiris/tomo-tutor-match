@@ -1,0 +1,279 @@
+// TutorMatch 資料模型
+// 文件：https://www.prisma.io/docs
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  TUTOR
+  ADMIN
+}
+
+enum JobStatus {
+  OPEN
+  MATCHED
+  CLOSED
+}
+
+enum ApplicationStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum TeachingMode {
+  ONLINE
+  IN_PERSON
+  BOTH
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  UNDISCLOSED
+}
+
+enum VerificationType {
+  IDENTITY // 實名認證（身分證）
+  BACKGROUND // 無犯罪紀錄（良民證）
+  EDUCATION // 學歷與成績證明（畢業證書／成績單）
+}
+
+enum VerificationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String // 本名（不對外公開）
+  displayName  String? // 公開化名
+  role         Role     @default(STUDENT)
+  gender       Gender   @default(UNDISCLOSED)
+  avatarUrl    String? // 頭像（data URL 或外部網址）
+
+  // 安全認證
+  idVerified      Boolean @default(false) // 實名認證通過
+  bgCheckVerified Boolean @default(false) // 無犯罪紀錄查驗通過
+  eduVerified     Boolean @default(false) // 學歷與成績證明審核通過
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tutorProfile  TutorProfile?
+  jobPosts      JobPost[]      @relation("StudentJobs")
+
+  // 評價（留在個人檔案,雙向）
+  reviewsAuthored Review[] @relation("ReviewsAuthored")
+  reviewsReceived Review[] @relation("ReviewsReceived")
+
+  // 聊天
+  conversationsA Conversation[] @relation("ConvUserA")
+  conversationsB Conversation[] @relation("ConvUserB")
+  messagesSent   Message[]      @relation("MessageSender")
+
+  verificationRequests VerificationRequest[]
+
+  // 收藏（愛心）
+  favorites Favorite[]
+
+  // 討論區
+  forumPosts   ForumPost[]  @relation("ForumPosts")
+  forumReplies ForumReply[] @relation("ForumReplies")
+}
+
+// 收藏：使用者把滿意的老師卡或學生卡加入愛心清單
+model Favorite {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tutorProfileId String?
+  tutorProfile   TutorProfile? @relation(fields: [tutorProfileId], references: [id], onDelete: Cascade)
+  jobId          String?
+  job            JobPost?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, tutorProfileId])
+  @@unique([userId, jobId])
+  @@index([userId])
+}
+
+// 安全認證申請（上傳證件 → 管理員審核）
+model VerificationRequest {
+  id         String             @id @default(cuid())
+  userId     String
+  user       User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type       VerificationType
+  docUrl     String? // 證件圖片（base64 data URL）；審核後即清空，不長期保留證件
+  status     VerificationStatus @default(PENDING)
+  note       String? // 審核備註
+  createdAt  DateTime           @default(now())
+  reviewedAt DateTime?
+
+  @@index([userId])
+  @@index([status])
+}
+
+// 兩位使用者之間的一對一對話（userAId 永遠 < userBId，方便去重）
+model Conversation {
+  id            String   @id @default(cuid())
+  userAId       String
+  userBId       String
+  userA         User     @relation("ConvUserA", fields: [userAId], references: [id], onDelete: Cascade)
+  userB         User     @relation("ConvUserB", fields: [userBId], references: [id], onDelete: Cascade)
+  messages      Message[]
+  createdAt     DateTime @default(now())
+  lastMessageAt DateTime @default(now())
+
+  @@unique([userAId, userBId])
+  @@index([userAId])
+  @@index([userBId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderId       String
+  sender         User         @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  body           String
+  createdAt      DateTime     @default(now())
+
+  @@index([conversationId])
+}
+
+model TutorProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio         String?
+  subjects    String[] // 科目
+  levels      String[] // 可教學制（國小/國中/高中/大學/成人）
+  regions     String[] // 授課地區
+  hourlyRate  Int? // 時薪（新台幣）
+  experience  String? // 教學經歷
+  education   String? // 學歷
+  university  String? // 畢業大學
+  eduLevel    String? // 教育程度（學士/碩士/博士/在學中…）
+  mode        TeachingMode @default(BOTH)
+  isPublished Boolean  @default(false)
+  ratingAvg   Float    @default(0)
+  ratingCount Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  applications Application[]
+  favoritedBy  Favorite[]
+
+  @@index([isPublished])
+}
+
+model JobPost {
+  id          String       @id @default(cuid())
+  studentId   String
+  student     User         @relation("StudentJobs", fields: [studentId], references: [id], onDelete: Cascade)
+  title       String
+  subject     String
+  level       String? // 學生年級／學制
+  region      String
+  mode        TeachingMode @default(BOTH)
+  budget      Int? // 預算（每小時，新台幣）
+  description String
+  studentStatus String? // 學生狀況（年級、程度、學習現況）
+  parentNeeds   String? // 家長訴求（希望加強的方向、期望）
+  status      JobStatus    @default(OPEN)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  applications Application[]
+  favoritedBy  Favorite[]
+
+  @@index([status])
+  @@index([subject])
+}
+
+model Application {
+  id        String            @id @default(cuid())
+  jobId     String
+  job       JobPost           @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  tutorId   String
+  tutor     TutorProfile      @relation(fields: [tutorId], references: [id], onDelete: Cascade)
+  message   String
+  status    ApplicationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+
+  @@unique([jobId, tutorId]) // 同一案件同一老師只能應徵一次
+  @@index([tutorId])
+}
+
+// 評價／留言：留在「被評價者」的個人檔案底下（雙向：學生↔老師）
+model Review {
+  id         String   @id @default(cuid())
+  revieweeId String // 被評價的使用者
+  reviewee   User     @relation("ReviewsReceived", fields: [revieweeId], references: [id], onDelete: Cascade)
+  authorId   String // 評價者
+  author     User     @relation("ReviewsAuthored", fields: [authorId], references: [id], onDelete: Cascade)
+  rating     Int // 1-5
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  @@unique([revieweeId, authorId]) // 每人對同一對象只能評一次
+  @@index([revieweeId])
+}
+
+// 速率限制計數（固定視窗）。用既有的 Postgres，不額外引入 Redis。
+// ponytail: 固定視窗、並發下可能略微超計，對暴力破解防護足夠；
+//           若要精準或高吞吐，再換 Upstash/Redis 滑動視窗。
+model RateLimit {
+  key       String   @id // 例如 "login:ip:1.2.3.4" 或 "login:email:foo@bar"
+  count     Int      @default(0)
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
+
+enum ForumBoard {
+  TUTOR // 老師討論區
+  PARENT // 家長討論區
+}
+
+model ForumPost {
+  id          String       @id @default(cuid())
+  board       ForumBoard
+  authorId    String
+  author      User         @relation("ForumPosts", fields: [authorId], references: [id], onDelete: Cascade)
+  anonymous   Boolean      @default(false)
+  title       String
+  body        String
+  createdAt   DateTime     @default(now())
+  lastReplyAt DateTime     @default(now())
+  replies     ForumReply[]
+
+  @@index([board])
+}
+
+model ForumReply {
+  id        String    @id @default(cuid())
+  postId    String
+  post      ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User      @relation("ForumReplies", fields: [authorId], references: [id], onDelete: Cascade)
+  anonymous Boolean   @default(false)
+  body      String
+  createdAt DateTime  @default(now())
+
+  @@index([postId])
+}
