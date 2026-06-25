@@ -16,10 +16,14 @@ docker compose up --build
 
 容器啟動時會自動：
 1. 套用資料庫 migration（`prisma migrate deploy`）
-2. 灌入 8 位示範老師 + 1 位學生（`prisma db seed`）
-3. 啟動 Next.js 正式版伺服器
+2. 啟動 Next.js 正式版伺服器
 
-## 示範帳號（密碼都是 `test1234`）
+> ⚠️ 容器**不會**自動灌示範資料。示範帳號密碼是公開的 `test1234`，
+> 自動灌進正式環境等於開後門，所以已從啟動流程移除。
+> 需要示範資料時，手動執行：`docker compose exec app npm run db:seed`
+> （或本機 `npm run db:seed`）。**正式環境永遠不要跑 seed。**
+
+## 示範帳號（僅限本機 / 沙盒，密碼都是 `test1234`）
 
 | 身分 | Email |
 |------|-------|

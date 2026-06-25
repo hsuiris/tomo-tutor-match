@@ -13,6 +13,29 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "4mb",
     },
   },
+  // 安全標頭，套用到所有路由。
+  // ponytail: 先上低風險、高價值的標頭；嚴格 CSP 需要 nonce 串接 proxy.ts，
+  //           易在上線時打爆整站，待測試環境驗證後再開（見 DEPLOYMENT.md）。
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
