@@ -71,10 +71,10 @@ export default async function HomePage() {
           <h1 className="mt-6 font-serif text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-5xl">
             找到真正
             <br />
-            適合你的老師。
+            適合你的老師
           </h1>
           <p className="mt-5 max-w-md text-base font-medium leading-relaxed text-ink/80">
-            說出需求，智能匹配立刻幫你算出最契合的老師——
+            說出需求，智能匹配立刻幫你算出最契合的老師，
             還告訴你「為什麼推薦」，讓媒合不再靠運氣。
           </p>
 
