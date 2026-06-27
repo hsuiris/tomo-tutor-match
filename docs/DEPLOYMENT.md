@@ -10,13 +10,15 @@
 
 ```
 GitHub repo ──push──▶ Vercel（build + 託管 Next.js）
-                         │  build 時自動跑 prisma migrate deploy
                          ▼
                    Neon（serverless PostgreSQL，pooled + direct）
+                         ▲
+   遷移由人「手動」執行：npx prisma migrate deploy（不在 build 內）
 ```
 
-build 指令（`package.json`）：`prisma generate && prisma migrate deploy && next build`
-→ 每次部署自動產生 client、套用遷移，**不含 seed**。
+build 指令（`package.json`）：`prisma generate && next build`
+→ build **不連 DB**（避免 build 環境連不到 Neon 導致 P1001）。
+遷移改成**手動步驟**（見第 3 節），seed 永不執行。
 
 ---
 
@@ -38,11 +40,11 @@ build 指令（`package.json`）：`prisma generate && prisma migrate deploy && 
 
 Project → Settings → Environment Variables，**Production 與 Preview 都要設**（build 也要讀得到）：
 
-| 變數             | 值                                                   |
-| ---------------- | ---------------------------------------------------- |
-| `DATABASE_URL` | Neon **pooled** 連線字串（建議 `?sslmode=require&pgbouncer=true`）                                     |
-| `DIRECT_URL` | Neon **direct（非 pooler）** 連線字串，供 `prisma migrate deploy` 用 |
-| `AUTH_SECRET`  | `openssl rand -base64 33` 產生的**全新**金鑰 |
+| 變數             | 值                                                                          |
+| ---------------- | --------------------------------------------------------------------------- |
+| `DATABASE_URL` | Neon**pooled** 連線字串（建議 `?sslmode=require&pgbouncer=true`）   |
+| `DIRECT_URL`   | Neon**direct（非 pooler）** 連線字串，供 `prisma migrate deploy` 用 |
+| `AUTH_SECRET`  | `openssl rand -base64 33` 產生的**全新**金鑰                        |
 
 ⚠️ **重要**：
 
@@ -56,9 +58,14 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 
 1. Vercel → **Import** 該 GitHub repo（框架自動辨識為 Next.js）。
 2. 設定第 2 節的環境變數。
-3. 觸發 deploy。build 會自動 `prisma migrate deploy` 套用遷移。
-4. 先用 **preview deployment**（推 `launch-prep` branch 產生的網址）驗證，跑第 6 節 smoke test。
-5. 確認無誤 → 合併 `launch-prep` 進 `main`，將 `main` 設為 production branch。
+3. **先手動套用遷移**（從本機跑，本機連得到 Neon）：
+   ```bash
+   DATABASE_URL="<pooled>" DIRECT_URL="<direct>" npx prisma migrate deploy
+   ```
+   這會在 Neon 建好所有資料表。之後每次新增 migration 都要再跑一次（建議在 deploy 前先跑）。
+4. 觸發 deploy。build 只跑 `prisma generate && next build`，**不連 DB**。
+5. 先用 **preview deployment**（推 `launch-prep` branch 產生的網址）驗證，跑第 6 節 smoke test。
+6. 確認無誤 → 合併 `launch-prep` 進 `main`，將 `main` 設為 production branch。
 
 ---
 
@@ -68,6 +75,7 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 
 1. 在線上正常註冊一個你自己的帳號。
 2. 用 DB 工具把該帳號 role 改成 ADMIN：
+
    ```sql
    UPDATE "User" SET role = 'ADMIN' WHERE email = '你的email';
    ```
@@ -96,7 +104,7 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 ### 🟡 Phase 2 — 環境與部署
 
 - [X] 安全標頭（HSTS / nosniff / X-Frame-Options / Referrer-Policy / Permissions-Policy）— `next.config.ts`
-- [ ] `DATABASE_URL` / `DIRECT_URL` / `AUTH_SECRET` 由 Vercel 環境注入（非寫死）
+- [X] `DATABASE_URL` / `DIRECT_URL` / `AUTH_SECRET` 由 Vercel 環境注入（非寫死）
 - [ ] DB 使用強密碼、**不對公網開放**（僅允許 Vercel / 受信任來源連線）
 - [ ] 全站 HTTPS（Vercel 預設提供，確認自訂網域憑證 OK）
 - [ ] `npm run build`、`npm run lint` 在 CI／本機通過
@@ -139,9 +147,10 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 # 連正式 DB 檢視資料（小心操作）
 DATABASE_URL="<prod url>" npx prisma studio
 
-# 查遷移狀態（直連，需帶 DIRECT_URL）
+# 查遷移狀態 / 套用新遷移（需帶 DIRECT_URL）
 DATABASE_URL="<pooled url>" DIRECT_URL="<direct url>" npx prisma migrate status
+DATABASE_URL="<pooled url>" DIRECT_URL="<direct url>" npx prisma migrate deploy
 ```
 
-- 每次合併到 production branch 即觸發部署並套用新遷移。
+- **遷移不在 build 內**：新增 migration 後，要手動跑上面的 `migrate deploy`（建議在 deploy 前先跑），Vercel deploy 本身不會碰 DB。
 - 永遠不要對正式 DB 執行 `npm run db:seed` 或 `prisma migrate reset`。
