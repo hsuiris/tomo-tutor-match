@@ -129,7 +129,7 @@ prisma/
 ## 8. 本機開發
 
 ```bash
-# 需要本機 Postgres（或用 Docker，見根目錄 DOCKER.md）
+# 需要本機 Postgres
 npm install
 # 設定 .env 的 DATABASE_URL / DIRECT_URL / AUTH_SECRET（本機 DIRECT_URL 與 DATABASE_URL 相同即可）
 npx prisma migrate deploy   # 套用遷移

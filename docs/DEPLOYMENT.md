@@ -100,10 +100,6 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 - 完全私網要 Neon **Private Networking（AWS PrivateLink）**，Business/Enterprise 才有，YAGNI。
 - 結論：對 Vercel + Neon，正確姿勢就是 **A + B + Neon「Protected branches」鎖住正式分支**，不要為了 IP 白名單去升級方案。
 
-**D. Docker 沙盒**
-
-`docker-compose.yml` 的 DB 密碼已改成由 `DB_PASSWORD` 環境變數注入（不再寫死 `tutormatch`）。沙盒沒有 publish DB port，外部連不到，風險低；密碼只在 `pgdata` volume 為空時寫入，要換先 `docker compose down -v`。
-
 ---
 
 ## 3. 部署步驟
@@ -114,6 +110,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
    ```bash
    DATABASE_URL="<pooled>" DIRECT_URL="<direct>" npx prisma migrate deploy
    ```
+
    這會在 Neon 建好所有資料表。之後每次新增 migration 都要再跑一次（建議在 deploy 前先跑）。
 4. 觸發 deploy。build 只跑 `prisma generate && next build`，**不連 DB**。
 5. 先用 **preview deployment**（推 `launch-prep` branch 產生的網址）驗證，跑第 6 節 smoke test。
@@ -140,8 +137,6 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 
 ### 🔴 Phase 0 — 阻斷項（已完成）
 
-- [X] 移除容器自動 seed（`docker-entrypoint.sh`）
-- [X] `AUTH_SECRET` 無不安全預設值（`docker-compose.yml`），正式用全新金鑰
 - [X] 確認正式 DB **沒有**任何 `@demo.com` 帳號：
   ```sql
   SELECT email, role FROM "User" WHERE email LIKE '%@demo.com';  -- 應為 0 筆
@@ -158,10 +153,10 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 - [X] 安全標頭（HSTS / nosniff / X-Frame-Options / Referrer-Policy / Permissions-Policy）— `next.config.ts`
 - [X] `DATABASE_URL` / `DIRECT_URL` / `AUTH_SECRET` 由 Vercel 環境注入（非寫死）
 - [X] DB 使用強密碼（Neon role 已輪換）、TLS 強制、連線字串只在 Vercel env（對外暴露的現實見〈安全〉節：Vercel 無固定 egress IP，IP 白名單不適用）
-- [ ] （可選）建立最小權限 `app_user`，`DATABASE_URL` 改用它連線（SQL 見〈安全〉節 B）
-- [ ] 全站 HTTPS（Vercel 預設提供，確認自訂網域憑證 OK）
+- [X] 建立最小權限 `app_user`，`DATABASE_URL` 改用它連線（SQL 見〈安全〉節 B）；`DIRECT_URL` 維持 owner（migration 要 DDL），日後新增 migration 仍由 owner 跑
+- [X] 全站 HTTPS（Vercel 預設提供，確認自訂網域憑證 OK）
 - [ ] `npm run build`、`npm run lint` 在 CI／本機通過
-- [ ] preview deployment smoke test 通過（第 6 節）
+- [X] preview deployment smoke test 通過（第 6 節）
 
 ### 🟢 Phase 3 — 上線後
 
