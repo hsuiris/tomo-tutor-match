@@ -63,7 +63,9 @@ export default async function ProfileEditPage() {
       <p className="mt-1 mb-6 text-sm text-ink/60">
         填寫越完整,越容易被學生找到並信任。
       </p>
-      <ProfileForm initial={initial} />
+      <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm sm:p-8">
+        <ProfileForm initial={initial} />
+      </div>
     </div>
   );
 }
