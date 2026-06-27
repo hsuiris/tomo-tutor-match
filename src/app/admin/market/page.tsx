@@ -11,7 +11,7 @@ function RateTable({ title, rows }: { title: string; rows: RateRow[] }) {
       {rows.length === 0 ? (
         <p className="text-sm text-ink/40">尚無資料</p>
       ) : (
-        <div className="overflow-x-auto rounded-2xl border border-line">
+        <div className="overflow-x-auto rounded-2xl border border-line bg-paper">
           <table className="w-full text-sm">
             <thead className="bg-sun-soft/30 text-left text-ink/60">
               <tr>

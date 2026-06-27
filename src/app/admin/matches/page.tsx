@@ -90,7 +90,7 @@ export default async function AdminMatchesPage({
         ))}
       </div>
 
-      <div className="overflow-x-auto rounded-2xl border border-line">
+      <div className="overflow-x-auto rounded-2xl border border-line bg-paper">
         <table className="w-full text-sm">
           <thead className="bg-sun-soft/30 text-left text-ink/60">
             <tr>
