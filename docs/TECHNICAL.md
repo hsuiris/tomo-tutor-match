@@ -118,7 +118,8 @@ prisma/
 
 | 變數 | 用途 | 範例／產生 |
 |---|---|---|
-| `DATABASE_URL` | Postgres 連線字串 | `postgresql://user:pass@host:5432/db?schema=public` |
+| `DATABASE_URL` | 連線字串（serverless runtime；正式用 Neon **pooled**） | `postgresql://user:pass@host/db?sslmode=require&pgbouncer=true` |
+| `DIRECT_URL` | 直連字串，供 `prisma migrate deploy`（正式用 Neon **direct**；本機與 `DATABASE_URL` 相同即可） | `postgresql://user:pass@host/db?sslmode=require` |
 | `AUTH_SECRET` | NextAuth JWT 簽章金鑰（**正式環境務必獨立產生**） | `openssl rand -base64 33` |
 
 正式部署設定見 [`DEPLOYMENT.md`](./DEPLOYMENT.md)。
@@ -130,7 +131,7 @@ prisma/
 ```bash
 # 需要本機 Postgres（或用 Docker，見根目錄 DOCKER.md）
 npm install
-# 設定 .env 的 DATABASE_URL / AUTH_SECRET
+# 設定 .env 的 DATABASE_URL / DIRECT_URL / AUTH_SECRET（本機 DIRECT_URL 與 DATABASE_URL 相同即可）
 npx prisma migrate deploy   # 套用遷移
 npm run db:seed             # （選用）灌示範資料 — 僅限本機
 npm run dev                 # http://localhost:3000
@@ -156,5 +157,5 @@ npx prisma studio  # 視覺化檢視/編輯資料庫
 2. **未審核的 PENDING 證件不會自動過期** → 建議加排程清掉超過 N 天的 `docUrl`。
 3. **無 Content-Security-Policy**。需在 `proxy.ts` 串 nonce 後再開，避免打爆 inline script/style。
 4. **RateLimit 過期列不自動清理**（launch 量級可忽略）。量大可改 Upstash 滑動視窗。
-5. **DB 連線未用 connection pooling**。serverless 高併發時再導入 pooler（並為 Prisma migrate 設 `directUrl`）。
+5. **高併發下的連線數**：已用 Neon pooled（runtime）+ direct（migration）；流量大再調 Neon 連線上限或導入 Prisma Accelerate。
 6. 個資法（PDPA）所需的隱私權政策、蒐集同意、保存期限為營運/法務事項，非程式可代勞。

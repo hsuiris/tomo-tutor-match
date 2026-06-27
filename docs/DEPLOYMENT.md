@@ -1,6 +1,6 @@
 # TutorMatch 上線文件（Vercel）
 
-部署目標：**Vercel**（Next.js 應用）+ **託管式 PostgreSQL**（Vercel Postgres / Neon / Supabase 擇一）。
+部署目標：**Vercel**（Next.js 應用）+ **Neon**（serverless PostgreSQL）。
 
 > 流程：推上 GitHub → Vercel preview 驗證 → 確認後合併 `main` 設為 production。
 
@@ -12,7 +12,7 @@
 GitHub repo ──push──▶ Vercel（build + 託管 Next.js）
                          │  build 時自動跑 prisma migrate deploy
                          ▼
-                   託管 PostgreSQL（Neon/Supabase/Vercel Postgres）
+                   Neon（serverless PostgreSQL，pooled + direct）
 ```
 
 build 指令（`package.json`）：`prisma generate && prisma migrate deploy && next build`
@@ -27,9 +27,10 @@ build 指令（`package.json`）：`prisma generate && prisma migrate deploy && 
    git remote add origin <你的 GitHub repo 網址>
    git push -u origin launch-prep
    ```
-2. **開一個託管 Postgres**，取得連線字串。
-   - 先用 **直連（non-pooled）** 連線當 `DATABASE_URL` 最簡單——build 階段的 `migrate deploy` 需要直連。
-   - 若之後改用連線池（pgbouncer / port 6543），需在 `prisma/schema.prisma` 的 datasource 補 `directUrl = env("DIRECT_URL")` 給遷移用。
+2. **開一個 Neon 專案**，從 dashboard 取兩種連線字串（schema 已設好 `directUrl`，兩個都要用）：
+   - **Pooled**（host 含 `-pooler`）→ 給 `DATABASE_URL`，serverless runtime 用；建議帶 `?sslmode=require&pgbouncer=true`。
+   - **Direct**（host 不含 `-pooler`）→ 給 `DIRECT_URL`，build 階段的 `prisma migrate deploy` 用。
+   - Neon 沒有 Supabase 那種 IPv6 直連雷，Vercel 直接連得上。
 
 ---
 
@@ -37,12 +38,14 @@ build 指令（`package.json`）：`prisma generate && prisma migrate deploy && 
 
 Project → Settings → Environment Variables，**Production 與 Preview 都要設**（build 也要讀得到）：
 
-| 變數 | 值 |
-|---|---|
-| `DATABASE_URL` | 正式 DB 直連字串 |
-| `AUTH_SECRET` | `openssl rand -base64 33` 產生的**全新**金鑰 |
+| 變數             | 值                                                   |
+| ---------------- | ---------------------------------------------------- |
+| `DATABASE_URL` | Neon **pooled** 連線字串（建議 `?sslmode=require&pgbouncer=true`）                                     |
+| `DIRECT_URL` | Neon **direct（非 pooler）** 連線字串，供 `prisma migrate deploy` 用 |
+| `AUTH_SECRET`  | `openssl rand -base64 33` 產生的**全新**金鑰 |
 
 ⚠️ **重要**：
+
 - 本機 `.env` 裡的 dev `AUTH_SECRET` 視為**已洩漏**，正式環境務必換新。
 - Vercel **不會**讀你的 `.env`（已 gitignore），一定要在 dashboard 設。
 - NextAuth v5 在 production 沒設 `AUTH_SECRET` 會直接啟動失敗；Vercel 會自動信任 host，**不需**額外設 `AUTH_TRUST_HOST`。
@@ -68,6 +71,7 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
    ```sql
    UPDATE "User" SET role = 'ADMIN' WHERE email = '你的email';
    ```
+
    （或 `npx prisma studio` 連正式 DB 手動改。）
 
 ---
@@ -75,27 +79,31 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 ## 5. 上線前 Checklist
 
 ### 🔴 Phase 0 — 阻斷項（已完成）
-- [x] 移除容器自動 seed（`docker-entrypoint.sh`）
-- [x] `AUTH_SECRET` 無不安全預設值（`docker-compose.yml`），正式用全新金鑰
-- [x] 確認正式 DB **沒有**任何 `@demo.com` 帳號：
+
+- [X] 移除容器自動 seed（`docker-entrypoint.sh`）
+- [X] `AUTH_SECRET` 無不安全預設值（`docker-compose.yml`），正式用全新金鑰
+- [X] 確認正式 DB **沒有**任何 `@demo.com` 帳號：
   ```sql
   SELECT email, role FROM "User" WHERE email LIKE '%@demo.com';  -- 應為 0 筆
   ```
 
 ### 🟠 Phase 1 — 建議修（已完成）
-- [x] 登入/註冊速率限制
-- [x] `avatarUrl` 只接受 `data:image/`
-- [x] 證件影像審核後即清除（PII 最小化）
+
+- [X] 登入/註冊速率限制
+- [X] `avatarUrl` 只接受 `data:image/`
+- [X] 證件影像審核後即清除（PII 最小化）
 
 ### 🟡 Phase 2 — 環境與部署
-- [x] 安全標頭（HSTS / nosniff / X-Frame-Options / Referrer-Policy / Permissions-Policy）— `next.config.ts`
-- [ ] `DATABASE_URL` / `AUTH_SECRET` 由 Vercel 環境注入（非寫死）
+
+- [X] 安全標頭（HSTS / nosniff / X-Frame-Options / Referrer-Policy / Permissions-Policy）— `next.config.ts`
+- [ ] `DATABASE_URL` / `DIRECT_URL` / `AUTH_SECRET` 由 Vercel 環境注入（非寫死）
 - [ ] DB 使用強密碼、**不對公網開放**（僅允許 Vercel / 受信任來源連線）
 - [ ] 全站 HTTPS（Vercel 預設提供，確認自訂網域憑證 OK）
 - [ ] `npm run build`、`npm run lint` 在 CI／本機通過
 - [ ] preview deployment smoke test 通過（第 6 節）
 
 ### 🟢 Phase 3 — 上線後
+
 - [ ] 開啟 DB **自動備份**（在 DB 供應商設定，確認可還原）
 - [ ] 設定監控與告警：Vercel logs/analytics、DB 連線數、登入失敗率
 - [ ] 補上**隱私權政策 / 個資蒐集同意 / 證件保存期限**（PDPA 合規，營運/法務）
@@ -131,8 +139,8 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 # 連正式 DB 檢視資料（小心操作）
 DATABASE_URL="<prod url>" npx prisma studio
 
-# 查遷移狀態
-DATABASE_URL="<prod url>" npx prisma migrate status
+# 查遷移狀態（直連，需帶 DIRECT_URL）
+DATABASE_URL="<pooled url>" DIRECT_URL="<direct url>" npx prisma migrate status
 ```
 
 - 每次合併到 production branch 即觸發部署並套用新遷移。
