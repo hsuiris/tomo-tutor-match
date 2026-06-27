@@ -227,7 +227,7 @@ export default async function JobDetailPage({
 
       {/* 老師視角：應徵 */}
       {isTutor && !isOwner && (
-        <div className="mt-6 rounded-2xl border border-line p-6">
+        <div className="mt-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
           <h2 className="mb-3 font-bold text-ink">應徵這個案件</h2>
           {myApplication ? (
             <div className="rounded-lg bg-sun-soft/30 px-4 py-3 text-sm text-ink/70">

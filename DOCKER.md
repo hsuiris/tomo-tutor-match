@@ -6,8 +6,9 @@
 ## 啟動
 
 ```bash
-# 在 tutor-match/ 目錄下
-docker compose up --build
+# 在 tutor-match/ 目錄下，DB_PASSWORD 與 AUTH_SECRET 必須先設好
+DB_PASSWORD=$(openssl rand -base64 24) AUTH_SECRET=$(openssl rand -base64 33) \
+  docker compose up --build
 ```
 
 第一次會建置 image（幾分鐘），之後啟動很快。完成後打開：
@@ -44,10 +45,12 @@ docker compose up --build   # 改了程式後重建
 
 - **連接埠**：主機 `3300` → 容器 `3000`（避開本機其他佔用 3000 的服務，可在 `docker-compose.yml` 改）
 - **資料庫**：容器內 `db` 服務，資料存在 `pgdata` volume，不會因容器重啟而消失
-- **AUTH_SECRET**：正式上線請在啟動前設定環境變數，例如：
+- **DB_PASSWORD / AUTH_SECRET**：兩者都必須在啟動前設好（沒設會直接報錯，不給不安全預設值）：
   ```bash
-  AUTH_SECRET=$(openssl rand -base64 33) docker compose up -d
+  DB_PASSWORD=$(openssl rand -base64 24) AUTH_SECRET=$(openssl rand -base64 33) \
+    docker compose up -d
   ```
+  > `DB_PASSWORD` 只在 `pgdata` volume 為空時寫入。已建過的沙盒要換密碼，先 `docker compose down -v` 清掉再起。
 
 ## 本機開發 vs Docker
 

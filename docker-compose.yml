@@ -7,7 +7,9 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: tutormatch
-      POSTGRES_PASSWORD: tutormatch
+      # 必須由環境提供；產生：openssl rand -base64 24
+      # 注意：只在 pgdata volume 為空時生效，改密碼要先 docker compose down -v
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?請先設定 DB_PASSWORD 環境變數（openssl rand -base64 24）}
       POSTGRES_DB: tutormatch
     volumes:
       - pgdata:/var/lib/postgresql/data
@@ -24,7 +26,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgresql://tutormatch:tutormatch@db:5432/tutormatch?schema=public
+      DATABASE_URL: postgresql://tutormatch:${DB_PASSWORD}@db:5432/tutormatch?schema=public
       # 必須由環境提供（未設定就直接報錯，不給不安全的預設值）
       # 產生方式：openssl rand -base64 33
       AUTH_SECRET: ${AUTH_SECRET:?請先設定 AUTH_SECRET 環境變數（openssl rand -base64 33）}
