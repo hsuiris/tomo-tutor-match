@@ -18,6 +18,11 @@ const APP_LABEL: Record<string, string> = {
   REJECTED: "已婉拒",
 };
 
+// 取 n 天前的時間點。包成函式，避免在 render 直接呼叫 Date.now（react-hooks/purity）
+function daysAgo(n: number): Date {
+  return new Date(Date.now() - n * 24 * 60 * 60 * 1000);
+}
+
 function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-2xl border border-line bg-paper p-5">
@@ -28,7 +33,7 @@ function Stat({ label, value }: { label: string; value: number }) {
 }
 
 export default async function AdminDashboardPage() {
-  const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const since = daysAgo(7);
   const [
     usersByRole,
     jobsByStatus,
