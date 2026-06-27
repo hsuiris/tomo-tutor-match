@@ -84,7 +84,11 @@ export default async function Navbar() {
               >
                 {user.name}
                 <span className="rounded-full bg-sun px-1.5 py-0.5 text-[10px] font-bold text-paper">
-                  {user.role === "TUTOR" ? "老師" : "家長"}
+                  {user.role === "TUTOR"
+                    ? "老師"
+                    : user.role === "ADMIN"
+                      ? "管理員"
+                      : "家長"}
                 </span>
               </Link>
               <form
