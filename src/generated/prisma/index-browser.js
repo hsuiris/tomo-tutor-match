@@ -133,6 +133,7 @@ exports.Prisma.UserScalarFieldEnum = {
   idVerified: 'idVerified',
   bgCheckVerified: 'bgCheckVerified',
   eduVerified: 'eduVerified',
+  disabled: 'disabled',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

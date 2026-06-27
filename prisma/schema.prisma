@@ -71,6 +71,9 @@ model User {
   bgCheckVerified Boolean @default(false) // 無犯罪紀錄查驗通過
   eduVerified     Boolean @default(false) // 學歷與成績證明審核通過
 
+  // 帳號狀態
+  disabled        Boolean @default(false) // admin 停用帳號（停用後無法登入；既有 JWT session 自然到期前仍有效）
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

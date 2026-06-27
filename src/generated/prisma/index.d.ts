@@ -2245,6 +2245,7 @@ export namespace Prisma {
     idVerified: boolean | null
     bgCheckVerified: boolean | null
     eduVerified: boolean | null
+    disabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2261,6 +2262,7 @@ export namespace Prisma {
     idVerified: boolean | null
     bgCheckVerified: boolean | null
     eduVerified: boolean | null
+    disabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2277,6 +2279,7 @@ export namespace Prisma {
     idVerified: number
     bgCheckVerified: number
     eduVerified: number
+    disabled: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2295,6 +2298,7 @@ export namespace Prisma {
     idVerified?: true
     bgCheckVerified?: true
     eduVerified?: true
+    disabled?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2311,6 +2315,7 @@ export namespace Prisma {
     idVerified?: true
     bgCheckVerified?: true
     eduVerified?: true
+    disabled?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2327,6 +2332,7 @@ export namespace Prisma {
     idVerified?: true
     bgCheckVerified?: true
     eduVerified?: true
+    disabled?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2416,6 +2422,7 @@ export namespace Prisma {
     idVerified: boolean
     bgCheckVerified: boolean
     eduVerified: boolean
+    disabled: boolean
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -2449,6 +2456,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     tutorProfile?: boolean | User$tutorProfileArgs<ExtArgs>
@@ -2477,6 +2485,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2493,6 +2502,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -2509,11 +2519,12 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "displayName" | "role" | "gender" | "avatarUrl" | "idVerified" | "bgCheckVerified" | "eduVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "displayName" | "role" | "gender" | "avatarUrl" | "idVerified" | "bgCheckVerified" | "eduVerified" | "disabled" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tutorProfile?: boolean | User$tutorProfileArgs<ExtArgs>
     jobPosts?: boolean | User$jobPostsArgs<ExtArgs>
@@ -2558,6 +2569,7 @@ export namespace Prisma {
       idVerified: boolean
       bgCheckVerified: boolean
       eduVerified: boolean
+      disabled: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -3005,6 +3017,7 @@ export namespace Prisma {
     readonly idVerified: FieldRef<"User", 'Boolean'>
     readonly bgCheckVerified: FieldRef<"User", 'Boolean'>
     readonly eduVerified: FieldRef<"User", 'Boolean'>
+    readonly disabled: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -16039,6 +16052,7 @@ export namespace Prisma {
     idVerified: 'idVerified',
     bgCheckVerified: 'bgCheckVerified',
     eduVerified: 'eduVerified',
+    disabled: 'disabled',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -16417,6 +16431,7 @@ export namespace Prisma {
     idVerified?: BoolFilter<"User"> | boolean
     bgCheckVerified?: BoolFilter<"User"> | boolean
     eduVerified?: BoolFilter<"User"> | boolean
+    disabled?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     tutorProfile?: XOR<TutorProfileNullableScalarRelationFilter, TutorProfileWhereInput> | null
@@ -16444,6 +16459,7 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     tutorProfile?: TutorProfileOrderByWithRelationInput
@@ -16474,6 +16490,7 @@ export namespace Prisma {
     idVerified?: BoolFilter<"User"> | boolean
     bgCheckVerified?: BoolFilter<"User"> | boolean
     eduVerified?: BoolFilter<"User"> | boolean
+    disabled?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     tutorProfile?: XOR<TutorProfileNullableScalarRelationFilter, TutorProfileWhereInput> | null
@@ -16501,6 +16518,7 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -16523,6 +16541,7 @@ export namespace Prisma {
     idVerified?: BoolWithAggregatesFilter<"User"> | boolean
     bgCheckVerified?: BoolWithAggregatesFilter<"User"> | boolean
     eduVerified?: BoolWithAggregatesFilter<"User"> | boolean
+    disabled?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -17333,6 +17352,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -17360,6 +17380,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -17387,6 +17408,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -17414,6 +17436,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -17441,6 +17464,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17457,6 +17481,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17473,6 +17498,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -18458,6 +18484,7 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18474,6 +18501,7 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -18490,6 +18518,7 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -21296,6 +21325,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -21322,6 +21352,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -21452,6 +21483,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -21478,6 +21510,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -21604,6 +21637,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -21630,6 +21664,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -21672,6 +21707,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -21698,6 +21734,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -21724,6 +21761,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -21750,6 +21788,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -21781,6 +21820,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -21807,6 +21847,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -21873,6 +21914,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -21899,6 +21941,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -21936,6 +21979,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -21962,6 +22006,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -22025,6 +22070,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -22051,6 +22097,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -22120,6 +22167,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -22146,6 +22194,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -22172,6 +22221,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     jobPosts?: JobPostCreateNestedManyWithoutStudentInput
@@ -22198,6 +22248,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     jobPosts?: JobPostUncheckedCreateNestedManyWithoutStudentInput
@@ -22290,6 +22341,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jobPosts?: JobPostUpdateManyWithoutStudentNestedInput
@@ -22316,6 +22368,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     jobPosts?: JobPostUncheckedUpdateManyWithoutStudentNestedInput
@@ -22386,6 +22439,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -22412,6 +22466,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -22504,6 +22559,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -22530,6 +22586,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -22776,6 +22833,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -22802,6 +22860,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -22833,6 +22892,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -22859,6 +22919,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -22901,6 +22962,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -22927,6 +22989,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -22964,6 +23027,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -22990,6 +23054,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -23016,6 +23081,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -23042,6 +23108,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -23110,6 +23177,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -23136,6 +23204,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
@@ -23205,6 +23274,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
@@ -23231,6 +23301,7 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
@@ -23306,6 +23377,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
@@ -23332,6 +23404,7 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
