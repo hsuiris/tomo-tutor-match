@@ -53,6 +53,14 @@ export default async function Navbar() {
           <Link href="/forum" className="transition hover:text-cobalt">
             討論區
           </Link>
+          {user?.role === "ADMIN" && (
+            <Link
+              href="/admin"
+              className="transition hover:text-cobalt"
+            >
+              管理後台
+            </Link>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
