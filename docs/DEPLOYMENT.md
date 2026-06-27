@@ -22,7 +22,7 @@ build 指令（`package.json`）：`prisma generate && prisma migrate deploy && 
 
 ## 1. 前置準備
 
-1. **建立 Git remote 並推送**（目前 repo 尚無 remote）：
+1. **建立 Git remote 並推送**：
    ```bash
    git remote add origin <你的 GitHub repo 網址>
    git push -u origin launch-prep
