@@ -160,7 +160,7 @@ export default async function UserProfilePage({
         </h2>
 
         {canReview && (
-          <div className="mb-5 rounded-2xl border border-line bg-sun-soft/40 p-4">
+          <div className="mb-5 rounded-2xl border border-ink/10 bg-white p-4 shadow-sm">
             <ReviewForm revieweeId={user.id} revieweeName={name} />
           </div>
         )}

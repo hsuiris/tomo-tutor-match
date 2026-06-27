@@ -14,7 +14,7 @@ export default function AuthLayout({
         >
           TutorMatch
         </Link>
-        <div className="rounded-xl border border-line bg-paper p-8 shadow-[0_10px_30px_rgba(60,55,45,0.12)]">
+        <div className="rounded-xl border border-ink/10 bg-white p-8 shadow-[0_10px_30px_rgba(60,55,45,0.12)]">
           {children}
         </div>
       </div>

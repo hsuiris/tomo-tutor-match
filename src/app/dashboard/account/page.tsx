@@ -37,14 +37,14 @@ export default async function AccountPage() {
       </p>
 
       {/* 化名 */}
-      <section className="rounded-2xl border border-line p-6">
+      <section className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
         <h2 className="mb-1 font-bold text-ink">公開化名</h2>
         <p className="mb-4 text-xs text-ink/40">你的本名是「{user.name}」,僅平台保留。</p>
         <AliasForm displayName={user.displayName ?? ""} />
       </section>
 
       {/* 安全認證 */}
-      <section className="mt-6 rounded-2xl border border-line p-6">
+      <section className="mt-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
         <div className="mb-1 flex items-center justify-between">
           <h2 className="font-bold text-ink">安全認證</h2>
           <TrustBadges

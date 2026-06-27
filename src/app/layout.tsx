@@ -43,7 +43,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-canvas text-ink">
         <Navbar />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-line bg-[#f3eee1]">
+        <footer className="border-t border-line bg-[#faf8f2]">
           <div className="mx-auto flex max-w-6xl flex-col items-center gap-1 px-4 py-10 text-center">
             <span className="font-serif text-2xl font-bold tracking-tight text-ink">
               TutorMatch

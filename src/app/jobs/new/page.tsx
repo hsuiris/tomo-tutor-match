@@ -13,7 +13,9 @@ export default async function NewJobPage() {
       <p className="mt-1 mb-6 text-sm text-ink/60">
         描述你的需求,讓適合的老師主動應徵。
       </p>
-      <JobForm />
+      <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm sm:p-8">
+        <JobForm />
+      </div>
     </div>
   );
 }
