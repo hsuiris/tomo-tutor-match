@@ -3,7 +3,7 @@ import { Prisma } from "@/generated/prisma";
 import { db } from "@/lib/db";
 import { setUserDisabled } from "@/app/admin/actions";
 
-export const metadata = { title: "使用者管理 · TutorMatch" };
+export const metadata = { title: "使用者管理 · Tomo" };
 
 const PER = 50;
 const ROLES = ["STUDENT", "TUTOR", "ADMIN"] as const;

@@ -141,7 +141,7 @@ export default async function HomePage() {
       {/* 為什麼選擇 */}
       <section className="mt-10 rounded-2xl border border-line bg-[#faf8f2] px-6 py-12 sm:px-14 sm:py-16">
         <SectionHeading
-          title="為什麼選擇 TutorMatch"
+          title="為什麼選擇 Tomo"
           leftImg="/student1.png"
           rightImg="/student2.png"
         />

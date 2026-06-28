@@ -17,7 +17,7 @@ export default async function Navbar() {
           href="/"
           className="font-serif text-2xl font-extrabold tracking-tight text-ink"
         >
-          TutorMatch
+          Tomo
         </Link>
 
         <div className="hidden items-center gap-7 text-sm font-bold text-ink sm:flex">

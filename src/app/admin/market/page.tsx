@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { SUBJECTS, LEVELS, REGIONS } from "@/lib/constants";
 import { aggregateMarket, type RateRow } from "@/lib/market";
 
-export const metadata = { title: "家教行情分析 · TutorMatch" };
+export const metadata = { title: "家教行情分析 · Tomo" };
 
 function RateTable({ title, rows }: { title: string; rows: RateRow[] }) {
   return (

@@ -4,7 +4,7 @@ import { SUBJECTS, LEVELS } from "@/lib/constants";
 import RateEstimator from "@/components/RateEstimator";
 import { parseExperienceYears, type MarketData } from "@/lib/estimate";
 
-export const metadata = { title: "家教行情統計 · TutorMatch" };
+export const metadata = { title: "家教行情統計 · Tomo" };
 
 function avg(nums: number[]): number {
   if (nums.length === 0) return 0;

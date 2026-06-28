@@ -1,4 +1,4 @@
-// TutorMatch 資料模型
+// Tomo 資料模型
 // 文件：https://www.prisma.io/docs
 
 generator client {

@@ -12,6 +12,10 @@ export const registerSchema = z
     gender: z.enum(["MALE", "FEMALE", "UNDISCLOSED"], {
       message: "請選擇性別",
     }),
+    // checkbox 勾選時 FormData 值為 "on"，未勾選則缺欄位 → 報錯
+    consent: z.literal("on", {
+      message: "請先閱讀並勾選同意隱私權政策與個資蒐集告知",
+    }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "兩次輸入的密碼不一致",

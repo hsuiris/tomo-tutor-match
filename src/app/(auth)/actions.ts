@@ -82,6 +82,8 @@ export async function loginUser(
     !(await rateLimit(`login:ip:${ip}`, 10, 300)) ||
     !(await rateLimit(`login:email:${parsed.data.email.toLowerCase()}`, 5, 300))
   ) {
+    // 結構化記到 stderr，Vercel logs 可據此設「登入失敗率」告警
+    console.warn(`[login-failure] reason=rate-limited ip=${ip}`);
     return { error: TOO_MANY };
   }
 
@@ -92,6 +94,7 @@ export async function loginUser(
     });
   } catch (error) {
     if (error instanceof AuthError) {
+      console.warn(`[login-failure] reason=bad-credentials ip=${ip}`);
       return { error: "Email 或密碼錯誤" };
     }
     throw error; // redirect 需要往上拋

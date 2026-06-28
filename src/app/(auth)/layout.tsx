@@ -12,7 +12,7 @@ export default function AuthLayout({
           href="/"
           className="mb-8 block text-center font-serif text-3xl font-extrabold text-ink"
         >
-          TutorMatch
+          Tomo
         </Link>
         <div className="rounded-xl border border-ink/10 bg-white p-8 shadow-[0_10px_30px_rgba(60,55,45,0.12)]">
           {children}

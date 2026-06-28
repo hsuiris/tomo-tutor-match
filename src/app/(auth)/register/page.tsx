@@ -17,7 +17,7 @@ export default function RegisterPage() {
   return (
     <div>
       <h1 className="mb-1 font-serif text-2xl font-extrabold text-ink">建立帳號</h1>
-      <p className="mb-6 text-sm text-ink/60">加入 TutorMatch，開始找家教或接案</p>
+      <p className="mb-6 text-sm text-ink/60">加入 Tomo，開始找家教或接案</p>
 
       <form action={formAction} className="space-y-4">
         {/* 身分選擇 */}
@@ -142,6 +142,33 @@ export default function RegisterPage() {
           required
           errors={state.fieldErrors?.confirmPassword}
         />
+
+        {/* 個資蒐集同意 */}
+        <div className="space-y-1">
+          <label className="flex items-start gap-2 text-sm text-ink/80">
+            <input
+              type="checkbox"
+              name="consent"
+              className="mt-0.5 shrink-0"
+            />
+            <span>
+              我已閱讀並同意{" "}
+              <Link
+                href="/privacy"
+                target="_blank"
+                className="font-medium text-cobalt hover:underline"
+              >
+                隱私權政策與個資蒐集告知
+              </Link>
+              <span className="ml-0.5 text-red-500">*</span>
+            </span>
+          </label>
+          {state.fieldErrors?.consent?.map((e) => (
+            <p key={e} className="text-xs text-red-500">
+              {e}
+            </p>
+          ))}
+        </div>
 
         {state.error && (
           <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
