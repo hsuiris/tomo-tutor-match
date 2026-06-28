@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth, signOut } from "@/auth";
+import HeartIcon from "@/components/HeartIcon";
 
 export default async function Navbar() {
   const session = await auth();
@@ -70,7 +71,7 @@ export default async function Navbar() {
                 href="/favorites"
                 className="hidden items-center gap-1 text-sm font-bold text-ink transition hover:text-cobalt sm:flex"
               >
-                <span className="text-blush">♥</span> 收藏
+                <HeartIcon className="h-4 w-4 text-blush" fill="currentColor" /> 收藏
               </Link>
               <Link
                 href="/messages"
