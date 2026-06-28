@@ -25,6 +25,9 @@ const playfair = Playfair_Display({
 const notoSerifTC = Noto_Serif_TC({
   variable: "--font-serif-tc",
   weight: ["500", "600", "700", "900"],
+  // CJK 字檔大、無法 preload；用 optional + 等寬度量替代字型，
+  // 避免標題晚出現時的閃動，字體下載快取後即時套用
+  display: "optional",
 });
 
 export const metadata: Metadata = {
