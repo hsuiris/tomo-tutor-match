@@ -13,6 +13,19 @@ export default function JobForm() {
   const router = useRouter();
   const [state, formAction] = useActionState(createJob, initialState);
   const err = state.fieldErrors;
+  const v = state.values;
+
+  // 出錯時顯示紅字錯誤，否則顯示灰字限制提示
+  const msg = (errs: string[] | undefined, hint: string) =>
+    errs?.length ? (
+      errs.map((e) => (
+        <p key={e} className="mt-1 text-xs text-red-500">
+          {e}
+        </p>
+      ))
+    ) : (
+      <p className="mt-1 text-xs text-ink/40">{hint}</p>
+    );
 
   // 發布成功後導轉到案件頁
   useEffect(() => {
@@ -33,13 +46,10 @@ export default function JobForm() {
         <input
           name="title"
           placeholder="例如：高一數學,加強三角函數"
+          defaultValue={v?.title}
           className={inputCls}
         />
-        {err?.title?.map((e) => (
-          <p key={e} className="mt-1 text-xs text-red-500">
-            {e}
-          </p>
-        ))}
+        {msg(err?.title, "至少 4 個字")}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -47,7 +57,7 @@ export default function JobForm() {
           <label className="mb-1 block text-sm font-medium text-ink/80">
             科目 <span className="text-red-500">*</span>
           </label>
-          <select name="subject" defaultValue="" className={inputCls}>
+          <select name="subject" defaultValue={v?.subject ?? ""} className={inputCls}>
             <option value="" disabled>
               請選擇
             </option>
@@ -67,7 +77,7 @@ export default function JobForm() {
           <label className="mb-1 block text-sm font-medium text-ink/80">
             學生年級 <span className="text-red-500">*</span>
           </label>
-          <select name="level" defaultValue="" className={inputCls}>
+          <select name="level" defaultValue={v?.level ?? ""} className={inputCls}>
             <option value="" disabled>
               請選擇
             </option>
@@ -87,7 +97,7 @@ export default function JobForm() {
           <label className="mb-1 block text-sm font-medium text-ink/80">
             地區 <span className="text-red-500">*</span>
           </label>
-          <select name="region" defaultValue="" className={inputCls}>
+          <select name="region" defaultValue={v?.region ?? ""} className={inputCls}>
             <option value="" disabled>
               請選擇
             </option>
@@ -107,7 +117,7 @@ export default function JobForm() {
           <label className="mb-1 block text-sm font-medium text-ink/80">
             授課方式
           </label>
-          <select name="mode" defaultValue="BOTH" className={inputCls}>
+          <select name="mode" defaultValue={v?.mode ?? "BOTH"} className={inputCls}>
             <option value="BOTH">線上 / 實體皆可</option>
             <option value="ONLINE">僅線上</option>
             <option value="IN_PERSON">僅實體</option>
@@ -123,6 +133,7 @@ export default function JobForm() {
           name="budget"
           type="number"
           placeholder="例如 800（可留空）"
+          defaultValue={v?.budget}
           className={inputCls}
         />
         {err?.budget?.map((e) => (
@@ -140,13 +151,10 @@ export default function JobForm() {
           name="studentStatus"
           rows={3}
           placeholder="例如：高一升高二,數學基礎較弱,段考約 60 分,想跟上進度"
+          defaultValue={v?.studentStatus}
           className={textareaCls}
         />
-        {err?.studentStatus?.map((e) => (
-          <p key={e} className="mt-1 text-xs text-red-500">
-            {e}
-          </p>
-        ))}
+        {msg(err?.studentStatus, "至少 5 個字")}
       </div>
 
       <div>
@@ -157,30 +165,24 @@ export default function JobForm() {
           name="parentNeeds"
           rows={3}
           placeholder="例如：希望加強三角函數與考試技巧,耐心、能引導思考的老師"
+          defaultValue={v?.parentNeeds}
           className={textareaCls}
         />
-        {err?.parentNeeds?.map((e) => (
-          <p key={e} className="mt-1 text-xs text-red-500">
-            {e}
-          </p>
-        ))}
+        {msg(err?.parentNeeds, "至少 5 個字")}
       </div>
 
       <div>
         <label className="mb-1 block text-sm font-medium text-ink/80">
-          其他補充說明
+          其他補充說明 <span className="text-red-500">*</span>
         </label>
         <textarea
           name="description"
           rows={4}
           placeholder="上課時間偏好、其他希望的老師條件等"
+          defaultValue={v?.description}
           className={textareaCls}
         />
-        {err?.description?.map((e) => (
-          <p key={e} className="mt-1 text-xs text-red-500">
-            {e}
-          </p>
-        ))}
+        {msg(err?.description, "必填，至少 10 個字")}
       </div>
 
       {state.error && (

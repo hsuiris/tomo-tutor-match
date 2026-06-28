@@ -29,7 +29,20 @@ export async function createJob(
 
   const parsed = jobSchema.safeParse(raw);
   if (!parsed.success) {
-    return { fieldErrors: parsed.error.flatten().fieldErrors };
+    return {
+      fieldErrors: parsed.error.flatten().fieldErrors,
+      values: {
+        title: raw.title,
+        subject: raw.subject,
+        level: raw.level,
+        region: raw.region,
+        mode: raw.mode ?? "BOTH",
+        budget: budgetRaw ?? "",
+        description: raw.description,
+        studentStatus: raw.studentStatus,
+        parentNeeds: raw.parentNeeds,
+      },
+    };
   }
 
   const job = await db.jobPost.create({
@@ -57,7 +70,10 @@ export async function applyToJob(
   };
   const parsed = applicationSchema.safeParse(raw);
   if (!parsed.success) {
-    return { fieldErrors: parsed.error.flatten().fieldErrors };
+    return {
+      fieldErrors: parsed.error.flatten().fieldErrors,
+      values: { message: raw.message },
+    };
   }
 
   const profile = await db.tutorProfile.findUnique({

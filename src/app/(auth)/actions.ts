@@ -12,6 +12,8 @@ const TOO_MANY = "嘗試次數過多，請稍後再試";
 export type ActionState = {
   error?: string;
   fieldErrors?: Record<string, string[]>;
+  // 出錯時回填使用者剛輸入的值
+  values?: Record<string, string>;
 };
 
 // 註冊
@@ -19,23 +21,29 @@ export async function registerUser(
   _prev: ActionState,
   formData: FormData
 ): Promise<ActionState> {
+  const raw = Object.fromEntries(formData);
+  // 出錯時回填（密碼不回填，重新輸入較安全）
+  const values = {
+    name: String(raw.name ?? ""),
+    email: String(raw.email ?? ""),
+  };
+
   // 註冊：每個 IP 每小時最多 5 次，擋註冊灌水
   if (!(await rateLimit(`register:ip:${await clientIp()}`, 5, 3600))) {
-    return { error: TOO_MANY };
+    return { error: TOO_MANY, values };
   }
 
-  const raw = Object.fromEntries(formData);
   const parsed = registerSchema.safeParse(raw);
 
   if (!parsed.success) {
-    return { fieldErrors: parsed.error.flatten().fieldErrors };
+    return { fieldErrors: parsed.error.flatten().fieldErrors, values };
   }
 
   const { name, email, password, role, gender } = parsed.data;
 
   const existing = await db.user.findUnique({ where: { email } });
   if (existing) {
-    return { error: "這個 Email 已經註冊過了" };
+    return { error: "這個 Email 已經註冊過了", values };
   }
 
   const passwordHash = await bcrypt.hash(password, 10);

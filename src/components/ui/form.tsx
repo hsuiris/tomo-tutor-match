@@ -10,6 +10,7 @@ export function Field({
   errors,
   defaultValue,
   required,
+  hint,
 }: {
   label: string;
   name: string;
@@ -18,6 +19,8 @@ export function Field({
   errors?: string[];
   defaultValue?: string;
   required?: boolean;
+  // 欄位限制提示，填寫前就顯示（灰字）；出錯時改顯示紅色錯誤
+  hint?: string;
 }) {
   return (
     <div className="space-y-1">
@@ -33,11 +36,15 @@ export function Field({
         defaultValue={defaultValue}
         className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm font-medium outline-none transition placeholder:text-ink/40 focus:bg-sun-soft/40"
       />
-      {errors?.map((e) => (
-        <p key={e} className="text-xs font-bold text-blush">
-          {e}
-        </p>
-      ))}
+      {errors?.length ? (
+        errors.map((e) => (
+          <p key={e} className="text-xs font-bold text-blush">
+            {e}
+          </p>
+        ))
+      ) : hint ? (
+        <p className="text-xs text-ink/40">{hint}</p>
+      ) : null}
     </div>
   );
 }

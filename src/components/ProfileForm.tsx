@@ -68,6 +68,8 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
   }
 
   const err = state.fieldErrors;
+  // 出錯後回填剛輸入的值，沒有則用已儲存的值
+  const v = state.values;
 
   return (
     <form action={formAction} className="space-y-6">
@@ -226,7 +228,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
           </label>
           <select
             name="eduLevel"
-            defaultValue={initial.eduLevel}
+            defaultValue={v?.eduLevel ?? initial.eduLevel}
             className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
           >
             <option value="">未填寫</option>
@@ -243,7 +245,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
           </label>
           <input
             name="university"
-            defaultValue={initial.university}
+            defaultValue={v?.university ?? initial.university}
             placeholder="例如：國立台灣大學"
             className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
           />
@@ -258,7 +260,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
         name="education"
         label="科系／詳細學歷"
         required
-        defaultValue={initial.education}
+        defaultValue={v?.education ?? initial.education}
         placeholder="例如：數學系學士、資工所碩士"
         errors={err?.education}
       />
@@ -266,7 +268,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
         name="experience"
         label="教學經驗"
         required
-        defaultValue={initial.experience}
+        defaultValue={v?.experience ?? initial.experience}
         placeholder="例如：5 年家教經驗,帶過 30+ 位學生"
         errors={err?.experience}
       />
@@ -274,7 +276,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
         name="bio"
         label="自我介紹"
         required
-        defaultValue={initial.bio}
+        defaultValue={v?.bio ?? initial.bio}
         placeholder="介紹你的教學風格、專長與特色"
         errors={err?.bio}
       />
@@ -287,7 +289,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
           </label>
           <select
             name="mode"
-            defaultValue={initial.mode}
+            defaultValue={v?.mode ?? initial.mode}
             className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
           >
             <option value="BOTH">線上 / 實體皆可</option>
@@ -302,7 +304,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
           <input
             name="hourlyRate"
             type="number"
-            defaultValue={initial.hourlyRate}
+            defaultValue={v?.hourlyRate ?? initial.hourlyRate}
             placeholder="例如 800"
             className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
           />

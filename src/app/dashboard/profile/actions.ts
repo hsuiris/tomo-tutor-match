@@ -35,7 +35,19 @@ export async function updateProfile(
 
   const parsed = profileSchema.safeParse(raw);
   if (!parsed.success) {
-    return { fieldErrors: parsed.error.flatten().fieldErrors };
+    return {
+      fieldErrors: parsed.error.flatten().fieldErrors,
+      // 回填使用者剛輸入的值，避免出錯後被清空
+      values: {
+        bio: raw.bio,
+        experience: raw.experience,
+        education: raw.education,
+        university: raw.university,
+        eduLevel: raw.eduLevel ?? "",
+        hourlyRate: rateRaw ?? "",
+        mode: raw.mode ?? "BOTH",
+      },
+    };
   }
 
   const { gender, avatarUrl, ...profileData } = parsed.data;

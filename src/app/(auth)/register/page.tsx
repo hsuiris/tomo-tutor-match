@@ -117,6 +117,8 @@ export default function RegisterPage() {
           name="name"
           placeholder="王小明"
           required
+          hint="至少 2 個字"
+          defaultValue={state.values?.name}
           errors={state.fieldErrors?.name}
         />
         <Field
@@ -125,6 +127,7 @@ export default function RegisterPage() {
           type="email"
           placeholder="you@example.com"
           required
+          defaultValue={state.values?.email}
           errors={state.fieldErrors?.email}
         />
         <Field
@@ -133,6 +136,7 @@ export default function RegisterPage() {
           type="password"
           placeholder="至少 6 字元，需含英文字母與數字"
           required
+          hint="至少 6 字元，需含英文字母與數字"
           errors={state.fieldErrors?.password}
         />
         <Field
