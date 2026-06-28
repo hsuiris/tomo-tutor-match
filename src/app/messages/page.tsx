@@ -29,10 +29,21 @@ export default async function MessagesPage() {
       {conversations.length === 0 ? (
         <div className="mt-16 text-center text-ink/40">
           還沒有任何對話。到{" "}
-          <Link href="/tutors" className="text-cobalt hover:underline">
-            找老師
-          </Link>{" "}
-          頁面私訊有興趣的老師吧。
+          {session.user.role === "TUTOR" ? (
+            <>
+              <Link href="/jobs" className="text-cobalt hover:underline">
+                找學生
+              </Link>{" "}
+              頁面私訊有興趣的學生吧。
+            </>
+          ) : (
+            <>
+              <Link href="/tutors" className="text-cobalt hover:underline">
+                找老師
+              </Link>{" "}
+              頁面私訊有興趣的老師吧。
+            </>
+          )}
         </div>
       ) : (
         <ul className="divide-y divide-ink/10 rounded-2xl border border-line bg-paper">
