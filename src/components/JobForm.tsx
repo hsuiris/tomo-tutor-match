@@ -173,7 +173,7 @@ export default function JobForm() {
 
       <div>
         <label className="mb-1 block text-sm font-medium text-ink/80">
-          其他補充說明 <span className="text-red-500">*</span>
+          其他補充說明
         </label>
         <textarea
           name="description"
@@ -182,7 +182,7 @@ export default function JobForm() {
           defaultValue={v?.description}
           className={textareaCls}
         />
-        {msg(err?.description, "必填，至少 10 個字")}
+        {msg(err?.description, "選填")}
       </div>
 
       {state.error && (

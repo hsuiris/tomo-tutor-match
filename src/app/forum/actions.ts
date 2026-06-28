@@ -21,10 +21,13 @@ export async function createPost(
   const title = formData.get("title")?.toString().trim() ?? "";
   const body = formData.get("body")?.toString().trim() ?? "";
   const anonymous = formData.get("anonymous") === "on";
+  const values = { title, body };
 
-  if (!board) return { error: "看板錯誤" };
-  if (title.length < 4) return { fieldErrors: { title: ["標題至少 4 個字"] } };
-  if (body.length < 5) return { fieldErrors: { body: ["內容至少 5 個字"] } };
+  if (!board) return { error: "看板錯誤", values };
+  if (title.length < 4)
+    return { fieldErrors: { title: ["標題至少 4 個字"] }, values };
+  if (body.length < 5)
+    return { fieldErrors: { body: ["內容至少 5 個字"] }, values };
 
   const post = await db.forumPost.create({
     data: { board, title, body, anonymous, authorId: session.user.id },
@@ -45,7 +48,8 @@ export async function createReply(
   const body = formData.get("body")?.toString().trim() ?? "";
   const anonymous = formData.get("anonymous") === "on";
 
-  if (body.length < 1) return { error: "請輸入回覆內容" };
+  if (body.length < 1)
+    return { fieldErrors: { body: ["請輸入回覆內容"] }, values: { body } };
 
   const post = await db.forumPost.findUnique({
     where: { id: postId },

@@ -38,26 +38,36 @@ export default function NewPostForm({ board }: { board: "TUTOR" | "PARENT" }) {
         <input
           name="title"
           placeholder="主題標題"
+          defaultValue={state.values?.title}
           className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
         />
-        {state.fieldErrors?.title?.map((e) => (
-          <p key={e} className="mt-1 text-xs text-red-500">
-            {e}
-          </p>
-        ))}
+        {state.fieldErrors?.title?.length ? (
+          state.fieldErrors.title.map((e) => (
+            <p key={e} className="mt-1 text-xs text-red-500">
+              {e}
+            </p>
+          ))
+        ) : (
+          <p className="mt-1 text-xs text-ink/40">至少 4 個字</p>
+        )}
       </div>
       <div>
         <textarea
           name="body"
           rows={4}
           placeholder="分享你的問題或經驗…"
+          defaultValue={state.values?.body}
           className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
         />
-        {state.fieldErrors?.body?.map((e) => (
-          <p key={e} className="mt-1 text-xs text-red-500">
-            {e}
-          </p>
-        ))}
+        {state.fieldErrors?.body?.length ? (
+          state.fieldErrors.body.map((e) => (
+            <p key={e} className="mt-1 text-xs text-red-500">
+              {e}
+            </p>
+          ))
+        ) : (
+          <p className="mt-1 text-xs text-ink/40">至少 5 個字</p>
+        )}
       </div>
       <label className="flex items-center gap-2 text-sm text-ink/70">
         <input type="checkbox" name="anonymous" className="accent-ink" />

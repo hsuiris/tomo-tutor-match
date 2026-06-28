@@ -71,7 +71,7 @@ export const jobSchema = z.object({
   region: z.string().min(1, "請選擇地區"),
   mode: z.enum(["ONLINE", "IN_PERSON", "BOTH"]),
   budget: z.number().int().positive("預算需為正整數").max(100000).optional(),
-  description: z.string().min(10, "請描述需求,至少 10 個字").max(2000),
+  description: z.string().max(2000, "內容過長").optional(),
   studentStatus: z
     .string()
     .min(5, "請描述學生狀況,至少 5 個字")

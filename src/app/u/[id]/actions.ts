@@ -17,10 +17,12 @@ export async function submitReview(
   const rating = Number(formData.get("rating"));
   const comment = formData.get("comment")?.toString().trim() || null;
   const me = session.user.id;
+  // 出錯時回填 comment（選填，避免清空）；rating 由 client 端 state 保留
+  const values = { comment: comment ?? "" };
 
-  if (revieweeId === me) return { error: "不能評價自己" };
+  if (revieweeId === me) return { error: "不能評價自己", values };
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
-    return { error: "請給 1 到 5 顆星" };
+    return { error: "請給 1 到 5 顆星", values };
   }
 
   // 資格：雙方曾在某案件完成媒合（任一方向）
@@ -35,14 +37,14 @@ export async function submitReview(
     select: { id: true },
   });
   if (!matched) {
-    return { error: "你尚未與這位使用者完成媒合,無法評價" };
+    return { error: "你尚未與這位使用者完成媒合,無法評價", values };
   }
 
   const existing = await db.review.findUnique({
     where: { revieweeId_authorId: { revieweeId, authorId: me } },
     select: { id: true },
   });
-  if (existing) return { error: "你已經評價過了" };
+  if (existing) return { error: "你已經評價過了", values };
 
   await db.$transaction(async (tx) => {
     await tx.review.create({

@@ -31,8 +31,14 @@ export default function ReplyForm({ postId }: { postId: string }) {
         name="body"
         rows={3}
         placeholder="寫下你的回覆…"
+        defaultValue={state.values?.body}
         className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
       />
+      {state.fieldErrors?.body?.map((e) => (
+        <p key={e} className="text-xs text-red-500">
+          {e}
+        </p>
+      ))}
       <div className="flex items-center justify-between">
         <label className="flex items-center gap-2 text-sm text-ink/70">
           <input

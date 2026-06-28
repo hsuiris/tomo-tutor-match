@@ -46,7 +46,11 @@ export async function createJob(
   }
 
   const job = await db.jobPost.create({
-    data: { ...parsed.data, studentId: session.user.id },
+    data: {
+      ...parsed.data,
+      description: parsed.data.description ?? "",
+      studentId: session.user.id,
+    },
   });
 
   revalidatePath("/jobs");
