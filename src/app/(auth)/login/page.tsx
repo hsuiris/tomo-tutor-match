@@ -13,7 +13,7 @@ export default function LoginPage() {
   return (
     <div>
       <h1 className="mb-1 font-serif text-2xl font-extrabold text-ink">登入</h1>
-      <p className="mb-6 text-sm text-ink/60">歡迎回來 TutorMatch</p>
+      <p className="mb-6 text-sm text-ink/60">歡迎回來 Tomo</p>
 
       <form action={formAction} className="space-y-4">
         <Field

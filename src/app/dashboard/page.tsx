@@ -1,9 +1,13 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 
 export default async function DashboardPage() {
   const session = await auth();
   const user = session!.user; // middleware 已保證登入
+
+  // 管理員不是家長，個人面板對其無意義，直接進後台控制台
+  if (user.role === "ADMIN") redirect("/admin");
 
   const isTutor = user.role === "TUTOR";
 
@@ -62,13 +66,6 @@ export default async function DashboardPage() {
           title="帳號與安全"
           desc="設定公開化名、完成實名與無犯罪紀錄認證"
         />
-        {user.role === "ADMIN" && (
-          <DashCard
-            href="/admin/verifications"
-            title="認證審核（管理員）"
-            desc="審核使用者上傳的證件"
-          />
-        )}
       </div>
     </div>
   );

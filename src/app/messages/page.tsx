@@ -35,7 +35,7 @@ export default async function MessagesPage() {
           頁面私訊有興趣的老師吧。
         </div>
       ) : (
-        <ul className="divide-y divide-ink/10 rounded-2xl border border-line">
+        <ul className="divide-y divide-ink/10 rounded-2xl border border-line bg-paper">
           {conversations.map((c) => {
             const other = c.userA.id === me ? c.userB : c.userA;
             const last = c.messages[0];

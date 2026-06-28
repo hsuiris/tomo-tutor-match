@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Serif_TC, Playfair_Display } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import Link from "next/link";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
@@ -26,7 +28,7 @@ const notoSerifTC = Noto_Serif_TC({
 });
 
 export const metadata: Metadata = {
-  title: "TutorMatch 家教媒合平台",
+  title: "Tomo 家教媒合平台",
   description: "找家教、接案教學，一站搞定的家教媒合平台",
 };
 
@@ -46,13 +48,20 @@ export default function RootLayout({
         <footer className="border-t border-line bg-[#faf8f2]">
           <div className="mx-auto flex max-w-6xl flex-col items-center gap-1 px-4 py-10 text-center">
             <span className="font-serif text-2xl font-bold tracking-tight text-ink">
-              TutorMatch
+              Tomo
             </span>
             <span className="text-xs tracking-wide text-ink/70">
-              © {new Date().getFullYear()} TutorMatch ・ 家教媒合平台
+              © {new Date().getFullYear()} Tomo ・ 家教媒合平台
             </span>
+            <Link
+              href="/privacy"
+              className="mt-1 text-xs tracking-wide text-ink/60 hover:text-ink hover:underline"
+            >
+              隱私權政策與個資蒐集告知
+            </Link>
           </div>
         </footer>
+        <Analytics />
       </body>
     </html>
   );

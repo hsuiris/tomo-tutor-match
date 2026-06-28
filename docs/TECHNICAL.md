@@ -1,4 +1,4 @@
-# TutorMatch 技術文件
+# Tomo 技術文件
 
 家教媒合平台。學生／家長發布需求、老師應徵；雙方可私訊、互評，平台提供安全認證審核與討論區。
 
@@ -129,7 +129,7 @@ prisma/
 ## 8. 本機開發
 
 ```bash
-# 需要本機 Postgres（或用 Docker，見根目錄 DOCKER.md）
+# 需要本機 Postgres
 npm install
 # 設定 .env 的 DATABASE_URL / DIRECT_URL / AUTH_SECRET（本機 DIRECT_URL 與 DATABASE_URL 相同即可）
 npx prisma migrate deploy   # 套用遷移

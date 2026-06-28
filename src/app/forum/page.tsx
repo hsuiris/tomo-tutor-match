@@ -2,7 +2,7 @@ import Link from "next/link";
 import { db } from "@/lib/db";
 import { FORUM_BOARDS } from "@/lib/forum";
 
-export const metadata = { title: "討論區 · TutorMatch" };
+export const metadata = { title: "討論區 · Tomo" };
 
 export default async function ForumHome() {
   const counts = await db.forumPost.groupBy({

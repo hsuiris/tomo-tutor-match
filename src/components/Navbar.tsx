@@ -17,7 +17,7 @@ export default async function Navbar() {
           href="/"
           className="font-serif text-2xl font-extrabold tracking-tight text-ink"
         >
-          TutorMatch
+          Tomo
         </Link>
 
         <div className="hidden items-center gap-7 text-sm font-bold text-ink sm:flex">
@@ -53,6 +53,14 @@ export default async function Navbar() {
           <Link href="/forum" className="transition hover:text-cobalt">
             討論區
           </Link>
+          {user?.role === "ADMIN" && (
+            <Link
+              href="/admin"
+              className="transition hover:text-cobalt"
+            >
+              管理後台
+            </Link>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -76,7 +84,11 @@ export default async function Navbar() {
               >
                 {user.name}
                 <span className="rounded-full bg-sun px-1.5 py-0.5 text-[10px] font-bold text-paper">
-                  {user.role === "TUTOR" ? "老師" : "家長"}
+                  {user.role === "TUTOR"
+                    ? "老師"
+                    : user.role === "ADMIN"
+                      ? "管理員"
+                      : "家長"}
                 </span>
               </Link>
               <form

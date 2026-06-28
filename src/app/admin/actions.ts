@@ -52,3 +52,41 @@ export async function rejectVerification(id: string) {
 
   revalidatePath("/admin/verifications");
 }
+
+// 停用／復用使用者
+export async function setUserDisabled(id: string, disabled: boolean) {
+  if (!(await requireAdmin())) return;
+  await db.user.updateMany({ where: { id }, data: { disabled } });
+  revalidatePath("/admin/users");
+}
+
+// 強制關閉案件
+export async function closeJob(id: string) {
+  if (!(await requireAdmin())) return;
+  await db.jobPost.updateMany({
+    where: { id, status: { not: "CLOSED" } },
+    data: { status: "CLOSED" },
+  });
+  revalidatePath("/admin/matches");
+}
+
+// 刪除論壇文章（回覆由 schema onDelete: Cascade 連帶刪除）
+export async function deleteForumPost(id: string) {
+  if (!(await requireAdmin())) return;
+  await db.forumPost.deleteMany({ where: { id } });
+  revalidatePath("/admin/content");
+}
+
+// 刪除論壇回覆
+export async function deleteForumReply(id: string) {
+  if (!(await requireAdmin())) return;
+  await db.forumReply.deleteMany({ where: { id } });
+  revalidatePath("/admin/content");
+}
+
+// 刪除評價
+export async function deleteReview(id: string) {
+  if (!(await requireAdmin())) return;
+  await db.review.deleteMany({ where: { id } });
+  revalidatePath("/admin/content");
+}

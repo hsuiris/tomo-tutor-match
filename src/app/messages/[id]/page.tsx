@@ -60,18 +60,12 @@ export default async function ChatRoomPage({
                 className={`flex ${mine ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[75%] rounded-2xl px-4 py-2 text-sm ${
-                    mine
-                      ? "bg-sun text-paper"
-                      : "bg-sun-soft/50 text-ink"
+                  className={`max-w-[75%] rounded-2xl border bg-paper px-4 py-2 text-sm text-ink ${
+                    mine ? "border-sun" : "border-line"
                   }`}
                 >
                   <p className="whitespace-pre-wrap break-words">{m.body}</p>
-                  <p
-                    className={`mt-0.5 text-[10px] ${
-                      mine ? "text-paper/60" : "text-ink/40"
-                    }`}
-                  >
+                  <p className="mt-0.5 text-[10px] text-ink/40">
                     {m.createdAt.toLocaleTimeString("zh-TW", {
                       hour: "2-digit",
                       minute: "2-digit",

@@ -1,5 +1,3 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { approveVerification, rejectVerification } from "@/app/admin/actions";
 
@@ -10,16 +8,6 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 export default async function AdminVerificationsPage() {
-  const session = await auth();
-  if (!session) redirect("/login");
-  if (session.user.role !== "ADMIN") {
-    return (
-      <div className="mx-auto max-w-2xl px-4 py-24 text-center text-ink/60">
-        此頁面僅限管理員。
-      </div>
-    );
-  }
-
   const requests = await db.verificationRequest.findMany({
     where: { status: "PENDING" },
     orderBy: { createdAt: "asc" },
@@ -27,7 +15,7 @@ export default async function AdminVerificationsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
+    <div className="max-w-3xl">
       <h1 className="font-serif text-3xl font-extrabold text-ink">認證審核</h1>
       <div className="mt-2 h-1 w-14 bg-sun" />
       <p className="mt-3 mb-6 text-sm font-bold text-ink/60">

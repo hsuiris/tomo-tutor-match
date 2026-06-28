@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import TutorCard from "@/components/TutorCard";
 import JobCard from "@/components/JobCard";
 
-export const metadata = { title: "我的收藏 · TutorMatch" };
+export const metadata = { title: "我的收藏 · Tomo" };
 
 export default async function FavoritesPage() {
   const session = await auth();
