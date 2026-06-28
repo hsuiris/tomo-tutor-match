@@ -25,11 +25,11 @@ export const LEVELS = ["國小", "國中", "高中", "大學", "成人"] as cons
 export const EDU_LEVELS = [
   "高中職",
   "大學在學",
-  "學士",
+  "學士畢業",
   "碩士在學",
-  "碩士",
+  "碩士畢業",
   "博士在學",
-  "博士",
+  "博士畢業",
 ] as const;
 
 export const REGIONS = [

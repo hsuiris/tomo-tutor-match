@@ -4,7 +4,11 @@ export const registerSchema = z
   .object({
     name: z.string().min(2, "姓名至少 2 個字"),
     email: z.string().email("請輸入有效的 Email"),
-    password: z.string().min(6, "密碼至少 6 個字元"),
+    password: z
+      .string()
+      .min(6, "密碼至少 6 個字元")
+      .regex(/[A-Za-z]/, "密碼需包含英文字母")
+      .regex(/[0-9]/, "密碼需包含數字"),
     confirmPassword: z.string(),
     role: z.enum(["STUDENT", "TUTOR"], {
       message: "請選擇身分",
@@ -33,7 +37,7 @@ export type LoginInput = z.infer<typeof loginSchema>;
 
 // 老師檔案
 export const profileSchema = z.object({
-  bio: z.string().max(1000, "自我介紹過長").optional(),
+  bio: z.string().min(1, "請填寫自我介紹").max(1000, "自我介紹過長"),
   subjects: z.array(z.string()).min(1, "請至少選擇一個科目"),
   levels: z.array(z.string()).min(1, "請至少選擇一個可教學制"),
   regions: z.array(z.string()).min(1, "請至少選擇一個地區"),
@@ -43,9 +47,9 @@ export const profileSchema = z.object({
     .min(0)
     .max(100000)
     .optional(),
-  experience: z.string().max(500).optional(),
-  education: z.string().max(500).optional(),
-  university: z.string().max(100).optional(),
+  experience: z.string().min(1, "請填寫教學經驗").max(500, "教學經驗過長"),
+  education: z.string().min(1, "請填寫科系／學歷").max(500, "內容過長"),
+  university: z.string().min(1, "請填寫就讀大學").max(100, "校名過長"),
   eduLevel: z.string().max(20).optional(),
   mode: z.enum(["ONLINE", "IN_PERSON", "BOTH"]),
   gender: z.enum(["MALE", "FEMALE", "UNDISCLOSED"]),

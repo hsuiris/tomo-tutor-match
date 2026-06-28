@@ -239,7 +239,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium text-ink/80">
-            畢業／就讀大學
+            畢業／就讀大學 <span className="text-red-500">*</span>
           </label>
           <input
             name="university"
@@ -247,32 +247,43 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
             placeholder="例如：國立台灣大學"
             className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
           />
+          {err?.university?.map((e) => (
+            <p key={e} className="mt-1 text-xs text-red-500">
+              {e}
+            </p>
+          ))}
         </div>
       </div>
       <TextArea
         name="education"
         label="科系／詳細學歷"
+        required
         defaultValue={initial.education}
         placeholder="例如：數學系學士、資工所碩士"
+        errors={err?.education}
       />
       <TextArea
         name="experience"
         label="教學經驗"
+        required
         defaultValue={initial.experience}
         placeholder="例如：5 年家教經驗,帶過 30+ 位學生"
+        errors={err?.experience}
       />
       <TextArea
         name="bio"
         label="自我介紹"
+        required
         defaultValue={initial.bio}
         placeholder="介紹你的教學風格、專長與特色"
+        errors={err?.bio}
       />
 
       {/* 授課方式 + 時薪 */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="mb-1 block text-sm font-medium text-ink/80">
-            授課方式
+            授課方式 <span className="text-red-500">*</span>
           </label>
           <select
             name="mode"
@@ -366,16 +377,20 @@ function TextArea({
   label,
   defaultValue,
   placeholder,
+  required,
+  errors,
 }: {
   name: string;
   label: string;
   defaultValue: string;
   placeholder?: string;
+  required?: boolean;
+  errors?: string[];
 }) {
   return (
     <div>
       <label className="mb-1 block text-sm font-medium text-ink/80">
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </label>
       <textarea
         name={name}
@@ -384,6 +399,11 @@ function TextArea({
         rows={3}
         className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
       />
+      {errors?.map((e) => (
+        <p key={e} className="mt-1 text-xs text-red-500">
+          {e}
+        </p>
+      ))}
     </div>
   );
 }

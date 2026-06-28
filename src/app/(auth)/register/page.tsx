@@ -131,7 +131,7 @@ export default function RegisterPage() {
           label="密碼"
           name="password"
           type="password"
-          placeholder="至少 6 個字元"
+          placeholder="至少 6 字元，需含英文字母與數字"
           required
           errors={state.fieldErrors?.password}
         />

@@ -18,14 +18,14 @@ export async function updateProfile(
   const rateRaw = formData.get("hourlyRate")?.toString().trim();
   const avatarRaw = formData.get("avatarUrl")?.toString();
   const raw = {
-    bio: formData.get("bio")?.toString().trim() || undefined,
+    bio: formData.get("bio")?.toString().trim() ?? "",
     subjects: formData.getAll("subjects").map(String),
     levels: formData.getAll("levels").map(String),
     regions: formData.getAll("regions").map(String),
     hourlyRate: rateRaw ? Number(rateRaw) : undefined,
-    experience: formData.get("experience")?.toString().trim() || undefined,
-    education: formData.get("education")?.toString().trim() || undefined,
-    university: formData.get("university")?.toString().trim() || undefined,
+    experience: formData.get("experience")?.toString().trim() ?? "",
+    education: formData.get("education")?.toString().trim() ?? "",
+    university: formData.get("university")?.toString().trim() ?? "",
     eduLevel: formData.get("eduLevel")?.toString().trim() || undefined,
     mode: formData.get("mode")?.toString(),
     gender: formData.get("gender")?.toString(),
