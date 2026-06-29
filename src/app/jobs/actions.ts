@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { jobSchema, applicationSchema } from "@/lib/validations";
+import { notify } from "@/lib/email";
 import type { ActionState } from "@/lib/types";
 
 // 學生發布需求
@@ -91,7 +92,7 @@ export async function applyToJob(
 
   const job = await db.jobPost.findUnique({
     where: { id: parsed.data.jobId },
-    select: { status: true },
+    select: { status: true, studentId: true, title: true },
   });
   if (!job || job.status !== "OPEN") {
     return { error: "這個案件已經不開放應徵了" };
@@ -113,6 +114,14 @@ export async function applyToJob(
     },
   });
 
+  // 通知案主有新應徵（依其通知偏好）
+  await notify({
+    userId: job.studentId,
+    kind: "jobUpdate",
+    subject: `Tomo：你的案件「${job.title}」收到新應徵`,
+    html: `<p>有老師應徵你的家教案件「${job.title}」，登入即可查看並選擇老師。</p>`,
+  });
+
   revalidatePath(`/jobs/${parsed.data.jobId}`);
   return { success: "應徵已送出" };
 }
@@ -124,7 +133,10 @@ export async function acceptApplication(applicationId: string) {
 
   const app = await db.application.findUnique({
     where: { id: applicationId },
-    include: { job: { select: { id: true, studentId: true } } },
+    include: {
+      job: { select: { id: true, studentId: true, title: true } },
+      tutor: { select: { userId: true } },
+    },
   });
   if (!app || app.job.studentId !== session.user.id) return;
 
@@ -143,6 +155,14 @@ export async function acceptApplication(applicationId: string) {
       data: { status: "MATCHED" },
     }),
   ]);
+
+  // 通知被錄取的老師（依其通知偏好）
+  await notify({
+    userId: app.tutor.userId,
+    kind: "jobUpdate",
+    subject: `Tomo：你被選上了！案件「${app.job.title}」`,
+    html: `<p>恭喜！家長選擇了你來教授「${app.job.title}」，登入即可私訊聯繫。</p>`,
+  });
 
   revalidatePath(`/jobs/${app.job.id}`);
 }

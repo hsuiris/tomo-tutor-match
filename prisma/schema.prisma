@@ -71,6 +71,11 @@ model User {
   bgCheckVerified Boolean @default(false) // 無犯罪紀錄查驗通過
   eduVerified     Boolean @default(false) // 學歷與成績證明審核通過
 
+  // 通知設定
+  emailNotifications Boolean @default(false) // 總開關：是否把通知寄到 Email
+  notifyJobUpdates   Boolean @default(true) // 案件更新（應徵、媒合結果等）
+  notifyMessages     Boolean @default(true) // 收到新訊息
+
   // 帳號狀態
   disabled        Boolean @default(false) // admin 停用帳號（停用後無法登入；既有 JWT session 自然到期前仍有效）
 

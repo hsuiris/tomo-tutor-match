@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import ProfileForm, { type ProfileInitial } from "@/components/ProfileForm";
+import AliasForm from "@/components/AliasForm";
+import VerificationSection from "@/components/VerificationSection";
 import type { TeachingMode } from "@/lib/constants";
 
 export default async function ProfileEditPage() {
@@ -19,7 +21,20 @@ export default async function ProfileEditPage() {
 
   const profile = await db.tutorProfile.findUnique({
     where: { userId: session.user.id },
-    include: { user: { select: { name: true, gender: true, avatarUrl: true } } },
+    include: {
+      user: {
+        select: {
+          name: true,
+          displayName: true,
+          gender: true,
+          avatarUrl: true,
+          idVerified: true,
+          bgCheckVerified: true,
+          eduVerified: true,
+          verificationRequests: { orderBy: { createdAt: "desc" } },
+        },
+      },
+    },
   });
 
   // 註冊時已建立空白檔案，理論上一定存在
@@ -65,6 +80,27 @@ export default async function ProfileEditPage() {
       </p>
       <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm sm:p-8">
         <ProfileForm initial={initial} />
+      </div>
+
+      {/* 公開化名 */}
+      <section className="mt-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
+        <h2 className="mb-1 font-bold text-ink">公開化名</h2>
+        <p className="mb-4 text-xs text-ink/40">
+          你的本名是「{profile.user.name}」,僅平台保留。
+        </p>
+        <AliasForm displayName={profile.user.displayName ?? ""} />
+      </section>
+
+      {/* 安全認證 */}
+      <div className="mt-6">
+        <VerificationSection
+          idVerified={profile.user.idVerified}
+          bgCheckVerified={profile.user.bgCheckVerified}
+          eduVerified={profile.user.eduVerified}
+          requests={profile.user.verificationRequests}
+          showEducation
+          intro="完成認證後,你的檔案會顯示信任徽章,讓家長更放心託付,也保障你接案的安全。證件僅供審核,審核後即刪除。"
+        />
       </div>
     </div>
   );

@@ -45,6 +45,12 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 | `DATABASE_URL` | Neon**pooled** 連線字串（建議 `?sslmode=require&pgbouncer=true`）   |
 | `DIRECT_URL`   | Neon**direct（非 pooler）** 連線字串，供 `prisma migrate deploy` 用 |
 | `AUTH_SECRET`  | `openssl rand -base64 33` 產生的**全新**金鑰                        |
+| `RESEND_API_KEY` | （選用）Email 通知用，Resend API key；未設定則不寄送通知 Email      |
+| `MAIL_FROM`    | （選用）寄件人，如 `Tomo <noreply@你的網域>`；需與 RESEND_API_KEY 一起設 |
+
+> 📧 **Email 通知**：使用者可在「帳號與安全 → 通知設定」開啟 Email 通知（新應徵、媒合結果、新訊息）。
+> 實際寄送需設 `RESEND_API_KEY` 與 `MAIL_FROM`（[resend.com](https://resend.com) 免費方案＋驗證寄件網域）。
+> 兩者未設時程式會**略過寄送、不報錯**（見 `src/lib/email.ts`），功能其餘部分照常運作。
 
 ⚠️ **重要**：
 

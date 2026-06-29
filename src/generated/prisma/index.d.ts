@@ -2245,6 +2245,9 @@ export namespace Prisma {
     idVerified: boolean | null
     bgCheckVerified: boolean | null
     eduVerified: boolean | null
+    emailNotifications: boolean | null
+    notifyJobUpdates: boolean | null
+    notifyMessages: boolean | null
     disabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2262,6 +2265,9 @@ export namespace Prisma {
     idVerified: boolean | null
     bgCheckVerified: boolean | null
     eduVerified: boolean | null
+    emailNotifications: boolean | null
+    notifyJobUpdates: boolean | null
+    notifyMessages: boolean | null
     disabled: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -2279,6 +2285,9 @@ export namespace Prisma {
     idVerified: number
     bgCheckVerified: number
     eduVerified: number
+    emailNotifications: number
+    notifyJobUpdates: number
+    notifyMessages: number
     disabled: number
     createdAt: number
     updatedAt: number
@@ -2298,6 +2307,9 @@ export namespace Prisma {
     idVerified?: true
     bgCheckVerified?: true
     eduVerified?: true
+    emailNotifications?: true
+    notifyJobUpdates?: true
+    notifyMessages?: true
     disabled?: true
     createdAt?: true
     updatedAt?: true
@@ -2315,6 +2327,9 @@ export namespace Prisma {
     idVerified?: true
     bgCheckVerified?: true
     eduVerified?: true
+    emailNotifications?: true
+    notifyJobUpdates?: true
+    notifyMessages?: true
     disabled?: true
     createdAt?: true
     updatedAt?: true
@@ -2332,6 +2347,9 @@ export namespace Prisma {
     idVerified?: true
     bgCheckVerified?: true
     eduVerified?: true
+    emailNotifications?: true
+    notifyJobUpdates?: true
+    notifyMessages?: true
     disabled?: true
     createdAt?: true
     updatedAt?: true
@@ -2422,6 +2440,9 @@ export namespace Prisma {
     idVerified: boolean
     bgCheckVerified: boolean
     eduVerified: boolean
+    emailNotifications: boolean
+    notifyJobUpdates: boolean
+    notifyMessages: boolean
     disabled: boolean
     createdAt: Date
     updatedAt: Date
@@ -2456,6 +2477,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2485,6 +2509,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2502,6 +2529,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -2519,12 +2549,15 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "displayName" | "role" | "gender" | "avatarUrl" | "idVerified" | "bgCheckVerified" | "eduVerified" | "disabled" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "displayName" | "role" | "gender" | "avatarUrl" | "idVerified" | "bgCheckVerified" | "eduVerified" | "emailNotifications" | "notifyJobUpdates" | "notifyMessages" | "disabled" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tutorProfile?: boolean | User$tutorProfileArgs<ExtArgs>
     jobPosts?: boolean | User$jobPostsArgs<ExtArgs>
@@ -2569,6 +2602,9 @@ export namespace Prisma {
       idVerified: boolean
       bgCheckVerified: boolean
       eduVerified: boolean
+      emailNotifications: boolean
+      notifyJobUpdates: boolean
+      notifyMessages: boolean
       disabled: boolean
       createdAt: Date
       updatedAt: Date
@@ -3017,6 +3053,9 @@ export namespace Prisma {
     readonly idVerified: FieldRef<"User", 'Boolean'>
     readonly bgCheckVerified: FieldRef<"User", 'Boolean'>
     readonly eduVerified: FieldRef<"User", 'Boolean'>
+    readonly emailNotifications: FieldRef<"User", 'Boolean'>
+    readonly notifyJobUpdates: FieldRef<"User", 'Boolean'>
+    readonly notifyMessages: FieldRef<"User", 'Boolean'>
     readonly disabled: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -16086,6 +16125,9 @@ export namespace Prisma {
     idVerified: 'idVerified',
     bgCheckVerified: 'bgCheckVerified',
     eduVerified: 'eduVerified',
+    emailNotifications: 'emailNotifications',
+    notifyJobUpdates: 'notifyJobUpdates',
+    notifyMessages: 'notifyMessages',
     disabled: 'disabled',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -16467,6 +16509,9 @@ export namespace Prisma {
     idVerified?: BoolFilter<"User"> | boolean
     bgCheckVerified?: BoolFilter<"User"> | boolean
     eduVerified?: BoolFilter<"User"> | boolean
+    emailNotifications?: BoolFilter<"User"> | boolean
+    notifyJobUpdates?: BoolFilter<"User"> | boolean
+    notifyMessages?: BoolFilter<"User"> | boolean
     disabled?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -16495,6 +16540,9 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    emailNotifications?: SortOrder
+    notifyJobUpdates?: SortOrder
+    notifyMessages?: SortOrder
     disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -16526,6 +16574,9 @@ export namespace Prisma {
     idVerified?: BoolFilter<"User"> | boolean
     bgCheckVerified?: BoolFilter<"User"> | boolean
     eduVerified?: BoolFilter<"User"> | boolean
+    emailNotifications?: BoolFilter<"User"> | boolean
+    notifyJobUpdates?: BoolFilter<"User"> | boolean
+    notifyMessages?: BoolFilter<"User"> | boolean
     disabled?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
@@ -16554,6 +16605,9 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    emailNotifications?: SortOrder
+    notifyJobUpdates?: SortOrder
+    notifyMessages?: SortOrder
     disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -16577,6 +16631,9 @@ export namespace Prisma {
     idVerified?: BoolWithAggregatesFilter<"User"> | boolean
     bgCheckVerified?: BoolWithAggregatesFilter<"User"> | boolean
     eduVerified?: BoolWithAggregatesFilter<"User"> | boolean
+    emailNotifications?: BoolWithAggregatesFilter<"User"> | boolean
+    notifyJobUpdates?: BoolWithAggregatesFilter<"User"> | boolean
+    notifyMessages?: BoolWithAggregatesFilter<"User"> | boolean
     disabled?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -17398,6 +17455,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -17426,6 +17486,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -17454,6 +17517,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17482,6 +17548,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17510,6 +17579,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -17527,6 +17599,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -17544,6 +17619,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -18544,6 +18622,9 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    emailNotifications?: SortOrder
+    notifyJobUpdates?: SortOrder
+    notifyMessages?: SortOrder
     disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -18561,6 +18642,9 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    emailNotifications?: SortOrder
+    notifyJobUpdates?: SortOrder
+    notifyMessages?: SortOrder
     disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -18578,6 +18662,9 @@ export namespace Prisma {
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
+    emailNotifications?: SortOrder
+    notifyJobUpdates?: SortOrder
+    notifyMessages?: SortOrder
     disabled?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -21402,6 +21489,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21429,6 +21519,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21564,6 +21657,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21591,6 +21687,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21722,6 +21821,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21749,6 +21851,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21792,6 +21897,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21819,6 +21927,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21846,6 +21957,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21873,6 +21987,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21905,6 +22022,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21932,6 +22052,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -21999,6 +22122,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22026,6 +22152,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22064,6 +22193,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22091,6 +22223,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22155,6 +22290,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22182,6 +22320,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22252,6 +22393,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22279,6 +22423,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22306,6 +22453,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22333,6 +22483,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22426,6 +22579,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22453,6 +22609,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22524,6 +22683,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22551,6 +22713,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22644,6 +22809,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22671,6 +22839,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -22926,6 +23097,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22953,6 +23127,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -22985,6 +23162,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23012,6 +23192,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23055,6 +23238,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23082,6 +23268,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23120,6 +23309,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23147,6 +23339,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23174,6 +23369,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23201,6 +23399,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23270,6 +23471,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23297,6 +23501,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23367,6 +23574,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23394,6 +23604,9 @@ export namespace Prisma {
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
     disabled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -23470,6 +23683,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -23497,6 +23713,9 @@ export namespace Prisma {
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
     disabled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

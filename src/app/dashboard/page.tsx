@@ -27,7 +27,7 @@ export default async function DashboardPage() {
             <DashCard
               href="/dashboard/profile"
               title="編輯我的檔案"
-              desc="設定專長科目、地區、時薪與自我介紹"
+              desc="專長、時薪、自我介紹、公開化名與安全認證"
             />
             <DashCard
               href="/jobs"
@@ -64,7 +64,7 @@ export default async function DashboardPage() {
         <DashCard
           href="/dashboard/account"
           title="帳號與安全"
-          desc="設定公開化名、完成實名與無犯罪紀錄認證"
+          desc="修改密碼、通知設定與帳號安全"
         />
       </div>
     </div>

@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { notify } from "@/lib/email";
+import { publicName } from "@/lib/user";
 import type { ActionState } from "@/lib/types";
 
 // 取得或建立與某人的對話，回傳 conversationId（client 端再導轉）
@@ -67,6 +69,20 @@ export async function sendMessage(
       data: { lastMessageAt: new Date() },
     }),
   ]);
+
+  // 通知收訊方（依其通知偏好；未設 email 服務則略過）
+  const recipientId =
+    convo.userAId === session.user.id ? convo.userBId : convo.userAId;
+  const sender = await db.user.findUnique({
+    where: { id: session.user.id },
+    select: { name: true, displayName: true },
+  });
+  await notify({
+    userId: recipientId,
+    kind: "message",
+    subject: `Tomo：${sender ? publicName(sender) : "有人"}傳了新訊息給你`,
+    html: `<p>你在 Tomo 收到一則新訊息，登入即可查看與回覆。</p>`,
+  });
 
   revalidatePath(`/messages/${conversationId}`);
   revalidatePath("/messages");
