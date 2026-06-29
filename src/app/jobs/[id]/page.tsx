@@ -204,7 +204,7 @@ export default async function JobDetailPage({
 
       {/* 系統推薦：依家長需求媒合適合的老師（僅家長／學生帳號可見） */}
       {isOwner && isStudent && job.status === "OPEN" && (
-        <div className="mt-6 rounded-2xl border border-line bg-sun-soft/20 p-6">
+        <div className="mt-6 rounded-2xl border border-line bg-paper p-6">
           <h2 className="font-serif text-xl font-extrabold text-ink">
             ✨ 為你推薦的老師
           </h2>
@@ -236,7 +236,7 @@ export default async function JobDetailPage({
           <h2 className="mb-3 font-bold text-ink">應徵這個案件</h2>
           {myApplication ? (
             <div className="rounded-lg bg-sun-soft/30 px-4 py-3 text-sm text-ink/70">
-              你已經應徵過了,狀態：
+              已送出應徵,狀態：
               <span className="font-medium">
                 {APP_STATUS[myApplication.status].text}
               </span>
@@ -251,7 +251,7 @@ export default async function JobDetailPage({
 
       {/* 學生（案主）視角：應徵者列表 */}
       {isOwner && (
-        <div className="mt-6 rounded-2xl border border-line p-6">
+        <div className="mt-6 rounded-2xl border border-line bg-paper p-6">
           <h2 className="mb-4 font-bold text-ink">
             應徵者（{job.applications.length}）
           </h2>
