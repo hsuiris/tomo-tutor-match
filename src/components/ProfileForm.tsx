@@ -373,15 +373,23 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
       {state.success && (
         <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-600">
           {state.success} ✓
+          {!published && "（記得開啟上方「公開我的檔案」才會發佈到找老師）"}
         </p>
       )}
 
-      <button
-        type="submit"
-        className="rounded-full bg-sun px-6 py-2.5 text-sm font-bold text-paper hover:bg-sun/80"
-      >
-        儲存檔案
-      </button>
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          type="submit"
+          className="rounded-full bg-sun px-6 py-2.5 text-sm font-bold text-paper hover:bg-sun/80"
+        >
+          儲存檔案
+        </button>
+        <p className="text-xs text-ink/50">
+          {published
+            ? "存檔後會更新在「找老師」頁面。"
+            : "提醒：需開啟「公開我的檔案」，存檔後才會出現在「找老師」。"}
+        </p>
+      </div>
     </form>
   );
 }
