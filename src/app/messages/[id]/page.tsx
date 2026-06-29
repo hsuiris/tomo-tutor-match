@@ -60,8 +60,8 @@ export default async function ChatRoomPage({
                 className={`flex ${mine ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[75%] rounded-2xl border bg-paper px-4 py-2 text-sm text-ink ${
-                    mine ? "border-sun" : "border-line"
+                  className={`max-w-[75%] rounded-2xl border px-4 py-2 text-sm text-ink ${
+                    mine ? "border-sun bg-sun-soft" : "border-line bg-paper"
                   }`}
                 >
                   <p className="whitespace-pre-wrap break-words">{m.body}</p>
