@@ -97,9 +97,14 @@ export default async function UserProfilePage({
         )}
       </div>
 
-      {/* 老師教學資訊 */}
-      {tp && tp.isPublished && (
+      {/* 老師教學資訊：已公開所有人可見；未公開時僅本人可預覽 */}
+      {tp && (tp.isPublished || me === user.id) && (
         <div className="mt-6 rounded-xl border border-line bg-paper p-6">
+          {!tp.isPublished && me === user.id && (
+            <p className="mb-3 rounded-lg bg-sun-soft/40 px-3 py-2 text-sm text-ink/70">
+              預覽模式：此檔案尚未公開，只有你看得到。發佈後學生才能在「找家教」看到。
+            </p>
+          )}
           <h2 className="font-serif text-2xl font-extrabold text-ink">教學資訊</h2>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {tp.subjects.map((s) => (

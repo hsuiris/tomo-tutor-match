@@ -68,7 +68,10 @@ export async function updateProfile(
     data: profileData,
   });
 
+  // 老師檔案會出現在這些家長端頁面，一併刷新快取
   revalidatePath("/dashboard/profile");
-  revalidatePath(`/tutors`);
+  revalidatePath("/tutors");
+  revalidatePath("/"); // 首頁精選老師
+  revalidatePath(`/u/${session.user.id}`); // 公開檔案頁
   return { success: "檔案已儲存" };
 }

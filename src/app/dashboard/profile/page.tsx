@@ -52,14 +52,13 @@ export default async function ProfileEditPage() {
           </h1>
           <div className="mt-2 h-1 w-14 bg-sun" />
         </div>
-        {profile.isPublished && (
-          <Link
-            href={`/tutors/${profile.id}`}
-            className="text-sm font-bold text-cobalt hover:underline"
-          >
-            預覽公開頁面 →
-          </Link>
-        )}
+        <Link
+          href={`/u/${session.user.id}`}
+          target="_blank"
+          className="shrink-0 text-sm font-bold text-cobalt hover:underline"
+        >
+          {profile.isPublished ? "預覽公開頁面 →" : "預覽檔案 →"}
+        </Link>
       </div>
       <p className="mt-1 mb-6 text-sm text-ink/60">
         填寫越完整,越容易被學生找到並信任。
