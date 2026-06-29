@@ -94,6 +94,7 @@ export default async function TutorsPage({
         levels: true,
         regions: true,
         hourlyRate: true,
+        hourlyRateMax: true,
         mode: true,
         university: true,
         eduLevel: true,

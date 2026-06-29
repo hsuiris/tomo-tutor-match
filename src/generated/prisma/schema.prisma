@@ -162,24 +162,25 @@ model Message {
 }
 
 model TutorProfile {
-  id          String       @id @default(cuid())
-  userId      String       @unique
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  bio         String?
-  subjects    String[] // 科目
-  levels      String[] // 可教學制（國小/國中/高中/大學/成人）
-  regions     String[] // 授課地區
-  hourlyRate  Int? // 時薪（新台幣）
-  experience  String? // 教學經歷
-  education   String? // 學歷
-  university  String? // 畢業大學
-  eduLevel    String? // 教育程度（學士/碩士/博士/在學中…）
-  mode        TeachingMode @default(BOTH)
-  isPublished Boolean      @default(false)
-  ratingAvg   Float        @default(0)
-  ratingCount Int          @default(0)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id            String       @id @default(cuid())
+  userId        String       @unique
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio           String?
+  subjects      String[] // 科目
+  levels        String[] // 可教學制（國小/國中/高中/大學/成人）
+  regions       String[] // 授課地區
+  hourlyRate    Int? // 時薪下限（新台幣）；配對與統計以此為準
+  hourlyRateMax Int? // 時薪上限（可選；填了即為區間）
+  experience    String? // 教學經歷
+  education     String? // 學歷
+  university    String? // 畢業大學
+  eduLevel      String? // 教育程度（學士/碩士/博士/在學中…）
+  mode          TeachingMode @default(BOTH)
+  isPublished   Boolean      @default(false)
+  ratingAvg     Float        @default(0)
+  ratingCount   Int          @default(0)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
 
   applications Application[]
   favoritedBy  Favorite[]
@@ -196,7 +197,8 @@ model JobPost {
   level         String? // 學生年級／學制
   region        String
   mode          TeachingMode @default(BOTH)
-  budget        Int? // 預算（每小時，新台幣）
+  budget        Int? // 預算下限（每小時，新台幣）；配對以此為準
+  budgetMax     Int? // 預算上限（可選；填了即為區間）
   description   String
   studentStatus String? // 學生狀況（年級、程度、學習現況）
   parentNeeds   String? // 家長訴求（希望加強的方向、期望）

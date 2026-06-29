@@ -20,6 +20,7 @@ export type ProfileInitial = {
   levels: string[];
   regions: string[];
   hourlyRate: string;
+  hourlyRateMax: string;
   experience: string;
   education: string;
   university: string;
@@ -301,18 +302,29 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
           <label className="mb-1 block text-sm font-medium text-ink/80">
             時薪（新台幣 / 小時）
           </label>
-          <input
-            name="hourlyRate"
-            type="number"
-            defaultValue={v?.hourlyRate ?? initial.hourlyRate}
-            placeholder="例如 800"
-            className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
-          />
-          {err?.hourlyRate?.map((e) => (
+          <div className="flex items-center gap-2">
+            <input
+              name="hourlyRate"
+              type="number"
+              defaultValue={v?.hourlyRate ?? initial.hourlyRate}
+              placeholder="最低"
+              className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+            />
+            <span className="text-ink/40">–</span>
+            <input
+              name="hourlyRateMax"
+              type="number"
+              defaultValue={v?.hourlyRateMax ?? initial.hourlyRateMax}
+              placeholder="最高"
+              className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+            />
+          </div>
+          {(err?.hourlyRate ?? err?.hourlyRateMax)?.map((e) => (
             <p key={e} className="mt-1 text-xs text-red-500">
               {e}
             </p>
           ))}
+          <p className="mt-1 text-xs text-ink/40">可只填一邊，例如「500 起」或固定「800」</p>
         </div>
       </div>
 

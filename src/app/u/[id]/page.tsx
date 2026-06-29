@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { amountRange } from "@/lib/format";
 import Avatar from "@/components/Avatar";
 import RatingStars from "@/components/RatingStars";
 import TrustBadges from "@/components/TrustBadges";
@@ -145,7 +146,11 @@ export default async function UserProfilePage({
             <Fact label="授課方式" value={MODE_LABELS[tp.mode as TeachingMode]} />
             <Fact
               label="時薪"
-              value={tp.hourlyRate != null ? `NT$${tp.hourlyRate}` : "面議"}
+              value={
+                amountRange(tp.hourlyRate, tp.hourlyRateMax)
+                  ? `NT$${amountRange(tp.hourlyRate, tp.hourlyRateMax)}`
+                  : "面議"
+              }
               suffix={tp.hourlyRate != null ? "/ 小時" : undefined}
             />
             <Fact label="授課地區" value={tp.regions.join("、")} />

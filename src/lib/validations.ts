@@ -41,7 +41,14 @@ export const profileSchema = z.object({
   subjects: z.array(z.string()).min(1, "請至少選擇一個科目"),
   levels: z.array(z.string()).min(1, "請至少選擇一個可教學制"),
   regions: z.array(z.string()).min(1, "請至少選擇一個地區"),
+  // 時薪區間（皆可選；只填一邊也行）
   hourlyRate: z
+    .number({ message: "請輸入數字" })
+    .int()
+    .min(0)
+    .max(100000)
+    .optional(),
+  hourlyRateMax: z
     .number({ message: "請輸入數字" })
     .int()
     .min(0)
@@ -61,7 +68,13 @@ export const profileSchema = z.object({
     .refine((v) => v.startsWith("data:image/"), "頭像格式不正確")
     .optional(),
   isPublished: z.boolean(),
-});
+}).refine(
+  (d) =>
+    d.hourlyRate == null ||
+    d.hourlyRateMax == null ||
+    d.hourlyRateMax >= d.hourlyRate,
+  { message: "最高時薪需大於或等於最低", path: ["hourlyRateMax"] }
+);
 
 // 家教需求案件
 export const jobSchema = z.object({
@@ -70,14 +83,19 @@ export const jobSchema = z.object({
   level: z.string().min(1, "請選擇年級／學制"),
   region: z.string().min(1, "請選擇地區"),
   mode: z.enum(["ONLINE", "IN_PERSON", "BOTH"]),
+  // 預算區間（皆可選；只填一邊也行）
   budget: z.number().int().positive("預算需為正整數").max(100000).optional(),
+  budgetMax: z.number().int().positive("預算需為正整數").max(100000).optional(),
   description: z.string().max(2000, "內容過長").optional(),
   studentStatus: z
     .string()
     .min(5, "請描述學生狀況,至少 5 個字")
     .max(1000),
   parentNeeds: z.string().min(5, "請描述家長訴求,至少 5 個字").max(1000),
-});
+}).refine(
+  (d) => d.budget == null || d.budgetMax == null || d.budgetMax >= d.budget,
+  { message: "最高預算需大於或等於最低", path: ["budgetMax"] }
+);
 
 // 應徵
 export const applicationSchema = z.object({

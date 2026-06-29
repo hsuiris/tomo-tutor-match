@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { amountRange } from "@/lib/format";
 import Avatar from "@/components/Avatar";
 import RatingStars from "@/components/RatingStars";
 import TrustBadges from "@/components/TrustBadges";
@@ -37,6 +38,7 @@ export default async function JobDetailPage({
               id: true,
               userId: true,
               hourlyRate: true,
+              hourlyRateMax: true,
               subjects: true,
               ratingAvg: true,
               ratingCount: true,
@@ -96,6 +98,7 @@ export default async function JobDetailPage({
         levels: true,
         regions: true,
         hourlyRate: true,
+        hourlyRateMax: true,
         mode: true,
         university: true,
         eduLevel: true,
@@ -153,9 +156,9 @@ export default async function JobDetailPage({
           <span className="text-ink/60">
             ・ {MODE_LABELS[job.mode as TeachingMode]}
           </span>
-          {job.budget != null && (
+          {amountRange(job.budget, job.budgetMax) && (
             <span className="font-bold text-cobalt">
-              ${job.budget} / 小時
+              ${amountRange(job.budget, job.budgetMax)} / 小時
             </span>
           )}
         </div>
@@ -208,7 +211,9 @@ export default async function JobDetailPage({
           <p className="mt-1 text-sm text-ink/60">
             根據你的需求（{job.subject}
             {job.level ? `・${job.level}` : ""}・{job.region}
-            {job.budget != null ? `・預算 $${job.budget}` : ""}）為你篩選,
+            {amountRange(job.budget, job.budgetMax)
+              ? `・預算 $${amountRange(job.budget, job.budgetMax)}`
+              : ""}）為你篩選,
             並優先推薦通過實名、無犯罪紀錄與學歷認證的老師。
           </p>
           {recommended.length === 0 ? (

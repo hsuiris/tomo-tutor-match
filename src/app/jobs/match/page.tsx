@@ -91,6 +91,7 @@ export default async function JobMatchPage() {
       region: true,
       mode: true,
       budget: true,
+      budgetMax: true,
       status: true,
       studentStatus: true,
       parentNeeds: true,

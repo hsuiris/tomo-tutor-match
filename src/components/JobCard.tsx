@@ -1,6 +1,7 @@
 import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
 import { MODE_LABELS, type TeachingMode } from "@/lib/constants";
+import { amountRange } from "@/lib/format";
 
 export type JobCardData = {
   id: string;
@@ -10,6 +11,7 @@ export type JobCardData = {
   region: string;
   mode: TeachingMode;
   budget: number | null;
+  budgetMax: number | null;
   status: "OPEN" | "MATCHED" | "CLOSED";
   studentStatus: string | null;
   parentNeeds: string | null;
@@ -83,10 +85,10 @@ export default function JobCard({
 
       <div className="mt-4 flex items-center justify-between text-sm">
         <span>
-          {job.budget != null ? (
+          {amountRange(job.budget, job.budgetMax) ? (
             <span className="text-xl font-extrabold tabular-nums text-ink">
               <span className="mr-0.5 text-sm font-bold text-ink/60">NT$</span>
-              {job.budget}
+              {amountRange(job.budget, job.budgetMax)}
               <span className="ml-0.5 text-xs font-normal text-ink/50">
                 / 小時
               </span>

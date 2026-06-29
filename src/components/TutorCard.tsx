@@ -5,6 +5,7 @@ import TrustBadges from "./TrustBadges";
 import FavoriteButton from "./FavoriteButton";
 import { MODE_LABELS, type TeachingMode } from "@/lib/constants";
 import { publicName } from "@/lib/user";
+import { amountRange } from "@/lib/format";
 
 export type TutorCardData = {
   id: string;
@@ -13,6 +14,7 @@ export type TutorCardData = {
   levels: string[];
   regions: string[];
   hourlyRate: number | null;
+  hourlyRateMax: number | null;
   mode: TeachingMode;
   university: string | null;
   eduLevel: string | null;
@@ -59,11 +61,11 @@ export default function TutorCard({
             {MODE_LABELS[tutor.mode]}
           </p>
         </div>
-        {tutor.hourlyRate != null && (
+        {amountRange(tutor.hourlyRate, tutor.hourlyRateMax) && (
           <div className="shrink-0 text-right">
             <span className="text-xl font-extrabold tabular-nums text-ink">
               <span className="mr-0.5 text-sm font-bold text-ink/60">NT$</span>
-              {tutor.hourlyRate}
+              {amountRange(tutor.hourlyRate, tutor.hourlyRateMax)}
             </span>
             <span className="block text-xs text-ink/50">/ 小時</span>
           </div>

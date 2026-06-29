@@ -129,18 +129,29 @@ export default function JobForm() {
         <label className="mb-1 block text-sm font-medium text-ink/80">
           預算（每小時,新台幣）
         </label>
-        <input
-          name="budget"
-          type="number"
-          placeholder="例如 800（可留空）"
-          defaultValue={v?.budget}
-          className={inputCls}
-        />
-        {err?.budget?.map((e) => (
+        <div className="flex items-center gap-2">
+          <input
+            name="budget"
+            type="number"
+            placeholder="最低"
+            defaultValue={v?.budget}
+            className={inputCls}
+          />
+          <span className="text-ink/40">–</span>
+          <input
+            name="budgetMax"
+            type="number"
+            placeholder="最高"
+            defaultValue={v?.budgetMax}
+            className={inputCls}
+          />
+        </div>
+        {(err?.budget ?? err?.budgetMax)?.map((e) => (
           <p key={e} className="mt-1 text-xs text-red-500">
             {e}
           </p>
         ))}
+        <p className="mt-1 text-xs text-ink/40">可留空或只填一邊，例如「800 起」</p>
       </div>
 
       <div>

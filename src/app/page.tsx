@@ -25,6 +25,7 @@ export default async function HomePage() {
       levels: true,
       regions: true,
       hourlyRate: true,
+      hourlyRateMax: true,
       mode: true,
       university: true,
       eduLevel: true,

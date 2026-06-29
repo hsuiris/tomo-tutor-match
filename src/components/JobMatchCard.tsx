@@ -3,6 +3,7 @@ import FavoriteButton from "./FavoriteButton";
 import ScoreRing from "./ScoreRing";
 import { MODE_LABELS } from "@/lib/constants";
 import { matchTier, type ScoredJob } from "@/lib/match";
+import { amountRange } from "@/lib/format";
 
 export default function JobMatchCard({
   result,
@@ -97,10 +98,10 @@ export default function JobMatchCard({
 
       <div className="mt-4 flex items-center justify-between gap-3">
         <span>
-          {job.budget != null ? (
+          {amountRange(job.budget, job.budgetMax) ? (
             <span className="text-lg font-extrabold tabular-nums text-ink">
               <span className="mr-0.5 text-xs font-bold text-ink/60">NT$</span>
-              {job.budget}
+              {amountRange(job.budget, job.budgetMax)}
               <span className="ml-0.5 text-xs font-normal text-ink/50">／ 小時</span>
             </span>
           ) : (

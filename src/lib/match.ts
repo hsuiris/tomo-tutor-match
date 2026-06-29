@@ -31,6 +31,7 @@ export type MatchTutor = {
   levels: string[];
   regions: string[];
   hourlyRate: number | null;
+  hourlyRateMax: number | null;
   mode: TeachingMode;
   university: string | null;
   eduLevel: string | null;
@@ -306,6 +307,7 @@ export type MatchJob = {
   region: string;
   mode: TeachingMode;
   budget: number | null;
+  budgetMax: number | null;
   status: "OPEN" | "MATCHED" | "CLOSED";
   studentStatus: string | null;
   parentNeeds: string | null;

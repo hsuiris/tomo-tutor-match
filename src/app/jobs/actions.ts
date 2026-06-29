@@ -15,6 +15,7 @@ export async function createJob(
   if (!session) return { error: "請先登入" };
 
   const budgetRaw = formData.get("budget")?.toString().trim();
+  const budgetMaxRaw = formData.get("budgetMax")?.toString().trim();
   const raw = {
     title: formData.get("title")?.toString().trim() ?? "",
     subject: formData.get("subject")?.toString() ?? "",
@@ -22,6 +23,7 @@ export async function createJob(
     region: formData.get("region")?.toString() ?? "",
     mode: formData.get("mode")?.toString(),
     budget: budgetRaw ? Number(budgetRaw) : undefined,
+    budgetMax: budgetMaxRaw ? Number(budgetMaxRaw) : undefined,
     description: formData.get("description")?.toString().trim() ?? "",
     studentStatus: formData.get("studentStatus")?.toString().trim() ?? "",
     parentNeeds: formData.get("parentNeeds")?.toString().trim() ?? "",
@@ -38,6 +40,7 @@ export async function createJob(
         region: raw.region,
         mode: raw.mode ?? "BOTH",
         budget: budgetRaw ?? "",
+        budgetMax: budgetMaxRaw ?? "",
         description: raw.description,
         studentStatus: raw.studentStatus,
         parentNeeds: raw.parentNeeds,

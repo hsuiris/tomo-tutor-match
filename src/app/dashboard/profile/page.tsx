@@ -32,6 +32,7 @@ export default async function ProfileEditPage() {
     levels: profile.levels,
     regions: profile.regions,
     hourlyRate: profile.hourlyRate?.toString() ?? "",
+    hourlyRateMax: profile.hourlyRateMax?.toString() ?? "",
     experience: profile.experience ?? "",
     education: profile.education ?? "",
     university: profile.university ?? "",

@@ -16,6 +16,7 @@ export async function updateProfile(
   }
 
   const rateRaw = formData.get("hourlyRate")?.toString().trim();
+  const rateMaxRaw = formData.get("hourlyRateMax")?.toString().trim();
   const avatarRaw = formData.get("avatarUrl")?.toString();
   const raw = {
     bio: formData.get("bio")?.toString().trim() ?? "",
@@ -23,6 +24,7 @@ export async function updateProfile(
     levels: formData.getAll("levels").map(String),
     regions: formData.getAll("regions").map(String),
     hourlyRate: rateRaw ? Number(rateRaw) : undefined,
+    hourlyRateMax: rateMaxRaw ? Number(rateMaxRaw) : undefined,
     experience: formData.get("experience")?.toString().trim() ?? "",
     education: formData.get("education")?.toString().trim() ?? "",
     university: formData.get("university")?.toString().trim() ?? "",
@@ -45,6 +47,7 @@ export async function updateProfile(
         university: raw.university,
         eduLevel: raw.eduLevel ?? "",
         hourlyRate: rateRaw ?? "",
+        hourlyRateMax: rateMaxRaw ?? "",
         mode: raw.mode ?? "BOTH",
       },
     };

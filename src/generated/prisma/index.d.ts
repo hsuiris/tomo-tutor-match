@@ -8070,12 +8070,14 @@ export namespace Prisma {
 
   export type TutorProfileAvgAggregateOutputType = {
     hourlyRate: number | null
+    hourlyRateMax: number | null
     ratingAvg: number | null
     ratingCount: number | null
   }
 
   export type TutorProfileSumAggregateOutputType = {
     hourlyRate: number | null
+    hourlyRateMax: number | null
     ratingAvg: number | null
     ratingCount: number | null
   }
@@ -8085,6 +8087,7 @@ export namespace Prisma {
     userId: string | null
     bio: string | null
     hourlyRate: number | null
+    hourlyRateMax: number | null
     experience: string | null
     education: string | null
     university: string | null
@@ -8102,6 +8105,7 @@ export namespace Prisma {
     userId: string | null
     bio: string | null
     hourlyRate: number | null
+    hourlyRateMax: number | null
     experience: string | null
     education: string | null
     university: string | null
@@ -8122,6 +8126,7 @@ export namespace Prisma {
     levels: number
     regions: number
     hourlyRate: number
+    hourlyRateMax: number
     experience: number
     education: number
     university: number
@@ -8138,12 +8143,14 @@ export namespace Prisma {
 
   export type TutorProfileAvgAggregateInputType = {
     hourlyRate?: true
+    hourlyRateMax?: true
     ratingAvg?: true
     ratingCount?: true
   }
 
   export type TutorProfileSumAggregateInputType = {
     hourlyRate?: true
+    hourlyRateMax?: true
     ratingAvg?: true
     ratingCount?: true
   }
@@ -8153,6 +8160,7 @@ export namespace Prisma {
     userId?: true
     bio?: true
     hourlyRate?: true
+    hourlyRateMax?: true
     experience?: true
     education?: true
     university?: true
@@ -8170,6 +8178,7 @@ export namespace Prisma {
     userId?: true
     bio?: true
     hourlyRate?: true
+    hourlyRateMax?: true
     experience?: true
     education?: true
     university?: true
@@ -8190,6 +8199,7 @@ export namespace Prisma {
     levels?: true
     regions?: true
     hourlyRate?: true
+    hourlyRateMax?: true
     experience?: true
     education?: true
     university?: true
@@ -8297,6 +8307,7 @@ export namespace Prisma {
     levels: string[]
     regions: string[]
     hourlyRate: number | null
+    hourlyRateMax: number | null
     experience: string | null
     education: string | null
     university: string | null
@@ -8336,6 +8347,7 @@ export namespace Prisma {
     levels?: boolean
     regions?: boolean
     hourlyRate?: boolean
+    hourlyRateMax?: boolean
     experience?: boolean
     education?: boolean
     university?: boolean
@@ -8360,6 +8372,7 @@ export namespace Prisma {
     levels?: boolean
     regions?: boolean
     hourlyRate?: boolean
+    hourlyRateMax?: boolean
     experience?: boolean
     education?: boolean
     university?: boolean
@@ -8381,6 +8394,7 @@ export namespace Prisma {
     levels?: boolean
     regions?: boolean
     hourlyRate?: boolean
+    hourlyRateMax?: boolean
     experience?: boolean
     education?: boolean
     university?: boolean
@@ -8402,6 +8416,7 @@ export namespace Prisma {
     levels?: boolean
     regions?: boolean
     hourlyRate?: boolean
+    hourlyRateMax?: boolean
     experience?: boolean
     education?: boolean
     university?: boolean
@@ -8414,7 +8429,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TutorProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "subjects" | "levels" | "regions" | "hourlyRate" | "experience" | "education" | "university" | "eduLevel" | "mode" | "isPublished" | "ratingAvg" | "ratingCount" | "createdAt" | "updatedAt", ExtArgs["result"]["tutorProfile"]>
+  export type TutorProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "subjects" | "levels" | "regions" | "hourlyRate" | "hourlyRateMax" | "experience" | "education" | "university" | "eduLevel" | "mode" | "isPublished" | "ratingAvg" | "ratingCount" | "createdAt" | "updatedAt", ExtArgs["result"]["tutorProfile"]>
   export type TutorProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | TutorProfile$applicationsArgs<ExtArgs>
@@ -8443,6 +8458,7 @@ export namespace Prisma {
       levels: string[]
       regions: string[]
       hourlyRate: number | null
+      hourlyRateMax: number | null
       experience: string | null
       education: string | null
       university: string | null
@@ -8886,6 +8902,7 @@ export namespace Prisma {
     readonly levels: FieldRef<"TutorProfile", 'String[]'>
     readonly regions: FieldRef<"TutorProfile", 'String[]'>
     readonly hourlyRate: FieldRef<"TutorProfile", 'Int'>
+    readonly hourlyRateMax: FieldRef<"TutorProfile", 'Int'>
     readonly experience: FieldRef<"TutorProfile", 'String'>
     readonly education: FieldRef<"TutorProfile", 'String'>
     readonly university: FieldRef<"TutorProfile", 'String'>
@@ -9372,10 +9389,12 @@ export namespace Prisma {
 
   export type JobPostAvgAggregateOutputType = {
     budget: number | null
+    budgetMax: number | null
   }
 
   export type JobPostSumAggregateOutputType = {
     budget: number | null
+    budgetMax: number | null
   }
 
   export type JobPostMinAggregateOutputType = {
@@ -9387,6 +9406,7 @@ export namespace Prisma {
     region: string | null
     mode: $Enums.TeachingMode | null
     budget: number | null
+    budgetMax: number | null
     description: string | null
     studentStatus: string | null
     parentNeeds: string | null
@@ -9404,6 +9424,7 @@ export namespace Prisma {
     region: string | null
     mode: $Enums.TeachingMode | null
     budget: number | null
+    budgetMax: number | null
     description: string | null
     studentStatus: string | null
     parentNeeds: string | null
@@ -9421,6 +9442,7 @@ export namespace Prisma {
     region: number
     mode: number
     budget: number
+    budgetMax: number
     description: number
     studentStatus: number
     parentNeeds: number
@@ -9433,10 +9455,12 @@ export namespace Prisma {
 
   export type JobPostAvgAggregateInputType = {
     budget?: true
+    budgetMax?: true
   }
 
   export type JobPostSumAggregateInputType = {
     budget?: true
+    budgetMax?: true
   }
 
   export type JobPostMinAggregateInputType = {
@@ -9448,6 +9472,7 @@ export namespace Prisma {
     region?: true
     mode?: true
     budget?: true
+    budgetMax?: true
     description?: true
     studentStatus?: true
     parentNeeds?: true
@@ -9465,6 +9490,7 @@ export namespace Prisma {
     region?: true
     mode?: true
     budget?: true
+    budgetMax?: true
     description?: true
     studentStatus?: true
     parentNeeds?: true
@@ -9482,6 +9508,7 @@ export namespace Prisma {
     region?: true
     mode?: true
     budget?: true
+    budgetMax?: true
     description?: true
     studentStatus?: true
     parentNeeds?: true
@@ -9586,6 +9613,7 @@ export namespace Prisma {
     region: string
     mode: $Enums.TeachingMode
     budget: number | null
+    budgetMax: number | null
     description: string
     studentStatus: string | null
     parentNeeds: string | null
@@ -9622,6 +9650,7 @@ export namespace Prisma {
     region?: boolean
     mode?: boolean
     budget?: boolean
+    budgetMax?: boolean
     description?: boolean
     studentStatus?: boolean
     parentNeeds?: boolean
@@ -9643,6 +9672,7 @@ export namespace Prisma {
     region?: boolean
     mode?: boolean
     budget?: boolean
+    budgetMax?: boolean
     description?: boolean
     studentStatus?: boolean
     parentNeeds?: boolean
@@ -9661,6 +9691,7 @@ export namespace Prisma {
     region?: boolean
     mode?: boolean
     budget?: boolean
+    budgetMax?: boolean
     description?: boolean
     studentStatus?: boolean
     parentNeeds?: boolean
@@ -9679,6 +9710,7 @@ export namespace Prisma {
     region?: boolean
     mode?: boolean
     budget?: boolean
+    budgetMax?: boolean
     description?: boolean
     studentStatus?: boolean
     parentNeeds?: boolean
@@ -9687,7 +9719,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type JobPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "title" | "subject" | "level" | "region" | "mode" | "budget" | "description" | "studentStatus" | "parentNeeds" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPost"]>
+  export type JobPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "title" | "subject" | "level" | "region" | "mode" | "budget" | "budgetMax" | "description" | "studentStatus" | "parentNeeds" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPost"]>
   export type JobPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | JobPost$applicationsArgs<ExtArgs>
@@ -9717,6 +9749,7 @@ export namespace Prisma {
       region: string
       mode: $Enums.TeachingMode
       budget: number | null
+      budgetMax: number | null
       description: string
       studentStatus: string | null
       parentNeeds: string | null
@@ -10157,6 +10190,7 @@ export namespace Prisma {
     readonly region: FieldRef<"JobPost", 'String'>
     readonly mode: FieldRef<"JobPost", 'TeachingMode'>
     readonly budget: FieldRef<"JobPost", 'Int'>
+    readonly budgetMax: FieldRef<"JobPost", 'Int'>
     readonly description: FieldRef<"JobPost", 'String'>
     readonly studentStatus: FieldRef<"JobPost", 'String'>
     readonly parentNeeds: FieldRef<"JobPost", 'String'>
@@ -16115,6 +16149,7 @@ export namespace Prisma {
     levels: 'levels',
     regions: 'regions',
     hourlyRate: 'hourlyRate',
+    hourlyRateMax: 'hourlyRateMax',
     experience: 'experience',
     education: 'education',
     university: 'university',
@@ -16139,6 +16174,7 @@ export namespace Prisma {
     region: 'region',
     mode: 'mode',
     budget: 'budget',
+    budgetMax: 'budgetMax',
     description: 'description',
     studentStatus: 'studentStatus',
     parentNeeds: 'parentNeeds',
@@ -16810,6 +16846,7 @@ export namespace Prisma {
     levels?: StringNullableListFilter<"TutorProfile">
     regions?: StringNullableListFilter<"TutorProfile">
     hourlyRate?: IntNullableFilter<"TutorProfile"> | number | null
+    hourlyRateMax?: IntNullableFilter<"TutorProfile"> | number | null
     experience?: StringNullableFilter<"TutorProfile"> | string | null
     education?: StringNullableFilter<"TutorProfile"> | string | null
     university?: StringNullableFilter<"TutorProfile"> | string | null
@@ -16833,6 +16870,7 @@ export namespace Prisma {
     levels?: SortOrder
     regions?: SortOrder
     hourlyRate?: SortOrderInput | SortOrder
+    hourlyRateMax?: SortOrderInput | SortOrder
     experience?: SortOrderInput | SortOrder
     education?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
@@ -16859,6 +16897,7 @@ export namespace Prisma {
     levels?: StringNullableListFilter<"TutorProfile">
     regions?: StringNullableListFilter<"TutorProfile">
     hourlyRate?: IntNullableFilter<"TutorProfile"> | number | null
+    hourlyRateMax?: IntNullableFilter<"TutorProfile"> | number | null
     experience?: StringNullableFilter<"TutorProfile"> | string | null
     education?: StringNullableFilter<"TutorProfile"> | string | null
     university?: StringNullableFilter<"TutorProfile"> | string | null
@@ -16882,6 +16921,7 @@ export namespace Prisma {
     levels?: SortOrder
     regions?: SortOrder
     hourlyRate?: SortOrderInput | SortOrder
+    hourlyRateMax?: SortOrderInput | SortOrder
     experience?: SortOrderInput | SortOrder
     education?: SortOrderInput | SortOrder
     university?: SortOrderInput | SortOrder
@@ -16910,6 +16950,7 @@ export namespace Prisma {
     levels?: StringNullableListFilter<"TutorProfile">
     regions?: StringNullableListFilter<"TutorProfile">
     hourlyRate?: IntNullableWithAggregatesFilter<"TutorProfile"> | number | null
+    hourlyRateMax?: IntNullableWithAggregatesFilter<"TutorProfile"> | number | null
     experience?: StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
     education?: StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
     university?: StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
@@ -16934,6 +16975,7 @@ export namespace Prisma {
     region?: StringFilter<"JobPost"> | string
     mode?: EnumTeachingModeFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableFilter<"JobPost"> | number | null
+    budgetMax?: IntNullableFilter<"JobPost"> | number | null
     description?: StringFilter<"JobPost"> | string
     studentStatus?: StringNullableFilter<"JobPost"> | string | null
     parentNeeds?: StringNullableFilter<"JobPost"> | string | null
@@ -16954,6 +16996,7 @@ export namespace Prisma {
     region?: SortOrder
     mode?: SortOrder
     budget?: SortOrderInput | SortOrder
+    budgetMax?: SortOrderInput | SortOrder
     description?: SortOrder
     studentStatus?: SortOrderInput | SortOrder
     parentNeeds?: SortOrderInput | SortOrder
@@ -16977,6 +17020,7 @@ export namespace Prisma {
     region?: StringFilter<"JobPost"> | string
     mode?: EnumTeachingModeFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableFilter<"JobPost"> | number | null
+    budgetMax?: IntNullableFilter<"JobPost"> | number | null
     description?: StringFilter<"JobPost"> | string
     studentStatus?: StringNullableFilter<"JobPost"> | string | null
     parentNeeds?: StringNullableFilter<"JobPost"> | string | null
@@ -16997,6 +17041,7 @@ export namespace Prisma {
     region?: SortOrder
     mode?: SortOrder
     budget?: SortOrderInput | SortOrder
+    budgetMax?: SortOrderInput | SortOrder
     description?: SortOrder
     studentStatus?: SortOrderInput | SortOrder
     parentNeeds?: SortOrderInput | SortOrder
@@ -17022,6 +17067,7 @@ export namespace Prisma {
     region?: StringWithAggregatesFilter<"JobPost"> | string
     mode?: EnumTeachingModeWithAggregatesFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableWithAggregatesFilter<"JobPost"> | number | null
+    budgetMax?: IntNullableWithAggregatesFilter<"JobPost"> | number | null
     description?: StringWithAggregatesFilter<"JobPost"> | string
     studentStatus?: StringNullableWithAggregatesFilter<"JobPost"> | string | null
     parentNeeds?: StringNullableWithAggregatesFilter<"JobPost"> | string | null
@@ -17751,6 +17797,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -17774,6 +17821,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -17795,6 +17843,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17818,6 +17867,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17840,6 +17890,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -17859,6 +17910,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17879,6 +17931,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17899,6 +17952,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -17919,6 +17973,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -17937,6 +17992,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17957,6 +18013,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17976,6 +18033,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -17992,6 +18050,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18009,6 +18068,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18861,6 +18921,7 @@ export namespace Prisma {
     levels?: SortOrder
     regions?: SortOrder
     hourlyRate?: SortOrder
+    hourlyRateMax?: SortOrder
     experience?: SortOrder
     education?: SortOrder
     university?: SortOrder
@@ -18875,6 +18936,7 @@ export namespace Prisma {
 
   export type TutorProfileAvgOrderByAggregateInput = {
     hourlyRate?: SortOrder
+    hourlyRateMax?: SortOrder
     ratingAvg?: SortOrder
     ratingCount?: SortOrder
   }
@@ -18884,6 +18946,7 @@ export namespace Prisma {
     userId?: SortOrder
     bio?: SortOrder
     hourlyRate?: SortOrder
+    hourlyRateMax?: SortOrder
     experience?: SortOrder
     education?: SortOrder
     university?: SortOrder
@@ -18901,6 +18964,7 @@ export namespace Prisma {
     userId?: SortOrder
     bio?: SortOrder
     hourlyRate?: SortOrder
+    hourlyRateMax?: SortOrder
     experience?: SortOrder
     education?: SortOrder
     university?: SortOrder
@@ -18915,6 +18979,7 @@ export namespace Prisma {
 
   export type TutorProfileSumOrderByAggregateInput = {
     hourlyRate?: SortOrder
+    hourlyRateMax?: SortOrder
     ratingAvg?: SortOrder
     ratingCount?: SortOrder
   }
@@ -18993,6 +19058,7 @@ export namespace Prisma {
     region?: SortOrder
     mode?: SortOrder
     budget?: SortOrder
+    budgetMax?: SortOrder
     description?: SortOrder
     studentStatus?: SortOrder
     parentNeeds?: SortOrder
@@ -19003,6 +19069,7 @@ export namespace Prisma {
 
   export type JobPostAvgOrderByAggregateInput = {
     budget?: SortOrder
+    budgetMax?: SortOrder
   }
 
   export type JobPostMaxOrderByAggregateInput = {
@@ -19014,6 +19081,7 @@ export namespace Prisma {
     region?: SortOrder
     mode?: SortOrder
     budget?: SortOrder
+    budgetMax?: SortOrder
     description?: SortOrder
     studentStatus?: SortOrder
     parentNeeds?: SortOrder
@@ -19031,6 +19099,7 @@ export namespace Prisma {
     region?: SortOrder
     mode?: SortOrder
     budget?: SortOrder
+    budgetMax?: SortOrder
     description?: SortOrder
     studentStatus?: SortOrder
     parentNeeds?: SortOrder
@@ -19041,6 +19110,7 @@ export namespace Prisma {
 
   export type JobPostSumOrderByAggregateInput = {
     budget?: SortOrder
+    budgetMax?: SortOrder
   }
 
   export type EnumJobStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -20669,6 +20739,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -20690,6 +20761,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -20717,6 +20789,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -20735,6 +20808,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -21013,6 +21087,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21034,6 +21109,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21076,6 +21152,7 @@ export namespace Prisma {
     region?: StringFilter<"JobPost"> | string
     mode?: EnumTeachingModeFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableFilter<"JobPost"> | number | null
+    budgetMax?: IntNullableFilter<"JobPost"> | number | null
     description?: StringFilter<"JobPost"> | string
     studentStatus?: StringNullableFilter<"JobPost"> | string | null
     parentNeeds?: StringNullableFilter<"JobPost"> | string | null
@@ -21379,6 +21456,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -21401,6 +21479,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -21427,6 +21506,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -21446,6 +21526,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -21543,6 +21624,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21565,6 +21647,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21597,6 +21680,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -21616,6 +21700,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22641,6 +22726,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -22660,6 +22746,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -22681,6 +22768,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -22703,6 +22791,7 @@ export namespace Prisma {
     levels?: TutorProfileCreatelevelsInput | string[]
     regions?: TutorProfileCreateregionsInput | string[]
     hourlyRate?: number | null
+    hourlyRateMax?: number | null
     experience?: string | null
     education?: string | null
     university?: string | null
@@ -22740,6 +22829,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22759,6 +22849,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22786,6 +22877,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -22808,6 +22900,7 @@ export namespace Prisma {
     levels?: TutorProfileUpdatelevelsInput | string[]
     regions?: TutorProfileUpdateregionsInput | string[]
     hourlyRate?: NullableIntFieldUpdateOperationsInput | number | null
+    hourlyRateMax?: NullableIntFieldUpdateOperationsInput | number | null
     experience?: NullableStringFieldUpdateOperationsInput | string | null
     education?: NullableStringFieldUpdateOperationsInput | string | null
     university?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23427,6 +23520,7 @@ export namespace Prisma {
     region: string
     mode?: $Enums.TeachingMode
     budget?: number | null
+    budgetMax?: number | null
     description: string
     studentStatus?: string | null
     parentNeeds?: string | null
@@ -23515,6 +23609,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23533,6 +23628,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null
@@ -23551,6 +23647,7 @@ export namespace Prisma {
     region?: StringFieldUpdateOperationsInput | string
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
+    budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
     description?: StringFieldUpdateOperationsInput | string
     studentStatus?: NullableStringFieldUpdateOperationsInput | string | null
     parentNeeds?: NullableStringFieldUpdateOperationsInput | string | null

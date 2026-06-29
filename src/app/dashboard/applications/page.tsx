@@ -33,6 +33,7 @@ export default async function MyApplicationsPage() {
           region: true,
           mode: true,
           budget: true,
+          budgetMax: true,
           status: true,
         },
       },
