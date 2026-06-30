@@ -3,6 +3,14 @@
 // 設計理念：使用者描述需求（科目／學制／地區／預算／授課方式／在意的重點），
 // 引擎針對每位候選老師計算「契合度 %」並產生「為什麼推薦」的理由。
 // 純函式、無 AI、無外部依賴 —— 可單元測試、結果可解釋、零延遲。
+//
+// 兩道關鍵規則：
+// 1. 科目為「硬門檻」：指定科目但對方不符 → 最終分數乘以重罰係數，
+//    不教該科的老師（或非你專長的案件）絕不會被誤判為「契合」。
+// 2. 預算以「區間重疊」計分：時薪／預算皆可為 [下限, 上限]，
+//    判斷雙方區間是否相容，而非只比單一數字。
+
+const SUBJECT_GATE_PENALTY = 0.1; // 科目不符時的最終分數係數（硬門檻）
 
 import type { TeachingMode } from "@/lib/constants";
 
@@ -170,25 +178,32 @@ export function scoreTutor(
     dims.push({ key: "region", weight: weightFor("region", priority), fitness, active: true, reason });
   }
 
-  // 4. 預算（每小時上限）
+  // 4. 預算（學生填的是每小時可接受上限；老師時薪可為區間 [lo, hi]）
   if (criteria.budget && criteria.budget > 0) {
-    const rate = tutor.hourlyRate;
+    const budget = criteria.budget;
+    const lo = tutor.hourlyRate;
+    const hi = tutor.hourlyRateMax ?? tutor.hourlyRate; // lo 非 null 時 hi 必非 null
+    const range = (a: number, b: number | null) =>
+      b && b > a ? `NT$${a}–${b}／時` : `NT$${a}／時`;
     let fitness: number;
     let reason: MatchReason | undefined;
-    if (rate == null) {
+    if (lo == null) {
       fitness = 0.5; // 未標價，中性
-    } else if (rate <= criteria.budget) {
-      fitness = 1;
-      reason = { label: `NT$${rate}／時 在預算內`, positive: true };
-    } else if (rate <= criteria.budget * 1.15) {
+    } else if ((hi as number) <= budget) {
+      fitness = 1; // 整個時薪區間都在預算內
+      reason = { label: `${range(lo, hi)} 在預算內`, positive: true };
+    } else if (lo <= budget) {
+      fitness = 0.8; // 預算落在老師區間內 → 可在預算內談成
+      reason = { label: `${range(lo, hi)} 可在預算內談`, positive: true };
+    } else if (lo <= budget * 1.15) {
       fitness = 0.55;
-      reason = { label: `NT$${rate}／時 略高於預算`, positive: false };
-    } else if (rate <= criteria.budget * 1.3) {
+      reason = { label: `${range(lo, hi)} 略高於預算`, positive: false };
+    } else if (lo <= budget * 1.3) {
       fitness = 0.25;
-      reason = { label: `NT$${rate}／時 高於預算`, positive: false };
+      reason = { label: `${range(lo, hi)} 高於預算`, positive: false };
     } else {
       fitness = 0;
-      reason = { label: `NT$${rate}／時 超出預算`, positive: false };
+      reason = { label: `${range(lo, hi)} 超出預算`, positive: false };
     }
     dims.push({ key: "budget", weight: weightFor("budget", priority), fitness, active: true, reason });
   }
@@ -246,7 +261,10 @@ export function scoreTutor(
   const active = dims.filter((d) => d.active);
   const totalWeight = active.reduce((s, d) => s + d.weight, 0) || 1;
   const raw = active.reduce((s, d) => s + d.weight * d.fitness, 0) / totalWeight;
-  const score = Math.round(raw * 100);
+
+  // 科目硬門檻：指定了科目但老師不教 → 重罰，不可能被誤判為契合
+  const subjectMiss = !!criteria.subject && !tutor.subjects.includes(criteria.subject);
+  const score = Math.round(raw * (subjectMiss ? SUBJECT_GATE_PENALTY : 1) * 100);
 
   // 理由：正向優先（依權重排序）、最多保留一個提醒
   const sorted = [...dims].sort((a, b) => b.weight - a.weight);
@@ -381,28 +399,39 @@ export function scoreJob(job: MatchJob, profile: JobMatchProfile): ScoredJob {
     dims.push({ key: "region", weight: JOB_WEIGHTS.region, fitness, active: true, reason });
   }
 
-  // 3. 預算是否達到老師的時薪
+  // 3. 預算是否達到老師的時薪（案件預算可為區間 [lo, hi]）
   {
+    const lo = job.budget;
+    const hi = job.budgetMax ?? job.budget; // lo 非 null 時 hi 必非 null
     const rate = profile.hourlyRate;
     let fitness: number;
     let reason: MatchReason | undefined;
-    if (job.budget == null) {
+    if (lo == null) {
       fitness = 0.6; // 面議，中性
       reason = { label: "預算面議", positive: true };
     } else if (rate == null) {
       fitness = 0.6;
-    } else if (job.budget >= rate) {
-      fitness = 1;
-      reason = { label: `預算 NT$${job.budget} ≥ 你的時薪`, positive: true };
-    } else if (job.budget >= rate * 0.9) {
+    } else if (lo >= rate) {
+      fitness = 1; // 連預算下限都達到你的時薪
+      reason = {
+        label:
+          hi && hi > lo
+            ? `預算 NT$${lo}–${hi} ≥ 你的時薪`
+            : `預算 NT$${lo} ≥ 你的時薪`,
+        positive: true,
+      };
+    } else if ((hi as number) >= rate) {
+      fitness = 0.85; // 預算上限可達你的時薪 → 有機會談到理想價
+      reason = { label: `預算上看 NT$${hi}，可達你的時薪`, positive: true };
+    } else if ((hi as number) >= rate * 0.9) {
       fitness = 0.6;
       reason = { label: `預算略低於你的時薪`, positive: false };
-    } else if (job.budget >= rate * 0.8) {
+    } else if ((hi as number) >= rate * 0.8) {
       fitness = 0.3;
-      reason = { label: `預算 NT$${job.budget} 低於你的時薪`, positive: false };
+      reason = { label: `預算 NT$${lo}–${hi} 低於你的時薪`, positive: false };
     } else {
       fitness = 0;
-      reason = { label: `預算 NT$${job.budget} 遠低於你的時薪`, positive: false };
+      reason = { label: `預算 NT$${lo}${(hi as number) > lo ? `–${hi}` : ""} 遠低於你的時薪`, positive: false };
     }
     dims.push({ key: "budget", weight: JOB_WEIGHTS.budget, fitness, active: true, reason });
   }
@@ -443,7 +472,10 @@ export function scoreJob(job: MatchJob, profile: JobMatchProfile): ScoredJob {
   const active = dims.filter((d) => d.active);
   const totalWeight = active.reduce((s, d) => s + d.weight, 0) || 1;
   const raw = active.reduce((s, d) => s + d.weight * d.fitness, 0) / totalWeight;
-  const score = Math.round(raw * 100);
+
+  // 科目硬門檻：非老師登記的專長 → 重罰，不會被誤判為值得接的案件
+  const subjectMiss = !profile.subjects.includes(job.subject);
+  const score = Math.round(raw * (subjectMiss ? SUBJECT_GATE_PENALTY : 1) * 100);
 
   const sorted = [...dims].sort((a, b) => b.weight - a.weight);
   const positives = sorted.filter((d) => d.reason?.positive).map((d) => d.reason!);
