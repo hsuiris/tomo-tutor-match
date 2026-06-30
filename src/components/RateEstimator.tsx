@@ -100,7 +100,6 @@ export default function RateEstimator({
         <span className="rounded-full border border-line bg-sun px-3 py-1 text-xs font-extrabold text-paper">
           ✨ AI 行情估算
         </span>
-        <span className="text-xs font-bold text-ink/40">僅老師可見</span>
       </div>
       <h2 className="mt-3 font-serif text-2xl font-extrabold text-ink">
         估算你的合理時薪
@@ -171,7 +170,7 @@ export default function RateEstimator({
           ) : (
             <>
               <p className="text-xs font-bold text-ink/50">建議時薪區間</p>
-              <p className="mt-1 font-serif text-4xl font-extrabold tabular-nums text-ink">
+              <p className="mt-1 text-4xl font-extrabold tabular-nums text-ink">
                 NT${est.low}
                 <span className="mx-1 text-xl text-ink/40">–</span>
                 NT${est.high}
