@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   SUBJECTS,
-  LEVELS,
   REGIONS,
   MODE_LABELS,
   GENDER_OPTIONS,
   MATCH_PRIORITIES,
+  levelsForSubject,
   type TeachingMode,
 } from "@/lib/constants";
 
@@ -41,6 +41,14 @@ export default function MatchForm({
   const [gender, setGender] = useState(defaults.gender ?? "");
   const [priority, setPriority] = useState(defaults.priority ?? "balanced");
 
+  // 年級／程度選項依科目而定（技能類用 入門/初階/進階）
+  const levelOptions = levelsForSubject(subject);
+  function changeSubject(val: string) {
+    setSubject(val);
+    const allowed = new Set(levelsForSubject(val));
+    setLevel((cur) => (allowed.has(cur) ? cur : ""));
+  }
+
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const params = new URLSearchParams();
@@ -68,7 +76,7 @@ export default function MatchForm({
           <label className={labelCls}>科目</label>
           <select
             value={subject}
-            onChange={(e) => setSubject(e.target.value)}
+            onChange={(e) => changeSubject(e.target.value)}
             className={fieldCls}
           >
             <option value="">請選擇科目</option>
@@ -127,7 +135,7 @@ export default function MatchForm({
           </label>
           <select
             value={subject}
-            onChange={(e) => setSubject(e.target.value)}
+            onChange={(e) => changeSubject(e.target.value)}
             className={fieldCls}
           >
             <option value="">請選擇科目</option>
@@ -139,14 +147,14 @@ export default function MatchForm({
           </select>
         </div>
         <div>
-          <label className={labelCls}>學制／年級</label>
+          <label className={labelCls}>年級／程度</label>
           <select
             value={level}
             onChange={(e) => setLevel(e.target.value)}
             className={fieldCls}
           >
             <option value="">不限</option>
-            {LEVELS.map((l) => (
+            {levelOptions.map((l) => (
               <option key={l} value={l}>
                 {l}
               </option>

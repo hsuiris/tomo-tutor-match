@@ -4,9 +4,9 @@ import { useActionState, useState } from "react";
 import { updateProfile } from "@/app/dashboard/profile/actions";
 import {
   SUBJECTS,
-  LEVELS,
   REGIONS,
   EDU_LEVELS,
+  levelsForSubjects,
   type TeachingMode,
   type Gender,
 } from "@/lib/constants";
@@ -66,6 +66,19 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
     value: string
   ) {
     setList(list.includes(value) ? list.filter((x) => x !== value) : [...list, value]);
+  }
+
+  // 程度選項依所選科目而定（技能類用 入門/初階/進階）
+  const levelOptions = levelsForSubjects(subjects);
+
+  // 切換科目時，移除已不適用的程度
+  function toggleSubject(s: string) {
+    const next = subjects.includes(s)
+      ? subjects.filter((x) => x !== s)
+      : [...subjects, s];
+    setSubjects(next);
+    const allowed = new Set(levelsForSubjects(next));
+    setLevels((cur) => cur.filter((l) => allowed.has(l)));
   }
 
   const err = state.fieldErrors;
@@ -169,7 +182,7 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
                   name="subjects"
                   value={s}
                   checked={active}
-                  onChange={() => toggle(subjects, setSubjects, s)}
+                  onChange={() => toggleSubject(s)}
                   className="sr-only"
                 />
                 {s}
@@ -184,13 +197,13 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
         ))}
       </fieldset>
 
-      {/* 可教學制 */}
+      {/* 可教學制／程度 */}
       <fieldset>
         <legend className="mb-2 text-sm font-medium text-ink/80">
-          可教學制 <span className="text-red-500">*</span>
+          可教年級／程度 <span className="text-red-500">*</span>
         </legend>
         <div className="flex flex-wrap gap-2">
-          {LEVELS.map((lv) => {
+          {levelOptions.map((lv) => {
             const active = levels.includes(lv);
             return (
               <label

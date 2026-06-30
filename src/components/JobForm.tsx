@@ -1,9 +1,9 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createJob } from "@/app/jobs/actions";
-import { SUBJECTS, LEVELS, REGIONS } from "@/lib/constants";
+import { SUBJECTS, REGIONS, levelsForSubject } from "@/lib/constants";
 import { SubmitButton } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
@@ -14,6 +14,11 @@ export default function JobForm() {
   const [state, formAction] = useActionState(createJob, initialState);
   const err = state.fieldErrors;
   const v = state.values;
+
+  // 科目決定年級／程度選項（技能類用 入門/初階/進階）
+  const [subject, setSubject] = useState<string>(v?.subject ?? "");
+  const [level, setLevel] = useState<string>(v?.level ?? "");
+  const levelOptions = levelsForSubject(subject);
 
   // 出錯時顯示紅字錯誤，否則顯示灰字限制提示
   const msg = (errs: string[] | undefined, hint: string) =>
@@ -57,7 +62,17 @@ export default function JobForm() {
           <label className="mb-1 block text-sm font-medium text-ink/80">
             科目 <span className="text-red-500">*</span>
           </label>
-          <select name="subject" defaultValue={v?.subject ?? ""} className={inputCls}>
+          <select
+            name="subject"
+            value={subject}
+            onChange={(e) => {
+              setSubject(e.target.value);
+              // 換科目後若原年級不在新選項內就清掉
+              const allowed = new Set(levelsForSubject(e.target.value));
+              setLevel((cur) => (allowed.has(cur) ? cur : ""));
+            }}
+            className={inputCls}
+          >
             <option value="" disabled>
               請選擇
             </option>
@@ -75,13 +90,19 @@ export default function JobForm() {
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium text-ink/80">
-            學生年級 <span className="text-red-500">*</span>
+            學生年級／程度 <span className="text-red-500">*</span>
           </label>
-          <select name="level" defaultValue={v?.level ?? ""} className={inputCls}>
+          <select
+            name="level"
+            value={level}
+            onChange={(e) => setLevel(e.target.value)}
+            disabled={!subject}
+            className={inputCls}
+          >
             <option value="" disabled>
-              請選擇
+              {subject ? "請選擇" : "請先選科目"}
             </option>
-            {LEVELS.map((lv) => (
+            {levelOptions.map((lv) => (
               <option key={lv} value={lv}>
                 {lv}
               </option>

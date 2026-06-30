@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { SUBJECTS, LEVELS, REGIONS, GENDER_OPTIONS } from "@/lib/constants";
+import { SUBJECTS, ALL_LEVELS, REGIONS, GENDER_OPTIONS } from "@/lib/constants";
 
 export default function JobFilters() {
   const router = useRouter();
@@ -55,8 +55,8 @@ export default function JobFilters() {
         onToggle={(v) => toggle("subjects", v)}
       />
       <PillRow
-        label="學制（可複選）"
-        options={LEVELS}
+        label="年級／程度（可複選）"
+        options={ALL_LEVELS}
         selected={levels}
         onToggle={(v) => toggle("levels", v)}
       />

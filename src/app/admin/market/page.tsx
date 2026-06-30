@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { SUBJECTS, LEVELS, REGIONS } from "@/lib/constants";
+import { SUBJECTS, ALL_LEVELS as LEVELS, REGIONS } from "@/lib/constants";
 import { aggregateMarket, type RateRow } from "@/lib/market";
 
 export const metadata = { title: "家教行情分析 · Tomo" };

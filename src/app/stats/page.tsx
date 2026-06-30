@@ -1,6 +1,8 @@
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
-import { SUBJECTS, LEVELS } from "@/lib/constants";
+import { SUBJECTS, ALL_LEVELS as LEVELS, SKILL_LEVELS } from "@/lib/constants";
+
+const SKILL_LEVEL_SET = new Set<string>(SKILL_LEVELS);
 import RateEstimator from "@/components/RateEstimator";
 import { parseExperienceYears, type MarketData } from "@/lib/estimate";
 
@@ -18,6 +20,10 @@ const LEVEL_COLORS: Record<string, string> = {
   高中: "from-blue-400 to-blue-500",
   大學: "from-blue-500 to-blue-600",
   成人: "from-blue-600 to-blue-700",
+  // 技能類程度
+  入門: "from-emerald-400 to-teal-400",
+  初階: "from-teal-400 to-teal-500",
+  進階: "from-teal-500 to-teal-600",
 };
 
 export default async function StatsPage() {
@@ -45,7 +51,9 @@ export default async function StatsPage() {
       max: rates.length ? Math.max(...rates) : 0,
       demandAvg: avg(budgets),
     };
-  });
+  })
+    // 技能類程度（入門/初階/進階）沒資料時不顯示，避免空卡片；學術年級維持常駐
+    .filter((l) => !SKILL_LEVEL_SET.has(l.level) || l.count > 0);
 
   const bySubject = SUBJECTS.map((subject) => {
     const rates = tutors

@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import {
   SUBJECTS,
-  LEVELS,
+  ALL_LEVELS,
   REGIONS,
   EDU_LEVELS,
   SORT_OPTIONS,
@@ -199,8 +199,8 @@ export default function TutorFilters() {
         onToggle={(v) => toggle("subjects", v)}
       />
       <PillRow
-        label="學制（可複選）"
-        options={LEVELS}
+        label="年級／程度（可複選）"
+        options={ALL_LEVELS}
         selected={levels}
         onToggle={(v) => toggle("levels", v)}
       />

@@ -21,6 +21,37 @@ export const SUBJECTS = [
 // 學制／年級（家教收費的主要差異來源之一）
 export const LEVELS = ["國小", "國中", "高中", "大學", "成人"] as const;
 
+// 技能類科目不分學制，改用程度分級（入門／初階／進階）
+export const SKILL_SUBJECTS = [
+  "程式設計",
+  "日文",
+  "鋼琴",
+  "美術",
+  "會計",
+  "經濟",
+] as const;
+export const SKILL_LEVELS = ["入門", "初階", "進階"] as const;
+
+// 篩選／統計用：學術年級 + 技能程度的完整清單
+export const ALL_LEVELS = [...LEVELS, ...SKILL_LEVELS] as const;
+
+const SKILL_SET = new Set<string>(SKILL_SUBJECTS);
+export const isSkillSubject = (s: string) => SKILL_SET.has(s);
+
+// 單一科目對應的程度選項
+export function levelsForSubject(subject: string): readonly string[] {
+  return isSkillSubject(subject) ? SKILL_LEVELS : LEVELS;
+}
+
+// 一組科目對應的程度選項（學術＋技能可並存）
+export function levelsForSubjects(subjects: string[]): string[] {
+  const hasSkill = subjects.some(isSkillSubject);
+  const hasAcademic = subjects.some((s) => !isSkillSubject(s));
+  if (hasSkill && !hasAcademic) return [...SKILL_LEVELS];
+  if (hasSkill && hasAcademic) return [...LEVELS, ...SKILL_LEVELS];
+  return [...LEVELS]; // 預設學術（含未選科目時）
+}
+
 // 老師的教育程度（最高學歷）
 export const EDU_LEVELS = [
   "高中職",

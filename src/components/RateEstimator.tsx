@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { SUBJECTS, LEVELS, EDU_LEVELS } from "@/lib/constants";
+import {
+  SUBJECTS,
+  EDU_LEVELS,
+  levelsForSubjects,
+} from "@/lib/constants";
 import {
   estimateRate,
   type MarketData,
@@ -35,6 +39,21 @@ export default function RateEstimator({
   const [levels, setLevels] = useState<string[]>(defaults.levels);
   const [years, setYears] = useState<number>(defaults.experienceYears);
   const [eduLevel, setEduLevel] = useState<string>(defaults.eduLevel ?? "");
+
+  // 程度選項依所選科目而定（技能類用 入門/初階/進階）
+  const levelOptions = useMemo(() => levelsForSubjects(subjects), [subjects]);
+
+  // 切換科目時，連帶移除已不適用的程度選項
+  const toggleSubject = (v: string) => {
+    setSubjects((cur) => {
+      const next = cur.includes(v)
+        ? cur.filter((x) => x !== v)
+        : [...cur, v];
+      const allowed = new Set(levelsForSubjects(next));
+      setLevels((ls) => ls.filter((l) => allowed.has(l)));
+      return next;
+    });
+  };
 
   const input: EstimateInput = useMemo(
     () => ({
@@ -97,15 +116,11 @@ export default function RateEstimator({
             label="教學科目（會的技能）"
             options={SUBJECTS}
             selected={subjects}
-            onToggle={(v) =>
-              setSubjects((cur) =>
-                cur.includes(v) ? cur.filter((x) => x !== v) : [...cur, v]
-              )
-            }
+            onToggle={toggleSubject}
           />
           <PillField
-            label="可教年級／學制"
-            options={LEVELS}
+            label="可教年級／程度"
+            options={levelOptions}
             selected={levels}
             onToggle={(v) =>
               setLevels((cur) =>
