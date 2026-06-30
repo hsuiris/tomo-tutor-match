@@ -34,40 +34,46 @@ export async function submitReview(
         { tutor: { userId: revieweeId }, job: { studentId: me } },
       ],
     },
-    select: { id: true },
+    select: { tutor: { select: { userId: true } } },
   });
   if (!matched) {
     return { error: "你尚未與這位使用者完成媒合,無法評價", values };
   }
+  // 被評價者在這段關係裡是老師還是學生：他是該案件的老師 → 評他「當老師」
+  const revieweeAsTutor = matched.tutor.userId === revieweeId;
 
   const existing = await db.review.findUnique({
-    where: { revieweeId_authorId: { revieweeId, authorId: me } },
+    where: {
+      revieweeId_authorId_revieweeAsTutor: { revieweeId, authorId: me, revieweeAsTutor },
+    },
     select: { id: true },
   });
   if (existing) return { error: "你已經評價過了", values };
 
   await db.$transaction(async (tx) => {
     await tx.review.create({
-      data: { revieweeId, authorId: me, rating, comment },
+      data: { revieweeId, authorId: me, rating, comment, revieweeAsTutor },
     });
-    // 若被評價者是老師,更新其平均星等
-    const profile = await tx.tutorProfile.findUnique({
-      where: { userId: revieweeId },
-      select: { id: true },
-    });
-    if (profile) {
-      const agg = await tx.review.aggregate({
-        where: { revieweeId },
-        _avg: { rating: true },
-        _count: { _all: true },
+    // 只有「評老師」才更新老師檔案星等；評學生不污染老師評分
+    if (revieweeAsTutor) {
+      const profile = await tx.tutorProfile.findUnique({
+        where: { userId: revieweeId },
+        select: { id: true },
       });
-      await tx.tutorProfile.update({
-        where: { id: profile.id },
-        data: {
-          ratingAvg: agg._avg.rating ?? 0,
-          ratingCount: agg._count._all,
-        },
-      });
+      if (profile) {
+        const agg = await tx.review.aggregate({
+          where: { revieweeId, revieweeAsTutor: true },
+          _avg: { rating: true },
+          _count: { _all: true },
+        });
+        await tx.tutorProfile.update({
+          where: { id: profile.id },
+          data: {
+            ratingAvg: agg._avg.rating ?? 0,
+            ratingCount: agg._count._all,
+          },
+        });
+      }
     }
   });
 

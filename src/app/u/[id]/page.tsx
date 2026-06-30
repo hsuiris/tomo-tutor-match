@@ -32,17 +32,20 @@ export default async function UserProfilePage({
   if (!user) notFound();
 
   const tp = user.tutorProfile;
-  const isTutor = user.role === "TUTOR";
   const name = publicName(user);
 
-  // 評分（老師用 profile 統計；其餘即時算）
-  const ratingAvg = tp
-    ? tp.ratingAvg
-    : user.reviewsReceived.length
-      ? user.reviewsReceived.reduce((s, r) => s + r.rating, 0) /
-        user.reviewsReceived.length
-      : 0;
-  const ratingCount = tp ? tp.ratingCount : user.reviewsReceived.length;
+  // 兩套獨立評分：老師（檔案統計）與學生（即時算被評為「學生身分」的評價）
+  const tutorAvg = tp?.ratingAvg ?? 0;
+  const tutorCount = tp?.ratingCount ?? 0;
+  const studentAgg = await db.review.aggregate({
+    where: { revieweeId: id, revieweeAsTutor: false },
+    _avg: { rating: true },
+    _count: { _all: true },
+  });
+  const studentAvg = studentAgg._avg.rating ?? 0;
+  const studentCount = studentAgg._count._all;
+  // 同時有老師與學生評分時，評價牆才標註身分，避免一般情況的雜訊
+  const dualRole = !!tp && studentCount > 0;
 
   // 是否可評價：登入、非本人、曾媒合、且尚未評過
   let canReview = false;
@@ -55,13 +58,23 @@ export default async function UserProfilePage({
           { tutor: { userId: id }, job: { studentId: me } },
         ],
       },
-      select: { id: true },
+      select: { tutor: { select: { userId: true } } },
     });
-    const reviewed = await db.review.findUnique({
-      where: { revieweeId_authorId: { revieweeId: id, authorId: me } },
-      select: { id: true },
-    });
-    canReview = !!matched && !reviewed;
+    if (matched) {
+      // 被評價者在這段關係裡是老師還是學生 → 該身分是否已評過
+      const revieweeAsTutor = matched.tutor.userId === id;
+      const reviewed = await db.review.findUnique({
+        where: {
+          revieweeId_authorId_revieweeAsTutor: {
+            revieweeId: id,
+            authorId: me,
+            revieweeAsTutor,
+          },
+        },
+        select: { id: true },
+      });
+      canReview = !reviewed;
+    }
   }
 
   return (
@@ -79,8 +92,17 @@ export default async function UserProfilePage({
             )}
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1">
-            {(isTutor || ratingCount > 0) && (
-              <RatingStars value={ratingAvg} count={ratingCount} />
+            {tp && (
+              <span className="inline-flex items-center gap-1">
+                <span className="text-xs font-bold text-ink/50">老師</span>
+                <RatingStars value={tutorAvg} count={tutorCount} />
+              </span>
+            )}
+            {studentCount > 0 && (
+              <span className="inline-flex items-center gap-1">
+                <span className="text-xs font-bold text-ink/50">學生</span>
+                <RatingStars value={studentAvg} count={studentCount} />
+              </span>
             )}
             <TrustBadges
               idVerified={user.idVerified}
@@ -165,8 +187,8 @@ export default async function UserProfilePage({
 
       {/* 評價牆 */}
       <div className="mt-6 rounded-xl border border-line bg-paper p-6">
-        <h2 className="mb-4 font-serif font-serif text-2xl font-extrabold text-ink">
-          評價與留言（{ratingCount}）
+        <h2 className="mb-4 font-serif text-2xl font-extrabold text-ink">
+          評價與留言（{user.reviewsReceived.length}）
         </h2>
 
         {canReview && (
@@ -189,6 +211,11 @@ export default async function UserProfilePage({
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-bold text-ink">
                     {publicName(r.author)}
+                    {dualRole && (
+                      <span className="ml-2 rounded-full bg-sun-soft/60 px-2 py-0.5 text-xs font-medium text-ink/60">
+                        {r.revieweeAsTutor ? "以老師身分" : "以學生身分"}
+                      </span>
+                    )}
                   </span>
                   <span className="text-sm text-amber-400">
                     {"★".repeat(r.rating)}

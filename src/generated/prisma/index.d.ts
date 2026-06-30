@@ -12989,6 +12989,7 @@ export namespace Prisma {
     authorId: string | null
     rating: number | null
     comment: string | null
+    revieweeAsTutor: boolean | null
     createdAt: Date | null
   }
 
@@ -12998,6 +12999,7 @@ export namespace Prisma {
     authorId: string | null
     rating: number | null
     comment: string | null
+    revieweeAsTutor: boolean | null
     createdAt: Date | null
   }
 
@@ -13007,6 +13009,7 @@ export namespace Prisma {
     authorId: number
     rating: number
     comment: number
+    revieweeAsTutor: number
     createdAt: number
     _all: number
   }
@@ -13026,6 +13029,7 @@ export namespace Prisma {
     authorId?: true
     rating?: true
     comment?: true
+    revieweeAsTutor?: true
     createdAt?: true
   }
 
@@ -13035,6 +13039,7 @@ export namespace Prisma {
     authorId?: true
     rating?: true
     comment?: true
+    revieweeAsTutor?: true
     createdAt?: true
   }
 
@@ -13044,6 +13049,7 @@ export namespace Prisma {
     authorId?: true
     rating?: true
     comment?: true
+    revieweeAsTutor?: true
     createdAt?: true
     _all?: true
   }
@@ -13140,6 +13146,7 @@ export namespace Prisma {
     authorId: string
     rating: number
     comment: string | null
+    revieweeAsTutor: boolean
     createdAt: Date
     _count: ReviewCountAggregateOutputType | null
     _avg: ReviewAvgAggregateOutputType | null
@@ -13168,6 +13175,7 @@ export namespace Prisma {
     authorId?: boolean
     rating?: boolean
     comment?: boolean
+    revieweeAsTutor?: boolean
     createdAt?: boolean
     reviewee?: boolean | UserDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -13179,6 +13187,7 @@ export namespace Prisma {
     authorId?: boolean
     rating?: boolean
     comment?: boolean
+    revieweeAsTutor?: boolean
     createdAt?: boolean
     reviewee?: boolean | UserDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -13190,6 +13199,7 @@ export namespace Prisma {
     authorId?: boolean
     rating?: boolean
     comment?: boolean
+    revieweeAsTutor?: boolean
     createdAt?: boolean
     reviewee?: boolean | UserDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -13201,10 +13211,11 @@ export namespace Prisma {
     authorId?: boolean
     rating?: boolean
     comment?: boolean
+    revieweeAsTutor?: boolean
     createdAt?: boolean
   }
 
-  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "revieweeId" | "authorId" | "rating" | "comment" | "createdAt", ExtArgs["result"]["review"]>
+  export type ReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "revieweeId" | "authorId" | "rating" | "comment" | "revieweeAsTutor" | "createdAt", ExtArgs["result"]["review"]>
   export type ReviewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reviewee?: boolean | UserDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
@@ -13230,6 +13241,7 @@ export namespace Prisma {
       authorId: string
       rating: number
       comment: string | null
+      revieweeAsTutor: boolean
       createdAt: Date
     }, ExtArgs["result"]["review"]>
     composites: {}
@@ -13661,6 +13673,7 @@ export namespace Prisma {
     readonly authorId: FieldRef<"Review", 'String'>
     readonly rating: FieldRef<"Review", 'Int'>
     readonly comment: FieldRef<"Review", 'String'>
+    readonly revieweeAsTutor: FieldRef<"Review", 'Boolean'>
     readonly createdAt: FieldRef<"Review", 'DateTime'>
   }
     
@@ -17443,6 +17456,7 @@ export namespace Prisma {
     authorId: 'authorId',
     rating: 'rating',
     comment: 'comment',
+    revieweeAsTutor: 'revieweeAsTutor',
     createdAt: 'createdAt'
   };
 
@@ -18461,6 +18475,7 @@ export namespace Prisma {
     authorId?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
     comment?: StringNullableFilter<"Review"> | string | null
+    revieweeAsTutor?: BoolFilter<"Review"> | boolean
     createdAt?: DateTimeFilter<"Review"> | Date | string
     reviewee?: XOR<UserScalarRelationFilter, UserWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -18472,6 +18487,7 @@ export namespace Prisma {
     authorId?: SortOrder
     rating?: SortOrder
     comment?: SortOrderInput | SortOrder
+    revieweeAsTutor?: SortOrder
     createdAt?: SortOrder
     reviewee?: UserOrderByWithRelationInput
     author?: UserOrderByWithRelationInput
@@ -18479,7 +18495,7 @@ export namespace Prisma {
 
   export type ReviewWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    revieweeId_authorId?: ReviewRevieweeIdAuthorIdCompoundUniqueInput
+    revieweeId_authorId_revieweeAsTutor?: ReviewRevieweeIdAuthorIdRevieweeAsTutorCompoundUniqueInput
     AND?: ReviewWhereInput | ReviewWhereInput[]
     OR?: ReviewWhereInput[]
     NOT?: ReviewWhereInput | ReviewWhereInput[]
@@ -18487,10 +18503,11 @@ export namespace Prisma {
     authorId?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
     comment?: StringNullableFilter<"Review"> | string | null
+    revieweeAsTutor?: BoolFilter<"Review"> | boolean
     createdAt?: DateTimeFilter<"Review"> | Date | string
     reviewee?: XOR<UserScalarRelationFilter, UserWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "revieweeId_authorId">
+  }, "id" | "revieweeId_authorId_revieweeAsTutor">
 
   export type ReviewOrderByWithAggregationInput = {
     id?: SortOrder
@@ -18498,6 +18515,7 @@ export namespace Prisma {
     authorId?: SortOrder
     rating?: SortOrder
     comment?: SortOrderInput | SortOrder
+    revieweeAsTutor?: SortOrder
     createdAt?: SortOrder
     _count?: ReviewCountOrderByAggregateInput
     _avg?: ReviewAvgOrderByAggregateInput
@@ -18515,6 +18533,7 @@ export namespace Prisma {
     authorId?: StringWithAggregatesFilter<"Review"> | string
     rating?: IntWithAggregatesFilter<"Review"> | number
     comment?: StringNullableWithAggregatesFilter<"Review"> | string | null
+    revieweeAsTutor?: BoolWithAggregatesFilter<"Review"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Review"> | Date | string
   }
 
@@ -19534,6 +19553,7 @@ export namespace Prisma {
     id?: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
     reviewee: UserCreateNestedOneWithoutReviewsReceivedInput
     author: UserCreateNestedOneWithoutReviewsAuthoredInput
@@ -19545,6 +19565,7 @@ export namespace Prisma {
     authorId: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
   }
 
@@ -19552,6 +19573,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviewee?: UserUpdateOneRequiredWithoutReviewsReceivedNestedInput
     author?: UserUpdateOneRequiredWithoutReviewsAuthoredNestedInput
@@ -19563,6 +19585,7 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19572,6 +19595,7 @@ export namespace Prisma {
     authorId: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
   }
 
@@ -19579,6 +19603,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -19588,6 +19613,7 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20617,9 +20643,10 @@ export namespace Prisma {
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
   }
 
-  export type ReviewRevieweeIdAuthorIdCompoundUniqueInput = {
+  export type ReviewRevieweeIdAuthorIdRevieweeAsTutorCompoundUniqueInput = {
     revieweeId: string
     authorId: string
+    revieweeAsTutor: boolean
   }
 
   export type ReviewCountOrderByAggregateInput = {
@@ -20628,6 +20655,7 @@ export namespace Prisma {
     authorId?: SortOrder
     rating?: SortOrder
     comment?: SortOrder
+    revieweeAsTutor?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -20641,6 +20669,7 @@ export namespace Prisma {
     authorId?: SortOrder
     rating?: SortOrder
     comment?: SortOrder
+    revieweeAsTutor?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -20650,6 +20679,7 @@ export namespace Prisma {
     authorId?: SortOrder
     rating?: SortOrder
     comment?: SortOrder
+    revieweeAsTutor?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -22324,6 +22354,7 @@ export namespace Prisma {
     id?: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
     reviewee: UserCreateNestedOneWithoutReviewsReceivedInput
   }
@@ -22333,6 +22364,7 @@ export namespace Prisma {
     revieweeId: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
   }
 
@@ -22350,6 +22382,7 @@ export namespace Prisma {
     id?: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
     author: UserCreateNestedOneWithoutReviewsAuthoredInput
   }
@@ -22359,6 +22392,7 @@ export namespace Prisma {
     authorId: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
   }
 
@@ -22701,6 +22735,7 @@ export namespace Prisma {
     authorId?: StringFilter<"Review"> | string
     rating?: IntFilter<"Review"> | number
     comment?: StringNullableFilter<"Review"> | string | null
+    revieweeAsTutor?: BoolFilter<"Review"> | boolean
     createdAt?: DateTimeFilter<"Review"> | Date | string
   }
 
@@ -25392,6 +25427,7 @@ export namespace Prisma {
     revieweeId: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
   }
 
@@ -25400,6 +25436,7 @@ export namespace Prisma {
     authorId: string
     rating: number
     comment?: string | null
+    revieweeAsTutor?: boolean
     createdAt?: Date | string
   }
 
@@ -25525,6 +25562,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     reviewee?: UserUpdateOneRequiredWithoutReviewsReceivedNestedInput
   }
@@ -25534,6 +25572,7 @@ export namespace Prisma {
     revieweeId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25542,6 +25581,7 @@ export namespace Prisma {
     revieweeId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25549,6 +25589,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutReviewsAuthoredNestedInput
   }
@@ -25558,6 +25599,7 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25566,6 +25608,7 @@ export namespace Prisma {
     authorId?: StringFieldUpdateOperationsInput | string
     rating?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
+    revieweeAsTutor?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
