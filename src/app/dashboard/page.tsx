@@ -20,9 +20,6 @@ export default async function DashboardPage() {
         嗨,{user.name} 👋
       </h1>
       <div className="mt-2 h-1 w-14 bg-sun" />
-      <p className="mt-3 font-bold text-ink/60">
-        {isTutor ? "你同時是學生與老師,隨時切換找老師或找學生" : "想學習找老師,也可以成為老師找學生"}
-      </p>
 
       {/* 學習：發需求找老師（所有人都能用） */}
       <h2 className="mt-8 mb-3 font-serif text-lg font-bold text-ink/80">
