@@ -91,7 +91,7 @@ export default async function JobsPage({
             href="/dashboard/profile"
             className="shrink-0 rounded-full border border-line bg-sun px-5 py-2.5 text-sm font-bold text-paper transition hover:bg-sun-dark"
           >
-            編輯老師檔案
+            發佈 / 編輯 老師檔案
           </Link>
         ) : (
           <form action={becomeTutor}>
