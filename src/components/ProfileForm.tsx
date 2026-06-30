@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useState, type ReactNode } from "react";
 import { updateProfile } from "@/app/dashboard/profile/actions";
 import {
   SUBJECTS,
@@ -33,7 +33,13 @@ export type ProfileInitial = {
 
 const initialState: ActionState = {};
 
-export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
+export default function ProfileForm({
+  initial,
+  aliasSlot,
+}: {
+  initial: ProfileInitial;
+  aliasSlot?: ReactNode;
+}) {
   const [state, formAction] = useActionState(updateProfile, initialState);
   const [subjects, setSubjects] = useState<string[]>(initial.subjects);
   const [levels, setLevels] = useState<string[]>(initial.levels);
@@ -86,9 +92,8 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
   const v = state.values;
 
   return (
-    <form action={formAction} className="space-y-6">
+    <>
       {/* 頭像 */}
-      <input type="hidden" name="avatarUrl" value={avatar} />
       <div className="flex items-center gap-4">
         <Avatar name={initial.name} url={avatar || null} size={72} />
         <div>
@@ -107,6 +112,12 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
           )}
         </div>
       </div>
+
+      {/* 公開化名（緊接大頭照下面） */}
+      {aliasSlot && <div className="mt-6">{aliasSlot}</div>}
+
+      <form action={formAction} className="mt-6 space-y-6">
+        <input type="hidden" name="avatarUrl" value={avatar} />
 
       {/* 性別 */}
       <div>
@@ -403,7 +414,8 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
             : "提醒：需開啟「公開我的檔案」，存檔後才會出現在「找老師」。"}
         </p>
       </div>
-    </form>
+      </form>
+    </>
   );
 }
 

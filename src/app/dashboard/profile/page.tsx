@@ -71,17 +71,19 @@ export default async function ProfileEditPage() {
         填寫越完整,越容易被學生找到並信任。
       </p>
       <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm sm:p-8">
-        <ProfileForm initial={initial} />
+        <ProfileForm
+          initial={initial}
+          aliasSlot={
+            <div className="border-t border-line/60 pt-5">
+              <h2 className="mb-1 font-bold text-ink">公開化名</h2>
+              <p className="mb-3 text-xs text-ink/40">
+                你的本名是「{profile.user.name}」,僅平台保留。
+              </p>
+              <AliasForm displayName={profile.user.displayName ?? ""} />
+            </div>
+          }
+        />
       </div>
-
-      {/* 公開化名 */}
-      <section className="mt-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
-        <h2 className="mb-1 font-bold text-ink">公開化名</h2>
-        <p className="mb-4 text-xs text-ink/40">
-          你的本名是「{profile.user.name}」,僅平台保留。
-        </p>
-        <AliasForm displayName={profile.user.displayName ?? ""} />
-      </section>
 
       {/* 安全認證 */}
       <div className="mt-6">
