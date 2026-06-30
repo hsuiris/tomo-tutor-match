@@ -7,7 +7,13 @@ import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
 
-export default function AliasForm({ displayName }: { displayName: string }) {
+export default function AliasForm({
+  displayName,
+  placeholder = "例如：思涵老師、Coach Chen",
+}: {
+  displayName: string;
+  placeholder?: string;
+}) {
   const [state, formAction] = useActionState(updateAlias, initialState);
 
   return (
@@ -15,7 +21,7 @@ export default function AliasForm({ displayName }: { displayName: string }) {
       <input
         name="displayName"
         defaultValue={displayName}
-        placeholder="例如：思涵老師、Coach Chen"
+        placeholder={placeholder}
         className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
       />
       <p className="text-xs text-ink/40">

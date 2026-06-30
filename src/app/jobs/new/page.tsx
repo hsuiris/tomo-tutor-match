@@ -28,7 +28,10 @@ export default async function NewJobPage() {
         <p className="mb-4 text-xs text-ink/40">
           你的本名是「{user.name}」,僅平台保留;對外只顯示化名。
         </p>
-        <AliasForm displayName={user.displayName ?? ""} />
+        <AliasForm
+          displayName={user.displayName ?? ""}
+          placeholder="例如：可可、小明媽媽"
+        />
       </section>
 
       <div className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm sm:p-8">
