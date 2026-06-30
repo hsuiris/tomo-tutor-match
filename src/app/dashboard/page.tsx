@@ -16,83 +16,92 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
-      <h1 className="font-serif text-4xl font-extrabold text-ink">
-        嗨,{user.name} 👋
-      </h1>
-      <div className="mt-2 h-1 w-14 bg-sun" />
-
-      {/* 學習：發需求找老師（所有人都能用） */}
-      <h2 className="mt-8 mb-3 font-serif text-lg font-bold text-ink/80">
-        🎒 我要學習(找老師)
-      </h2>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <DashCard
-          href="/jobs/new"
-          title="發布學習需求"
-          desc="描述你的需求,讓老師主動應徵"
-        />
-        <DashCard
-          href="/dashboard/jobs"
-          title="我發布的需求"
-          desc="管理你的案件、查看應徵者並完成配對"
-        />
-        <DashCard
-          href="/tutors"
-          title="尋找家教老師"
-          desc="瀏覽並篩選適合的老師"
-        />
-      </div>
-
-      {/* 教學：應徵需求找學生（要有老師檔案才開放） */}
-      <h2 className="mt-8 mb-3 font-serif text-lg font-bold text-ink/80">
-        📚 我要教學(找學生)
-      </h2>
-      <div className="grid gap-4 sm:grid-cols-2">
-        {isTutor ? (
-          <>
-            <DashCard
-              href="/dashboard/profile"
-              title="編輯我的老師檔案"
-              desc="專長、時薪、自我介紹、公開化名與安全認證"
-            />
-            <DashCard
-              href="/jobs"
-              title="瀏覽家教需求"
-              desc="尋找適合的案件並送出應徵"
-            />
-            <DashCard
-              href="/dashboard/applications"
-              title="我的應徵"
-              desc="查看你應徵過的案件與錄取狀態"
-            />
-          </>
-        ) : (
-          <form action={becomeTutor} className="sm:col-span-2">
-            <button
-              type="submit"
-              className="group w-full rounded-xl border border-dashed border-sun bg-sun-soft/30 p-6 text-left transition hover:-translate-y-1 hover:bg-sun-soft/50"
-            >
-              <span className="font-serif text-lg font-bold text-ink">
-                成為老師
-                <span className="ml-1 inline-block transition group-hover:translate-x-1">
-                  →
-                </span>
-              </span>
-              <p className="mt-1 text-sm text-ink/60">
-                建立老師檔案就能應徵學生的需求。接著完成實名/學歷認證,更容易被選上。
-              </p>
-            </button>
-          </form>
-        )}
-      </div>
-
-      {/* 共用 */}
-      <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <DashCard
+      {/* 標頭：問候 + 右上角帳號與安全 */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-4xl font-extrabold text-ink">
+            嗨,{user.name} 👋
+          </h1>
+          <div className="mt-2 h-1 w-14 bg-sun" />
+        </div>
+        <Link
           href="/dashboard/account"
-          title="帳號與安全"
-          desc="修改密碼、通知設定與帳號安全"
-        />
+          className="shrink-0 rounded-full border border-line px-4 py-2 text-sm font-bold text-ink transition hover:bg-sun"
+        >
+          帳號與安全 →
+        </Link>
+      </div>
+
+      {/* 兩欄：左＝我要學習、右＝我要教學，各自一直列 */}
+      <div className="mt-10 grid items-start gap-6 sm:grid-cols-2">
+        {/* 學習：發需求找老師（所有人都能用） */}
+        <section>
+          <h2 className="mb-3 font-serif text-lg font-bold text-ink/80">
+            🎒 我要學習(找老師)
+          </h2>
+          <div className="space-y-4">
+            <DashCard
+              href="/jobs/new"
+              title="發布學習需求"
+              desc="描述你的需求,讓老師主動應徵"
+            />
+            <DashCard
+              href="/dashboard/jobs"
+              title="我發布的需求"
+              desc="管理你的案件、查看應徵者並完成配對"
+            />
+            <DashCard
+              href="/tutors"
+              title="尋找家教老師"
+              desc="瀏覽並篩選適合的老師"
+            />
+          </div>
+        </section>
+
+        {/* 教學：應徵需求找學生（要有老師檔案才開放） */}
+        <section>
+          <h2 className="mb-3 font-serif text-lg font-bold text-ink/80">
+            📚 我要教學(找學生)
+          </h2>
+          <div className="space-y-4">
+            {isTutor ? (
+              <>
+                <DashCard
+                  href="/dashboard/profile"
+                  title="編輯我的老師檔案"
+                  desc="專長、時薪、自我介紹、公開化名與安全認證"
+                />
+                <DashCard
+                  href="/jobs"
+                  title="瀏覽家教需求"
+                  desc="尋找適合的案件並送出應徵"
+                />
+                <DashCard
+                  href="/dashboard/applications"
+                  title="我的應徵"
+                  desc="查看你應徵過的案件與錄取狀態"
+                />
+              </>
+            ) : (
+              <form action={becomeTutor}>
+                <button
+                  type="submit"
+                  className="group w-full rounded-xl border border-dashed border-sun bg-sun-soft/30 p-6 text-left transition hover:-translate-y-1 hover:bg-sun-soft/50"
+                >
+                  <span className="font-serif text-lg font-bold text-ink">
+                    成為老師
+                    <span className="ml-1 inline-block transition group-hover:translate-x-1">
+                      →
+                    </span>
+                  </span>
+                  <p className="mt-1 text-sm text-ink/60">
+                    建立老師檔案就能應徵學生的需求。接著完成實名/學歷認證,更容易被選上。
+                  </p>
+                </button>
+              </form>
+            )}
+          </div>
+        </section>
       </div>
     </div>
   );
