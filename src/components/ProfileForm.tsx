@@ -377,14 +377,14 @@ export default function ProfileForm({ initial }: { initial: ProfileInitial }) {
         </p>
       )}
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-col items-center gap-2">
         <button
           type="submit"
-          className="rounded-full bg-sun px-6 py-2.5 text-sm font-bold text-paper hover:bg-sun/80"
+          className="mx-auto block rounded-full bg-sun px-8 py-2.5 text-sm font-bold text-paper hover:bg-sun/80"
         >
           儲存檔案
         </button>
-        <p className="text-xs text-ink/50">
+        <p className="text-center text-xs text-ink/50">
           {published
             ? "存檔後會更新在「找老師」頁面。"
             : "提醒：需開啟「公開我的檔案」，存檔後才會出現在「找老師」。"}

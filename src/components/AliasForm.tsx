@@ -25,7 +25,7 @@ export default function AliasForm({ displayName }: { displayName: string }) {
       {state.success && (
         <p className="text-sm text-emerald-600">{state.success} ✓</p>
       )}
-      <SubmitButton>儲存化名</SubmitButton>
+      <SubmitButton fullWidth={false}>儲存化名</SubmitButton>
     </form>
   );
 }

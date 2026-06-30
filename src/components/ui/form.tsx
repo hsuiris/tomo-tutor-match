@@ -49,13 +49,22 @@ export function Field({
   );
 }
 
-export function SubmitButton({ children }: { children: React.ReactNode }) {
+export function SubmitButton({
+  children,
+  fullWidth = true,
+}: {
+  children: React.ReactNode;
+  // 預設滿版；fullWidth={false} 改為置中、寬度貼齊文字
+  fullWidth?: boolean;
+}) {
   const { pending } = useFormStatus();
   return (
     <button
       type="submit"
       disabled={pending}
-      className="w-full rounded-full border border-line bg-sun px-4 py-2.5 text-sm font-bold text-paper transition hover:bg-sun-dark disabled:cursor-not-allowed disabled:opacity-50"
+      className={`rounded-full border border-line bg-sun py-2.5 text-sm font-bold text-paper transition hover:bg-sun-dark disabled:cursor-not-allowed disabled:opacity-50 ${
+        fullWidth ? "w-full px-4" : "mx-auto block px-8"
+      }`}
     >
       {pending ? "處理中…" : children}
     </button>
