@@ -37,7 +37,7 @@ export default async function DashboardPage() {
         {/* 學習：發需求找老師（所有人都能用） */}
         <section>
           <h2 className="mb-3 font-serif text-lg font-bold text-ink/80">
-            🎒 我要學習(找老師)
+            🎒 我要學習（找老師）
           </h2>
           <div className="space-y-4">
             <DashCard
@@ -61,7 +61,7 @@ export default async function DashboardPage() {
         {/* 教學：應徵需求找學生（要有老師檔案才開放） */}
         <section>
           <h2 className="mb-3 font-serif text-lg font-bold text-ink/80">
-            📚 我要教學(找學生)
+            📚 我要教學（找學生）
           </h2>
           <div className="space-y-4">
             {isTutor ? (
