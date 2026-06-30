@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tomo · 家教媒合平台
 
-## Getting Started
+> 用一套可解釋的智能配對引擎，幫家長找到對的老師、幫老師找到對的案件。
 
-First, run the development server:
+Tomo 是一個雙邊家教媒合平台：**家長／學生**發布需求、**老師**建立專業檔案，平台依雙方條件即時算出「契合度」並排序推薦。配對結果完全可解釋——每一筆都附上「為什麼推薦」的理由，不是黑箱。
+
+---
+
+## 核心特色
+
+### 🎯 智能配對（平台主打）
+- **雙向配對**：家長端「找老師」、老師端「找案件」共用同一套加權引擎。
+- **契合度 0–100 + 推薦理由**：每位候選都標示契合度與正向理由／提醒，使用者一眼看懂為何推薦。
+- **可調權重**：家長可選擇最在意的重點（綜合／預算／評價／學歷認證），引擎即時放大對應維度。
+- 純規則式、零外部 AI 依賴 → 結果可解釋、可單元測試、零延遲。詳見 [配對演算法](#配對演算法)。
+
+### 👤 檔案與需求
+- **老師檔案**：專長科目、可教學制、授課地區、**時薪區間**、學歷／經歷、線上／實體；可設公開化名保護隱私，未公開前可自行預覽。
+- **家教需求**：科目、學制、地區、**預算區間**、學生狀況與家長訴求；老師可送出應徵，家長端管理應徵者並完成媒合。
+
+### 🛡️ 安全與信任
+- **三項認證**：實名（身分證）、無犯罪紀錄（良民證）、學歷證明；由管理員審核，**證件影像審核後即刪除**，不長期保存個資。
+- 密碼 bcrypt 雜湊、JWT 工作階段、登入頻率限制（防暴力破解）、帳號停用機制。
+- 隱私權政策與個資（PDPA）同意流程。
+
+### 💬 互動
+- **即時私訊**：家長與老師一對一聊天。
+- **雙向評價**：師生互評 1–5★。
+- **收藏**：把滿意的老師卡／需求加入愛心清單。
+- **討論區**：老師區與家長區兩個看板，可匿名發言。
+
+### 📊 行情與分析
+- **公開行情統計**：依科目／學制／地區的時薪分布。
+- **AI 行情估算**：老師可依自身條件試算建議時薪（資料驅動、可解釋）。
+
+### 🧑‍💼 管理後台（`/admin`）
+數據儀表板、使用者管理（篩選／停用）、媒合管理（強制關閉）、內容管理（刪文／刪評）、家教行情分析、認證審核。
+
+---
+
+## 配對演算法
+
+引擎在 [`src/lib/match.ts`](src/lib/match.ts)，純函式、可單元測試（[`match.test.ts`](src/lib/match.test.ts)）。
+
+**評分方式**：每個維度給一個 0–1 的契合度，乘上權重後做「有效維度正規化加權平均」，得到 0–100 契合度。未填的條件不計入，因此填得越多、配對越精準。
+
+**家長找老師** 的維度與基準權重：
+
+| 維度 | 權重 | 說明 |
+|---|---|---|
+| 科目 | 30 | **硬門檻**——不教該科目者最終分數乘 0.1 重罰，絕不會被誤判為契合 |
+| 地區／授課方式 | 16 | 當地可教＝1；可線上替代＝0.5 |
+| 評價 | 16 | 評論數越少越保守；新老師給中性分避免被淹沒 |
+| 預算 | 14 | 以**時薪區間 vs 預算上限**的重疊程度計分 |
+| 學制 | 12 | 可教該學制 |
+| 安全認證 | 8 | 通過幾項認證 |
+| 性別偏好 | 4 | 有指定才計入 |
+
+**老師找案件** 對應維度：科目（硬門檻）32、地區 18、預算 18、學制 12、競爭程度 12（應徵人數少＝機會大）、新鮮度 8。
+
+**兩道關鍵規則**
+1. **科目硬門檻**：科目是配對的根本。指定科目卻不符時，最終分數乘以重罰係數，使不教該科的老師（或非專長的案件）不可能出現在「契合」名單頂端。
+2. **預算區間重疊**：時薪與預算皆支援 `[下限, 上限]`。引擎判斷雙方區間是否相容（例如老師區間整段在預算內＝滿分、預算落在區間內＝可議），而非只比單一數字。
+
+候選池會先在資料庫層預篩（只取已公開老師／OPEN 案件；家長找老師時優先以科目縮小範圍，該科無人時才放寬由評分挑相近者）。
+
+---
+
+## 技術架構
+
+- **框架**：Next.js 16（App Router、React Server Components、Server Actions）
+- **語言**：TypeScript
+- **資料庫**：PostgreSQL（Neon）+ Prisma ORM
+- **驗證**：NextAuth v5（Credentials + JWT）
+- **樣式**：Tailwind CSS v4
+- **Email**：Resend
+- **部署**：Vercel + Neon
+
+---
+
+## 本地開發
+
+需求：Node.js 20+、一個 PostgreSQL 資料庫（建議 [Neon](https://neon.tech)）。
 
 ```bash
+# 1. 安裝依賴
+npm install
+
+# 2. 設定環境變數（見下方），手動建立 .env
+
+# 3. 套用資料庫 schema 並產生 Prisma client
+npx prisma migrate dev
+
+# 4. 灌入示範資料（含 demo 帳號）
+npm run db:seed
+
+# 5. 啟動
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+開 http://localhost:3000 。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 環境變數（`.env`）
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+DATABASE_URL=    # Neon 連線池 URL（serverless runtime 用）
+DIRECT_URL=      # Neon 直連 URL（prisma migrate 用，繞過連線池）
+AUTH_SECRET=     # NextAuth 工作階段密鑰（用 `npx auth secret` 產生）
+RESEND_API_KEY=  # Email 通知（選填）
+MAIL_FROM=       # 寄件者地址（選填）
+```
 
-## Learn More
+### 示範帳號（`npm run db:seed` 後，密碼皆為 `test1234`）
 
-To learn more about Next.js, take a look at the following resources:
+| 角色 | 帳號 |
+|---|---|
+| 管理員 | `admin@demo.com` |
+| 家長／學生 | `parent1@demo.com`、`parent2@demo.com`、`student@demo.com` |
+| 老師 | `tutor1@test.com` 等 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+管理員登入後從導覽列「管理後台」進入 `/admin`。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 專案結構
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/
+  app/            # 路由（App Router）
+    match/        # 家長找老師（智能配對）
+    jobs/         # 家教需求列表 / 發布 / 老師找案件
+    tutors/       # 老師列表與個人頁
+    messages/     # 私訊
+    forum/        # 討論區
+    stats/        # 行情統計
+    admin/        # 管理後台
+    dashboard/    # 個人面板
+  lib/
+    match.ts      # 智能配對引擎（核心）
+    estimate.ts   # AI 行情估算
+    market.ts     # 行情彙總（admin）
+  components/     # UI 元件
+prisma/
+  schema.prisma   # 資料模型
+  seed.ts         # 示範資料
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+部署：推上 GitHub 後於 Vercel 匯入，設定上述環境變數即可；資料庫遷移與建置流程已分離（`prisma migrate deploy` 對 Neon 執行）。
