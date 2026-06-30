@@ -26,7 +26,7 @@ export default async function DashboardPage() {
         </div>
         <Link
           href="/dashboard/account"
-          className="shrink-0 rounded-full border border-line px-4 py-2 text-sm font-bold text-ink transition hover:bg-sun"
+          className="shrink-0 rounded-full bg-sun px-4 py-2 text-sm font-bold text-paper transition hover:bg-sun-dark"
         >
           帳號與安全 →
         </Link>
