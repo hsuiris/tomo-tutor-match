@@ -141,6 +141,14 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PasswordResetTokenScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.FavoriteScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -322,6 +330,7 @@ exports.ForumBoard = exports.$Enums.ForumBoard = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  PasswordResetToken: 'PasswordResetToken',
   Favorite: 'Favorite',
   VerificationRequest: 'VerificationRequest',
   Conversation: 'Conversation',

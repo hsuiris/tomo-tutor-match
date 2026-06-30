@@ -32,6 +32,15 @@ export default function LoginPage() {
           errors={state.fieldErrors?.password}
         />
 
+        <div className="text-right">
+          <Link
+            href="/forgot-password"
+            className="text-xs font-medium text-cobalt hover:underline"
+          >
+            忘記密碼？
+          </Link>
+        </div>
+
         {state.error && (
           <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">
             {state.error}

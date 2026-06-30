@@ -102,6 +102,21 @@ model User {
   // 討論區
   forumPosts   ForumPost[]  @relation("ForumPosts")
   forumReplies ForumReply[] @relation("ForumReplies")
+
+  passwordResets PasswordResetToken[]
+}
+
+// 忘記密碼重設權杖：只存雜湊（外洩也無法直接使用），單次有效、有期限
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique // sha256(raw token)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
 }
 
 // 收藏：使用者把滿意的老師卡或學生卡加入愛心清單
