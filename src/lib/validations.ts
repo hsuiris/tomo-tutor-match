@@ -10,9 +10,6 @@ export const registerSchema = z
       .regex(/[A-Za-z]/, "密碼需包含英文字母")
       .regex(/[0-9]/, "密碼需包含數字"),
     confirmPassword: z.string(),
-    role: z.enum(["STUDENT", "TUTOR"], {
-      message: "請選擇身分",
-    }),
     gender: z.enum(["MALE", "FEMALE", "UNDISCLOSED"], {
       message: "請選擇性別",
     }),

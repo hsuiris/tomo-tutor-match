@@ -45,7 +45,7 @@ export async function registerUser(
     return { fieldErrors: parsed.error.flatten().fieldErrors, values };
   }
 
-  const { name, email, password, role, gender } = parsed.data;
+  const { name, email, password, gender } = parsed.data;
 
   const existing = await db.user.findUnique({ where: { email } });
   if (existing) {
@@ -54,25 +54,16 @@ export async function registerUser(
 
   const passwordHash = await bcrypt.hash(password, 10);
 
+  // 統一帳號：註冊都是一般使用者（role 預設 STUDENT），要教學再到面板「成為老師」
   await db.user.create({
-    data: {
-      name,
-      email,
-      passwordHash,
-      role,
-      gender,
-      // 註冊老師時自動建立空白檔案
-      ...(role === "TUTOR"
-        ? { tutorProfile: { create: {} } }
-        : {}),
-    },
+    data: { name, email, passwordHash, gender },
   });
 
   // 註冊成功後自動登入（signIn 成功會丟出 redirect）
   await signIn("credentials", {
     email,
     password,
-    redirectTo: role === "TUTOR" ? "/dashboard/profile" : "/tutors",
+    redirectTo: "/dashboard",
   });
 
   return {};

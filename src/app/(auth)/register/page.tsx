@@ -9,7 +9,6 @@ const initialState: ActionState = {};
 
 export default function RegisterPage() {
   const [state, formAction] = useActionState(registerUser, initialState);
-  const [role, setRole] = useState<"STUDENT" | "TUTOR">("STUDENT");
   const [gender, setGender] = useState<"MALE" | "FEMALE" | "UNDISCLOSED">(
     "UNDISCLOSED"
   );
@@ -20,58 +19,6 @@ export default function RegisterPage() {
       <p className="mb-6 text-sm text-ink/60">加入 Tomo，開始找家教或接案</p>
 
       <form action={formAction} className="space-y-4">
-        {/* 身分選擇 */}
-        <div className="space-y-1">
-          <span className="block text-sm font-medium text-ink/80">
-            我想要<span className="ml-0.5 text-red-500">*</span>
-          </span>
-          <div className="grid grid-cols-2 gap-3">
-            {(
-              [
-                { value: "STUDENT", label: "找家教", desc: "我是學生／家長" },
-                { value: "TUTOR", label: "接案教學", desc: "我是家教老師" },
-              ] as const
-            ).map((opt) => (
-              <label
-                key={opt.value}
-                className={`cursor-pointer rounded-lg border p-3 text-center transition ${
-                  role === opt.value
-                    ? "border-line bg-sun"
-                    : "border-line hover:border-line"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="role"
-                  value={opt.value}
-                  checked={role === opt.value}
-                  onChange={() => setRole(opt.value)}
-                  className="sr-only"
-                />
-                <span
-                  className={`block text-sm font-bold ${
-                    role === opt.value ? "text-paper" : "text-ink"
-                  }`}
-                >
-                  {opt.label}
-                </span>
-                <span
-                  className={`block text-xs ${
-                    role === opt.value ? "text-paper/80" : "text-ink/60"
-                  }`}
-                >
-                  {opt.desc}
-                </span>
-              </label>
-            ))}
-          </div>
-          {state.fieldErrors?.role?.map((e) => (
-            <p key={e} className="text-xs text-red-500">
-              {e}
-            </p>
-          ))}
-        </div>
-
         {/* 性別 */}
         <div className="space-y-1">
           <span className="block text-sm font-medium text-ink/80">
