@@ -1,5 +1,8 @@
 // AI 行情估算（資料驅動）：以平台真實行情為基準，依老師條件加權，估算建議時薪。
 // 純函式、可在伺服器與客戶端共用、結果完全可解釋。
+// 平台樣本不足時，回退到「市場公開行情」基準（見 market-baseline.ts），而非寫死數字。
+
+import { baselineRate } from "@/lib/market-baseline";
 
 // 平台市場資料（由 stats 頁以真實老師時薪彙整而成）
 export type MarketData = {
@@ -27,6 +30,9 @@ export type EstimateFactor = {
   pct: number; // 加成比例，例如 +0.15 / -0.05
 };
 
+// 基準來源：platform=平台真實成交、baseline=市場公開行情、default=保底
+export type BaseSource = "platform" | "baseline" | "default";
+
 export type RateEstimate = {
   base: number; // 市場基準時薪
   low: number;
@@ -35,6 +41,7 @@ export type RateEstimate = {
   factors: EstimateFactor[];
   sampleCount: number; // 參與基準計算的市場樣本數（科目×學制格數）
   marketAvg: number; // 對應市場平均（用來比較）
+  source: BaseSource;
 };
 
 const DEFAULT_RATE = 500; // 完全無市場資料時的保底基準
@@ -54,11 +61,12 @@ function clamp(n: number, lo: number, hi: number): number {
   return Math.max(lo, Math.min(hi, n));
 }
 
-// 計算市場基準：優先用「科目×學制」的真實均價，逐級放寬
+// 計算市場基準：優先用平台「科目×學制」真實均價，逐級放寬；
+// 平台沒有對應資料時，回退到市場公開行情基準（而非寫死數字）。
 function baseRate(
   input: EstimateInput,
   market: MarketData
-): { base: number; sampleCount: number; marketAvg: number } {
+): { base: number; sampleCount: number; marketAvg: number; source: BaseSource } {
   const cells: number[] = [];
   for (const s of input.subjects) {
     for (const l of input.levels) {
@@ -68,27 +76,38 @@ function baseRate(
   }
   if (cells.length) {
     const avg = cells.reduce((a, b) => a + b, 0) / cells.length;
-    return { base: avg, sampleCount: cells.length, marketAvg: avg };
+    return { base: avg, sampleCount: cells.length, marketAvg: avg, source: "platform" };
   }
-  // 退而求其次：科目均價
+  // 退而求其次：平台科目均價
   const subjAvgs = input.subjects
     .map((s) => market.bySubject[s])
     .filter((v): v is number => !!v && v > 0);
   if (subjAvgs.length) {
     const avg = subjAvgs.reduce((a, b) => a + b, 0) / subjAvgs.length;
-    return { base: avg, sampleCount: subjAvgs.length, marketAvg: avg };
+    return { base: avg, sampleCount: subjAvgs.length, marketAvg: avg, source: "platform" };
   }
-  // 再退：學制均價
+  // 再退：平台學制均價
   const lvlAvgs = input.levels
     .map((l) => market.byLevel[l])
     .filter((v): v is number => !!v && v > 0);
   if (lvlAvgs.length) {
     const avg = lvlAvgs.reduce((a, b) => a + b, 0) / lvlAvgs.length;
-    return { base: avg, sampleCount: lvlAvgs.length, marketAvg: avg };
+    return { base: avg, sampleCount: lvlAvgs.length, marketAvg: avg, source: "platform" };
   }
-  // 保底：全站平均
-  const avg = market.overall > 0 ? market.overall : DEFAULT_RATE;
-  return { base: avg, sampleCount: 0, marketAvg: avg };
+  // 平台沒有資料 → 用市場公開行情基準（科目×學制）
+  const baseCells: number[] = [];
+  for (const s of input.subjects) {
+    for (const l of input.levels) {
+      const v = baselineRate(s, l);
+      if (v > 0) baseCells.push(v);
+    }
+  }
+  if (baseCells.length) {
+    const avg = baseCells.reduce((a, b) => a + b, 0) / baseCells.length;
+    return { base: avg, sampleCount: 0, marketAvg: avg, source: "baseline" };
+  }
+  // 最終保底
+  return { base: DEFAULT_RATE, sampleCount: 0, marketAvg: DEFAULT_RATE, source: "default" };
 }
 
 function experienceFactor(years: number): EstimateFactor {
@@ -114,7 +133,7 @@ export function estimateRate(
   input: EstimateInput,
   market: MarketData
 ): RateEstimate {
-  const { base, sampleCount, marketAvg } = baseRate(input, market);
+  const { base, sampleCount, marketAvg, source } = baseRate(input, market);
 
   const factors: EstimateFactor[] = [];
   factors.push(experienceFactor(input.experienceYears));
@@ -161,5 +180,6 @@ export function estimateRate(
     factors,
     sampleCount,
     marketAvg: Math.round(marketAvg),
+    source,
   };
 }

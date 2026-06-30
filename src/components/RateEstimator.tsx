@@ -167,8 +167,10 @@ export default function RateEstimator({
               <p className="mt-1 text-xs text-ink/45">
                 市場基準 NT${est.base}
                 {est.sampleCount > 0
-                  ? `（依 ${est.sampleCount} 組科目×學制真實行情）`
-                  : "（市場樣本不足，採概略基準）"}
+                  ? `（依 ${est.sampleCount} 組科目×學制平台真實行情）`
+                  : est.source === "baseline"
+                    ? "（平台樣本不足，採市場公開行情基準）"
+                    : "（採概略基準）"}
               </p>
 
               {/* 加成拆解 */}
