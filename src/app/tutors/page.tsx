@@ -150,11 +150,21 @@ export default async function TutorsPage({
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
-      <h1 className="font-serif text-4xl font-extrabold text-ink">找老師</h1>
-      <div className="mt-2 h-1 w-14 bg-sun" />
-      <p className="mt-3 text-sm font-bold text-ink/60">
-        共 {total} 位老師符合條件
-      </p>
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-4xl font-extrabold text-ink">找老師</h1>
+          <div className="mt-2 h-1 w-14 bg-sun" />
+          <p className="mt-3 text-sm font-bold text-ink/60">
+            共 {total} 位老師符合條件
+          </p>
+        </div>
+        <Link
+          href="/jobs/new"
+          className="shrink-0 rounded-full border border-line bg-sun px-5 py-2.5 text-sm font-bold text-paper transition hover:bg-sun-dark"
+        >
+          發布需求 +
+        </Link>
+      </div>
 
       <div className="mt-6">
         <Suspense>
