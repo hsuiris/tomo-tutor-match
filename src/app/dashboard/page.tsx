@@ -119,7 +119,7 @@ function DashCard({
   return (
     <Link
       href={href}
-      className="group rounded-xl border border-line bg-paper p-6 transition hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(60,55,45,0.10)]"
+      className="group block rounded-xl border border-line bg-paper p-6 transition hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(60,55,45,0.10)]"
     >
       <h2 className="font-serif text-lg font-bold text-ink">
         {title}
