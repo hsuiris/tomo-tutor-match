@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import Avatar from "@/components/Avatar";
 import { publicName } from "@/lib/user";
+import { teachingRelations, relationLabel } from "@/lib/relationship";
 
 export default async function MessagesPage() {
   const session = await auth();
@@ -20,6 +21,9 @@ export default async function MessagesPage() {
     },
   });
 
+  // 一次查出我的所有已媒合關係，給每段對話標對方身分
+  const { myTutorIds, myStudentIds } = await teachingRelations(me);
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-10">
       <h1 className="font-serif text-3xl font-extrabold text-ink">訊息</h1>
@@ -29,27 +33,24 @@ export default async function MessagesPage() {
       {conversations.length === 0 ? (
         <div className="mt-16 text-center text-ink/40">
           還沒有任何對話。到{" "}
-          {session.user.role === "TUTOR" ? (
-            <>
-              <Link href="/jobs" className="text-cobalt hover:underline">
-                找學生
-              </Link>{" "}
-              頁面私訊有興趣的學生吧。
-            </>
-          ) : (
-            <>
-              <Link href="/tutors" className="text-cobalt hover:underline">
-                找老師
-              </Link>{" "}
-              頁面私訊有興趣的老師吧。
-            </>
-          )}
+          <Link href="/tutors" className="text-cobalt hover:underline">
+            找老師
+          </Link>{" "}
+          或{" "}
+          <Link href="/jobs" className="text-cobalt hover:underline">
+            找學生
+          </Link>{" "}
+          頁面私訊吧。
         </div>
       ) : (
         <ul className="divide-y divide-ink/10 rounded-2xl border border-line bg-paper">
           {conversations.map((c) => {
             const other = c.userA.id === me ? c.userB : c.userA;
             const last = c.messages[0];
+            const hat = relationLabel(
+              myTutorIds.has(other.id),
+              myStudentIds.has(other.id)
+            );
             return (
               <li key={c.id}>
                 <Link
@@ -62,12 +63,19 @@ export default async function MessagesPage() {
                     size={48}
                   />
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-medium text-ink">
-                        {publicName(other)}
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="flex min-w-0 items-center gap-1.5">
+                        <span className="truncate font-medium text-ink">
+                          {publicName(other)}
+                        </span>
+                        {hat && (
+                          <span className="shrink-0 rounded-full bg-sun-soft/60 px-1.5 py-0.5 text-[10px] font-medium text-ink/60">
+                            {hat}
+                          </span>
+                        )}
                       </span>
                       {last && (
-                        <span className="text-xs text-ink/40">
+                        <span className="shrink-0 text-xs text-ink/40">
                           {last.createdAt.toLocaleDateString("zh-TW")}
                         </span>
                       )}

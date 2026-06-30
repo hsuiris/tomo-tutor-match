@@ -6,6 +6,7 @@ import Avatar from "@/components/Avatar";
 import MessageComposer from "@/components/MessageComposer";
 import ChatPoller from "@/components/ChatPoller";
 import { publicName } from "@/lib/user";
+import { teachingRelations, relationLabel } from "@/lib/relationship";
 
 export default async function ChatRoomPage({
   params,
@@ -30,6 +31,10 @@ export default async function ChatRoomPage({
 
   const other = convo.userA.id === me ? convo.userB : convo.userA;
 
+  // 對方相對於我的身分（依已媒合關係，反轉時兩種都標）
+  const { myTutorIds, myStudentIds } = await teachingRelations(me);
+  const hat = relationLabel(myTutorIds.has(other.id), myStudentIds.has(other.id));
+
   return (
     <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-2xl flex-col px-4 py-4">
       <ChatPoller />
@@ -43,6 +48,11 @@ export default async function ChatRoomPage({
         <span className="font-bold text-ink">
           {publicName(other)}
         </span>
+        {hat && (
+          <span className="rounded-full bg-sun-soft/60 px-2 py-0.5 text-xs font-medium text-ink/60">
+            {hat}
+          </span>
+        )}
       </div>
 
       {/* 訊息區 */}
