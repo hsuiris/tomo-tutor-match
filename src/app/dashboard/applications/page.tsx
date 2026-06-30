@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { hasTutorProfile } from "@/lib/tutor";
 import { MODE_LABELS, type TeachingMode } from "@/lib/constants";
 
 const APP_STATUS: Record<string, { text: string; cls: string }> = {
@@ -13,10 +14,10 @@ const APP_STATUS: Record<string, { text: string; cls: string }> = {
 export default async function MyApplicationsPage() {
   const session = await auth();
   if (!session) redirect("/login");
-  if (session.user.role !== "TUTOR") {
+  if (!(await hasTutorProfile(session.user.id))) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-24 text-center text-ink/60">
-        只有家教老師有應徵紀錄。
+        還不是老師，沒有應徵紀錄。先到面板「成為老師」吧。
       </div>
     );
   }

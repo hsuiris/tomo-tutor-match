@@ -10,14 +10,6 @@ import type { TeachingMode } from "@/lib/constants";
 export default async function ProfileEditPage() {
   const session = await auth();
   if (!session) redirect("/login");
-  if (session.user.role !== "TUTOR") {
-    // 學生沒有老師檔案
-    return (
-      <div className="mx-auto max-w-2xl px-4 py-24 text-center text-ink/60">
-        只有家教老師可以編輯檔案。
-      </div>
-    );
-  }
 
   const profile = await db.tutorProfile.findUnique({
     where: { userId: session.user.id },
@@ -37,7 +29,7 @@ export default async function ProfileEditPage() {
     },
   });
 
-  // 註冊時已建立空白檔案，理論上一定存在
+  // 還不是老師（沒有檔案）→ 回面板用「成為老師」升級
   if (!profile) redirect("/dashboard");
 
   const initial: ProfileInitial = {

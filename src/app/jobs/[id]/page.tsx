@@ -9,6 +9,7 @@ import TrustBadges from "@/components/TrustBadges";
 import ApplyForm from "@/components/ApplyForm";
 import TutorCard, { type TutorCardData } from "@/components/TutorCard";
 import { publicName } from "@/lib/user";
+import { hasTutorProfile } from "@/lib/tutor";
 import { acceptApplication, rejectApplication } from "@/app/jobs/actions";
 import { MODE_LABELS, type TeachingMode } from "@/lib/constants";
 
@@ -61,17 +62,17 @@ export default async function JobDetailPage({
   if (!job) notFound();
 
   const isOwner = session?.user.id === job.student.id;
-  const isTutor = session?.user.role === "TUTOR";
-  // 只有家長／學生帳號才會看到「為你推薦的老師」,老師帳號不會
-  const isStudent = session?.user.role === "STUDENT";
+  // 能不能應徵看「有沒有老師檔案」，不看 JWT role
+  const isTutor = session ? await hasTutorProfile(session.user.id) : false;
   const myApplication = isTutor
     ? job.applications.find((a) => a.tutor.userId === session?.user.id)
     : undefined;
 
   // 系統依家長需求（科目／學制／地區／預算）推薦適合的老師,並以信任度+評價排序
   const appliedTutorIds = new Set(job.applications.map((a) => a.tutor.id));
+  // 推薦給案主（即使案主本身也是老師，找老師時一樣需要）
   let recommended: TutorCardData[] = [];
-  if (isOwner && isStudent && job.status === "OPEN") {
+  if (isOwner && job.status === "OPEN") {
     const matches = await db.tutorProfile.findMany({
       where: {
         isPublished: true,
@@ -202,8 +203,8 @@ export default async function JobDetailPage({
         </p>
       </div>
 
-      {/* 系統推薦：依家長需求媒合適合的老師（僅家長／學生帳號可見） */}
-      {isOwner && isStudent && job.status === "OPEN" && (
+      {/* 系統推薦：依案主需求媒合適合的老師（案主本人可見） */}
+      {isOwner && job.status === "OPEN" && (
         <div className="mt-6 rounded-2xl border border-line bg-paper p-6">
           <h2 className="font-serif text-xl font-extrabold text-ink">
             ✨ 為你推薦的老師

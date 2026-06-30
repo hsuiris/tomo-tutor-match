@@ -68,9 +68,6 @@ export async function applyToJob(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
-  if (session.user.role !== "TUTOR") {
-    return { error: "只有家教老師可以應徵" };
-  }
 
   const raw = {
     jobId: formData.get("jobId")?.toString() ?? "",
@@ -88,7 +85,7 @@ export async function applyToJob(
     where: { userId: session.user.id },
     select: { id: true },
   });
-  if (!profile) return { error: "找不到你的老師檔案" };
+  if (!profile) return { error: "請先在面板上「成為老師」，才能應徵案件" };
 
   const job = await db.jobPost.findUnique({
     where: { id: parsed.data.jobId },
@@ -96,6 +93,10 @@ export async function applyToJob(
   });
   if (!job || job.status !== "OPEN") {
     return { error: "這個案件已經不開放應徵了" };
+  }
+  // 不能應徵自己發布的需求（兼任學生＋老師時的自我配對）
+  if (job.studentId === session.user.id) {
+    return { error: "不能應徵自己發布的需求" };
   }
 
   // 重複應徵會違反 unique 限制

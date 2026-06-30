@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { profileSchema } from "@/lib/validations";
+import { hasTutorProfile } from "@/lib/tutor";
 import type { ActionState } from "@/lib/types";
 
 export async function updateProfile(
@@ -11,7 +12,7 @@ export async function updateProfile(
   formData: FormData
 ): Promise<ActionState> {
   const session = await auth();
-  if (!session || session.user.role !== "TUTOR") {
+  if (!session || !(await hasTutorProfile(session.user.id))) {
     return { error: "沒有權限" };
   }
 
