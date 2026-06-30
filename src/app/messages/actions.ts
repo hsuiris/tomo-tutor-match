@@ -7,6 +7,17 @@ import { notify } from "@/lib/email";
 import { publicName } from "@/lib/user";
 import type { ActionState } from "@/lib/types";
 
+// 把所有系統通知標為已讀
+export async function markNotificationsRead() {
+  const session = await auth();
+  if (!session) return;
+  await db.notification.updateMany({
+    where: { userId: session.user.id, read: false },
+    data: { read: true },
+  });
+  revalidatePath("/messages");
+}
+
 // 取得或建立與某人的對話，回傳 conversationId（client 端再導轉）
 export async function startConversation(
   otherUserId: string

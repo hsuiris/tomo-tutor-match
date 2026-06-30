@@ -104,6 +104,24 @@ model User {
   forumReplies ForumReply[] @relation("ForumReplies")
 
   passwordResets PasswordResetToken[]
+
+  // 系統通知（審核結果等）
+  notifications Notification[]
+}
+
+// 系統通知：平台主動發給使用者的訊息（如身分認證審核結果），顯示在訊息頁
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  body      String
+  href      String? // 可選的前往連結（如審核結果連到個人檔案）
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+  @@index([userId, createdAt])
 }
 
 // 忘記密碼重設權杖：只存雜湊（外洩也無法直接使用），單次有效、有期限

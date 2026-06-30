@@ -3,12 +3,20 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { notifySystem } from "@/lib/notification";
 
 async function requireAdmin() {
   const session = await auth();
   if (!session || session.user.role !== "ADMIN") return null;
   return session;
 }
+
+// 認證項目對應的中文名稱
+const VERIFY_LABEL = {
+  IDENTITY: "實名認證",
+  BACKGROUND: "無犯罪紀錄查驗",
+  EDUCATION: "學歷與成績認證",
+} as const;
 
 export async function approveVerification(id: string) {
   if (!(await requireAdmin())) return;
@@ -33,13 +41,21 @@ export async function approveVerification(id: string) {
     }),
   ]);
 
+  // 通知本人審核通過
+  await notifySystem(
+    req.userId,
+    `${VERIFY_LABEL[req.type]}已通過`,
+    `你的${VERIFY_LABEL[req.type]}審核通過，個人檔案已顯示信任徽章。`,
+    "/dashboard/account"
+  );
+
   revalidatePath("/admin/verifications");
 }
 
 export async function rejectVerification(id: string) {
   if (!(await requireAdmin())) return;
 
-  await db.verificationRequest.update({
+  const req = await db.verificationRequest.update({
     where: { id },
     // 退回後同樣清除證件影像
     data: {
@@ -49,6 +65,14 @@ export async function rejectVerification(id: string) {
       docUrl: null,
     },
   });
+
+  // 通知本人審核未通過，可重新送審
+  await notifySystem(
+    req.userId,
+    `${VERIFY_LABEL[req.type]}未通過`,
+    `你的${VERIFY_LABEL[req.type]}審核未通過：${req.note}。可重新上傳清晰證件再次送審。`,
+    "/dashboard/account"
+  );
 
   revalidatePath("/admin/verifications");
 }
