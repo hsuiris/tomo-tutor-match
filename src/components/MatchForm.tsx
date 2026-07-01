@@ -23,7 +23,7 @@ type Defaults = {
 };
 
 // compact：首頁 Hero 用的精簡版（科目／地區／預算 + 配對按鈕）
-// full：智能匹配頁的完整版
+// full：找老師頁「智能配對」模式的完整版
 export default function MatchForm({
   variant = "full",
   defaults = {},
@@ -59,7 +59,8 @@ export default function MatchForm({
     if (mode) params.set("mode", mode);
     if (gender) params.set("gender", gender);
     if (priority && priority !== "balanced") params.set("priority", priority);
-    router.push(`/match?${params.toString()}`);
+    const qs = params.toString();
+    router.push(`/tutors?view=match${qs ? `&${qs}` : ""}`);
   }
 
   const fieldCls =

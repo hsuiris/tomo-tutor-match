@@ -86,7 +86,7 @@ export default async function HomePage() {
 
           <p className="mt-3 text-xs font-bold text-ink/60">
             想設定更多條件？
-            <Link href="/match" className="underline underline-offset-2 hover:text-ink">
+            <Link href="/tutors?view=match" className="underline underline-offset-2 hover:text-ink">
               前往完整智能配對 →
             </Link>
           </p>
@@ -109,7 +109,7 @@ export default async function HomePage() {
             (s) => (
               <Link
                 key={s}
-                href={`/match?subject=${encodeURIComponent(s)}`}
+                href={`/tutors?view=match&subject=${encodeURIComponent(s)}`}
                 className="rounded-full border border-line bg-paper px-5 py-2 text-sm font-bold text-ink transition hover:bg-sun"
               >
                 {s}

@@ -18,20 +18,8 @@ export default async function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-7 text-sm font-bold text-ink sm:flex">
-          <Link
-            href="/match"
-            className="inline-flex items-center gap-1 rounded-full bg-sun px-3 py-1 text-paper transition hover:bg-sun-dark"
-          >
-            ✨ 智能匹配
-          </Link>
           <Link href="/tutors" className="transition hover:text-cobalt">
             找老師
-          </Link>
-          <Link
-            href="/jobs/match"
-            className="inline-flex items-center gap-1 rounded-full bg-sun px-3 py-1 text-paper transition hover:bg-sun-dark"
-          >
-            ✨ 智能接案
           </Link>
           <Link href="/jobs" className="transition hover:text-cobalt">
             找學生
