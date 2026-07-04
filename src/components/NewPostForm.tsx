@@ -79,7 +79,7 @@ export default function NewPostForm({ board }: { board: "TUTOR" | "PARENT" }) {
         <button
           type="button"
           onClick={() => setOpen(false)}
-          className="rounded-full border border-line px-4 py-2 text-sm text-ink/70 hover:bg-sun-soft/40"
+          className="whitespace-nowrap rounded-full border border-line px-4 py-2 text-sm text-ink/70 hover:bg-sun-soft/40"
         >
           取消
         </button>
