@@ -12,6 +12,7 @@ import { publicName } from "@/lib/user";
 import { hasTutorProfile } from "@/lib/tutor";
 import { acceptApplication, rejectApplication } from "@/app/jobs/actions";
 import { MODE_LABELS, type TeachingMode } from "@/lib/constants";
+import BackLink from "@/components/BackLink";
 
 const APP_STATUS: Record<string, { text: string; cls: string }> = {
   PENDING: { text: "應徵中", cls: "bg-amber-50 text-amber-600" },
@@ -129,9 +130,7 @@ export default async function JobDetailPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <Link href="/jobs" className="text-sm text-ink/40 hover:text-cobalt">
-        ← 返回需求列表
-      </Link>
+      <BackLink href="/jobs">返回需求列表</BackLink>
 
       {/* 案件資訊 */}
       <div className="mt-4 rounded-2xl border border-line bg-paper p-6">

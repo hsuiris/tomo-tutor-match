@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import BackLink from "@/components/BackLink";
 
 export const metadata: Metadata = {
   title: "隱私權政策與個資蒐集告知 ・ Tomo",
@@ -125,9 +125,7 @@ export default function PrivacyPage() {
       </Section>
 
       <div className="mt-10 border-t border-line pt-6">
-        <Link href="/register" className="text-sm font-medium text-cobalt hover:underline">
-          ← 返回註冊
-        </Link>
+        <BackLink href="/register">返回註冊</BackLink>
       </div>
     </div>
   );
