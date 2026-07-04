@@ -27,16 +27,16 @@ export default async function BoardPage({
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <BackLink href="/forum">所有看板</BackLink>
-      <h1 className="mt-3 flex items-center gap-2.5 font-serif text-3xl font-extrabold text-ink">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={meta.image}
-          alt={meta.title}
-          className="h-11 w-auto object-contain"
-        />
-        {meta.title}
-      </h1>
-      <div className="mt-4 mb-6">
+      <div className="mt-3 mb-6 flex flex-wrap items-center justify-between gap-4">
+        <h1 className="flex items-center gap-2.5 font-serif text-3xl font-extrabold text-ink">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={meta.image}
+            alt={meta.title}
+            className="h-11 w-auto object-contain"
+          />
+          {meta.title}
+        </h1>
         <NewPostForm board={meta.value} />
       </div>
 

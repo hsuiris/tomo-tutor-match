@@ -23,7 +23,7 @@ export default function NewPostForm({ board }: { board: "TUTOR" | "PARENT" }) {
         onClick={() => setOpen(true)}
         className="rounded-full bg-sun px-4 py-2 text-sm font-bold text-paper hover:bg-sun/80"
       >
-        發表主題
+        發表文章
       </button>
     );
   }
@@ -31,7 +31,7 @@ export default function NewPostForm({ board }: { board: "TUTOR" | "PARENT" }) {
   return (
     <form
       action={formAction}
-      className="space-y-3 rounded-2xl border border-line bg-paper p-5"
+      className="w-full space-y-3 rounded-2xl border border-line bg-paper p-5"
     >
       <input type="hidden" name="board" value={board} />
       <div>
