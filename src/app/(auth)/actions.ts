@@ -3,7 +3,6 @@
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
-import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { signIn } from "@/auth";
 import { registerSchema, loginSchema } from "@/lib/validations";
@@ -143,17 +142,23 @@ export async function requestPasswordReset(
     data: { tokenHash: sha256(raw), userId: user.id, expiresAt },
   });
 
-  const h = await headers();
-  const host = h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? "https";
-  const link = `${proto}://${host}/reset-password?token=${raw}`;
-  await sendEmail({
+  // 連結來源必須是受信任的固定網域（AUTH_URL），不可用 request 的 Host header，
+  // 否則攻擊者可偽造 Host 讓重設信指向惡意網域並竊取權杖（reset link poisoning）。
+  const baseUrl = (
+    process.env.AUTH_URL ??
+    process.env.APP_URL ??
+    "http://localhost:3000"
+  ).replace(/\/+$/, "");
+  const link = `${baseUrl}/reset-password?token=${raw}`;
+  // 不 await 寄信：避免「已註冊的 email 因寄信變慢」形成時序旁路，
+  // 洩漏帳號是否存在（配合上方對不存在帳號的立即回傳，讓兩者回應時間趨於一致）。
+  void sendEmail({
     to: email,
     subject: "Tomo：重設你的密碼",
     html: `<p>你要求重設 Tomo 密碼。點擊以下連結設定新密碼（1 小時內有效，僅能使用一次）：</p>
 <p><a href="${link}">${link}</a></p>
 <p>若不是你本人操作，請忽略這封信，你的密碼不會變動。</p>`,
-  });
+  }).catch((e) => console.error("[pwreset] 寄信失敗", e));
 
   return generic;
 }
@@ -163,6 +168,11 @@ export async function resetPassword(
   _prev: ActionState,
   formData: FormData
 ): Promise<ActionState> {
+  // 擋權杖暴力嘗試：每 IP 10 次/5 分（權杖為 256-bit 亂數，主要為縱深防禦）
+  if (!(await rateLimit(`pwreset-confirm:ip:${await clientIp()}`, 10, 300))) {
+    return { error: TOO_MANY };
+  }
+
   const token = formData.get("token")?.toString() ?? "";
   const next = formData.get("next")?.toString() ?? "";
   const confirm = formData.get("confirm")?.toString() ?? "";

@@ -106,9 +106,15 @@ npm run dev
 DATABASE_URL=    # Neon 連線池 URL（serverless runtime 用）
 DIRECT_URL=      # Neon 直連 URL（prisma migrate 用，繞過連線池）
 AUTH_SECRET=     # NextAuth 工作階段密鑰（用 `npx auth secret` 產生）
+AUTH_URL=        # 正式站台網址（如 https://tomo.example.com）；密碼重設連結以此為準，
+                 # 未設定會退回 http://localhost:3000。務必設定，避免 Host header 被偽造。
 RESEND_API_KEY=  # Email 通知（選填）
 MAIL_FROM=       # 寄件者地址（選填）
 ```
+
+> 安全提醒：`npm run db:seed` 會建立密碼為 `test1234` 的示範帳號（含管理員），僅供本機開發。
+> seed 在 `NODE_ENV=production` 會直接中止（除非明確設 `ALLOW_PROD_SEED=1`）；
+> 可用 `SEED_PASSWORD` 覆寫示範密碼。切勿對正式資料庫執行 seed。
 
 ### 示範帳號（`npm run db:seed` 後，密碼皆為 `test1234`）
 

@@ -151,7 +151,16 @@ const reviewsByEmail: Record<string, { rating: number; comment: string }[]> = {
 };
 
 async function main() {
-  const passwordHash = await bcrypt.hash("test1234", 10);
+  // 安全防護：demo 帳號（含 admin@demo.com）使用固定弱密碼，僅供本機開發用。
+  // 禁止在正式環境執行，避免植入已知密碼的管理員後門；需覆寫請明確設 ALLOW_PROD_SEED=1。
+  if (process.env.NODE_ENV === "production" && process.env.ALLOW_PROD_SEED !== "1") {
+    throw new Error(
+      "拒絕在 production 執行 seed（會植入已知密碼的 demo 帳號）。如確定要跑，請設定 ALLOW_PROD_SEED=1。"
+    );
+  }
+  // demo 密碼可用 SEED_PASSWORD 覆寫；未設定時退回本機開發用預設值。
+  const seedPassword = process.env.SEED_PASSWORD ?? "test1234";
+  const passwordHash = await bcrypt.hash(seedPassword, 10);
 
   // 兩位學生（用來當評價作者）
   const student = await db.user.upsert({
