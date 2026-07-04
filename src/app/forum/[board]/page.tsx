@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import BackLink from "@/components/BackLink";
 import { db } from "@/lib/db";
 import { FORUM_BOARDS, isBoardSlug } from "@/lib/forum";
 import { forumAuthor } from "@/lib/user";
@@ -25,9 +26,7 @@ export default async function BoardPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <Link href="/forum" className="text-sm text-ink/40 hover:text-cobalt">
-        ← 所有看板
-      </Link>
+      <BackLink href="/forum">所有看板</BackLink>
       <h1 className="mt-3 flex items-center gap-2.5 font-serif text-3xl font-extrabold text-ink">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

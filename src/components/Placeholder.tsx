@@ -1,4 +1,4 @@
-import Link from "next/link";
+import BackLink from "@/components/BackLink";
 
 // 尚未實作的頁面佔位（後續 Phase 會完成）
 export default function Placeholder({
@@ -14,12 +14,9 @@ export default function Placeholder({
       <p className="mt-3 text-ink/60">
         這個頁面將在 {phase} 完成,敬請期待。
       </p>
-      <Link
-        href="/"
-        className="mt-6 inline-block text-sm font-medium text-cobalt hover:underline"
-      >
-        ← 回首頁
-      </Link>
+      <div className="mt-6">
+        <BackLink href="/">回首頁</BackLink>
+      </div>
     </div>
   );
 }

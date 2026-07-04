@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import BackLink from "@/components/BackLink";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import Avatar from "@/components/Avatar";
@@ -41,9 +41,7 @@ export default async function ChatRoomPage({
 
       {/* 標頭 */}
       <div className="flex items-center gap-3 border-b border-line/15 pb-3">
-        <Link href="/messages" className="text-ink/40 hover:text-cobalt">
-          ←
-        </Link>
+        <BackLink href="/messages" />
         <Avatar name={publicName(other)} url={other.avatarUrl} size={40} />
         <span className="font-bold text-ink">
           {publicName(other)}
