@@ -65,7 +65,7 @@ export default async function MyApplicationsPage() {
               <li key={app.id}>
                 <Link
                   href={`/jobs/${app.job.id}`}
-                  className="block rounded-2xl border border-line p-5 transition hover:border-line hover:shadow-sm"
+                  className="block rounded-2xl border border-line bg-white p-5 transition hover:border-line hover:shadow-sm"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-bold text-ink">

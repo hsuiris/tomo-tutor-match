@@ -65,6 +65,7 @@ model User {
   role         Role     @default(STUDENT)
   gender       Gender   @default(UNDISCLOSED)
   avatarUrl    String? // 頭像（data URL 或外部網址）
+  photoUrls    String[] // 檔案照片牆（data URL，上限 3 張；顯示於公開檔案頁）
 
   // 安全認證
   idVerified      Boolean @default(false) // 實名認證通過

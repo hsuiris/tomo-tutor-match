@@ -94,6 +94,29 @@ export async function updateAlias(
   return { success: "顯示名稱已更新" };
 }
 
+// 更新檔案照片牆（家長與老師共用；顯示於公開檔案頁）
+export async function updatePhotos(
+  photos: string[]
+): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session) return { error: "請先登入" };
+
+  if (photos.length > 3) return { error: "最多 3 張照片" };
+  for (const p of photos) {
+    if (!p.startsWith("data:image/")) return { error: "照片格式不正確" };
+    if (p.length > 1_200_000) return { error: "每張照片請小於 800KB" };
+  }
+
+  await db.user.update({
+    where: { id: session.user.id },
+    data: { photoUrls: photos },
+  });
+
+  revalidatePath("/dashboard/account");
+  revalidatePath(`/u/${session.user.id}`);
+  return {};
+}
+
 // 送出安全認證申請（上傳證件）
 export async function submitVerification(
   _prev: ActionState,

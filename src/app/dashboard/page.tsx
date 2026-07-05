@@ -55,6 +55,11 @@ export default async function DashboardPage() {
               title="我發布的需求"
               desc="管理你的案件、查看應徵者並完成配對"
             />
+            <DashCard
+              href="/dashboard/tutors"
+              title="過去的老師"
+              desc="成交過的老師紀錄，可回頭評價與保持紀錄"
+            />
           </div>
         </section>
 
@@ -77,6 +82,11 @@ export default async function DashboardPage() {
                   href="/dashboard/applications"
                   title="我的應徵"
                   desc="查看你應徵過的案件與錄取狀態"
+                />
+                <DashCard
+                  href="/dashboard/students"
+                  title="我的學生"
+                  desc="成交過的學生與家長紀錄，可回頭評價"
                 />
               </>
             ) : (
