@@ -13,6 +13,7 @@
 const SUBJECT_GATE_PENALTY = 0.1; // 科目不符時的最終分數係數（硬門檻）
 
 import type { TeachingMode } from "@/lib/constants";
+import { regionsCover } from "@/lib/regions";
 
 // 學生輸入的配對條件
 export type MatchCriteria = {
@@ -165,7 +166,7 @@ export function scoreTutor(
     if (wantsOnline) {
       fitness = teachesOnline ? 1 : 0;
       if (teachesOnline) reason = { label: "提供線上授課", positive: true };
-    } else if (tutor.regions.includes(criteria.region)) {
+    } else if (regionsCover(tutor.regions, criteria.region)) {
       fitness = 1;
       reason = { label: `可在 ${criteria.region} 授課`, positive: true };
     } else if (teachesOnline) {
@@ -386,7 +387,7 @@ export function scoreJob(job: MatchJob, profile: JobMatchProfile): ScoredJob {
       fitness = teachesOnline ? 1 : 0;
       if (teachesOnline) reason = { label: "可線上授課", positive: true };
       else reason = { label: "對方要線上、你未提供", positive: false };
-    } else if (profile.regions.includes(job.region)) {
+    } else if (regionsCover(profile.regions, job.region)) {
       fitness = 1;
       reason = { label: `在你的授課地區 ${job.region}`, positive: true };
     } else if (teachesOnline) {

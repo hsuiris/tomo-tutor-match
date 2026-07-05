@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { Prisma } from "@/generated/prisma";
+import { expandRegions } from "@/lib/regions";
 import JobCard from "@/components/JobCard";
 import JobFilters from "@/components/JobFilters";
 import JobMatchCard from "@/components/JobMatchCard";
@@ -10,6 +11,12 @@ import ModeTabs from "@/components/ModeTabs";
 import { hasTutorProfile } from "@/lib/tutor";
 import { becomeTutor } from "@/app/dashboard/actions";
 import { rankJobs, type JobMatchProfile, type MatchJob } from "@/lib/match";
+
+export const metadata = {
+  title: "找案件",
+  description: "瀏覽 Tomo 上開放中的家教需求案件：科目、地區、預算與學生狀況，老師可直接應徵。",
+  alternates: { canonical: "/jobs" },
+};
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -97,7 +104,7 @@ async function BrowseMode({ sp }: { sp: Awaited<SearchParams> }) {
   const where: Prisma.JobPostWhereInput = { status: "OPEN" };
   if (subjects.length) where.subject = { in: subjects };
   if (levels.length) where.level = { in: levels };
-  if (regions.length) where.region = { in: regions };
+  if (regions.length) where.region = { in: expandRegions(regions) };
   if (gender === "MALE" || gender === "FEMALE") {
     where.student = { gender };
   }

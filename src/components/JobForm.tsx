@@ -3,7 +3,8 @@
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createJob } from "@/app/jobs/actions";
-import { SUBJECTS, REGIONS, levelsForSubject } from "@/lib/constants";
+import { SUBJECTS, levelsForSubject } from "@/lib/constants";
+import RegionOptions from "@/components/RegionOptions";
 import { SubmitButton } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
@@ -122,11 +123,7 @@ export default function JobForm() {
             <option value="" disabled>
               請選擇
             </option>
-            {REGIONS.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
+            <RegionOptions />
           </select>
           {err?.region?.map((e) => (
             <p key={e} className="mt-1 text-xs text-red-500">

@@ -63,19 +63,6 @@ export const EDU_LEVELS = [
   "博士畢業",
 ] as const;
 
-export const REGIONS = [
-  "線上",
-  "台北市",
-  "新北市",
-  "桃園市",
-  "新竹市",
-  "台中市",
-  "台南市",
-  "高雄市",
-  "基隆市",
-  "其他",
-] as const;
-
 export type TeachingMode = "ONLINE" | "IN_PERSON" | "BOTH";
 
 export const MODE_LABELS: Record<TeachingMode, string> = {
