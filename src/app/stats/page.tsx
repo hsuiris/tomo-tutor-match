@@ -151,7 +151,7 @@ export default async function StatsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-10">
+    <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
       {/* Hero：柔暖漸層 */}
       <div className="rounded-3xl border border-line bg-gradient-to-br from-sun-soft via-paper to-blushbg px-6 py-12 shadow-card sm:px-12">
         <h1 className="font-serif text-4xl font-extrabold text-ink sm:text-5xl">

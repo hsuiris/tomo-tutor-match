@@ -6,6 +6,7 @@ import Avatar from "@/components/Avatar";
 import { publicName } from "@/lib/user";
 import { teachingRelations, relationLabel } from "@/lib/relationship";
 import { markNotificationsRead } from "@/app/messages/actions";
+import NotificationDeleteButton from "@/components/NotificationDeleteButton";
 
 export default async function MessagesPage() {
   const session = await auth();
@@ -40,7 +41,7 @@ export default async function MessagesPage() {
   const unread = notifications.filter((n) => !n.read).length;
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10">
+    <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="font-serif text-3xl font-extrabold text-ink">訊息</h1>
       <div className="mt-2 h-1 w-14 bg-sun" />
       <p className="mt-1 mb-6 text-sm text-ink/60">系統通知與私訊對話</p>
@@ -78,8 +79,11 @@ export default async function MessagesPage() {
                         {n.title}
                       </span>
                     </span>
-                    <span className="shrink-0 text-xs text-ink/40">
-                      {n.createdAt.toLocaleDateString("zh-TW")}
+                    <span className="flex shrink-0 items-center gap-1">
+                      <span className="text-xs text-ink/40">
+                        {n.createdAt.toLocaleDateString("zh-TW")}
+                      </span>
+                      <NotificationDeleteButton id={n.id} />
                     </span>
                   </div>
                   <p className="mt-0.5 text-sm text-ink/60">{n.body}</p>
