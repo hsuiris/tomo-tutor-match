@@ -19,12 +19,14 @@ export default function Avatar({
 }) {
   if (url) {
     return (
+      // 頭像多為 DB 裡的 base64 data URL，next/image 幫不上忙；
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={url}
         alt={name}
         width={size}
         height={size}
+        loading="lazy"
         className="rounded-full object-cover"
         style={{ width: size, height: size }}
       />

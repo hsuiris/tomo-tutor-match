@@ -34,9 +34,10 @@ export async function sendEmail(args: {
 }
 
 // 依使用者通知偏好寄送（總開關 + 分類開關都要開才寄）
+// kind "system"：帳號層級通知（如認證審核結果），只看總開關
 export async function notify(opts: {
   userId: string;
-  kind: "jobUpdate" | "message";
+  kind: "jobUpdate" | "message" | "system";
   subject: string;
   html: string;
 }): Promise<void> {

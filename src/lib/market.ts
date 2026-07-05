@@ -1,6 +1,8 @@
 // 行情彙總（純函式，不碰 DB）：給定老師與案件清單，算各維度時薪統計。
 // admin 行情頁用；與 /stats 的公開估算（lib/estimate.ts）分工：這裡是描述性統計。
 
+import { regionsCover } from "@/lib/regions";
+
 export type RateRow = {
   key: string;
   count: number;
@@ -67,7 +69,7 @@ export function aggregateMarket(
     .filter((r) => r.count > 0);
 
   const byRegion = dims.regions
-    .map((r) => rateRow(r, rateOf((t) => t.regions.includes(r))))
+    .map((r) => rateRow(r, rateOf((t) => regionsCover(t.regions, r))))
     .filter((r) => r.count > 0)
     .sort((a, b) => b.avg - a.avg);
 

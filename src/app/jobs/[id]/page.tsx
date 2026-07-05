@@ -20,6 +20,26 @@ const APP_STATUS: Record<string, { text: string; cls: string }> = {
   REJECTED: { text: "未錄取", cls: "bg-sun-soft/50 text-ink/40" },
 };
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const job = await db.jobPost.findUnique({
+    where: { id },
+    select: { title: true, subject: true, region: true, description: true },
+  });
+  if (!job) return { title: "找不到案件" };
+  return {
+    title: job.title,
+    description:
+      job.description?.slice(0, 120) ||
+      `${job.region}・${job.subject} 家教需求，歡迎老師應徵。`,
+    alternates: { canonical: `/jobs/${id}` },
+  };
+}
+
 export default async function JobDetailPage({
   params,
 }: {
@@ -305,12 +325,12 @@ export default async function JobDetailPage({
                         {job.status === "OPEN" && app.status === "PENDING" && (
                           <div className="mt-3 flex gap-2">
                             <form action={acceptApplication.bind(null, app.id)}>
-                              <button className="rounded-full bg-sun px-3 py-1.5 text-xs font-bold text-paper hover:bg-sun/80">
+                              <button className="rounded-full bg-sun px-4 py-2.5 text-sm font-bold text-paper hover:bg-sun/80">
                                 接受並配對
                               </button>
                             </form>
                             <form action={rejectApplication.bind(null, app.id)}>
-                              <button className="rounded-full border border-line px-3 py-1.5 text-xs font-medium text-ink/70 hover:bg-sun-soft/40">
+                              <button className="rounded-full border border-line px-4 py-2.5 text-sm font-medium text-ink/70 hover:bg-sun-soft/40">
                                 婉拒
                               </button>
                             </form>

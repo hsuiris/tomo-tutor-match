@@ -3,7 +3,7 @@ import { Prisma } from "@/generated/prisma";
 import { db } from "@/lib/db";
 import { closeJob } from "@/app/admin/actions";
 
-export const metadata = { title: "媒合管理 · Tomo" };
+export const metadata = { title: "媒合管理" };
 
 const PER = 50;
 const STATUSES = ["OPEN", "MATCHED", "CLOSED"] as const;

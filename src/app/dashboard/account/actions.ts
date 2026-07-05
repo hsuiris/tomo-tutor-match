@@ -21,8 +21,8 @@ export async function changePassword(
   if (next !== confirm) {
     return { fieldErrors: { confirm: ["兩次輸入的新密碼不一致"] } };
   }
-  if (next.length < 6 || !/[A-Za-z]/.test(next) || !/[0-9]/.test(next)) {
-    return { fieldErrors: { next: ["密碼至少 6 字元，需含英文字母與數字"] } };
+  if (next.length < 8 || !/[A-Za-z]/.test(next) || !/[0-9]/.test(next)) {
+    return { fieldErrors: { next: ["密碼至少 8 字元，需含英文字母與數字"] } };
   }
 
   const user = await db.user.findUnique({

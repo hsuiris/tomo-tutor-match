@@ -10,6 +10,32 @@ import ReviewForm from "@/components/ReviewForm";
 import { publicName } from "@/lib/user";
 import { MODE_LABELS, GENDER_LABELS, type TeachingMode } from "@/lib/constants";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const user = await db.user.findUnique({
+    where: { id },
+    select: {
+      name: true,
+      displayName: true,
+      tutorProfile: { select: { bio: true, isPublished: true } },
+    },
+  });
+  if (!user) return { title: "找不到使用者" };
+  const name = publicName(user);
+  return {
+    title: `${name} 的個人檔案`,
+    description:
+      user.tutorProfile?.isPublished && user.tutorProfile.bio
+        ? user.tutorProfile.bio.slice(0, 120)
+        : `${name} 在 Tomo 家教媒合平台的公開檔案。`,
+    alternates: { canonical: `/u/${id}` },
+  };
+}
+
 export default async function UserProfilePage({
   params,
 }: {

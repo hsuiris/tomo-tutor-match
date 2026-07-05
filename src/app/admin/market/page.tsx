@@ -1,8 +1,9 @@
 import { db } from "@/lib/db";
-import { SUBJECTS, ALL_LEVELS as LEVELS, REGIONS } from "@/lib/constants";
+import { SUBJECTS, ALL_LEVELS as LEVELS } from "@/lib/constants";
+import { CITY_REGIONS } from "@/lib/regions";
 import { aggregateMarket, type RateRow } from "@/lib/market";
 
-export const metadata = { title: "家教行情分析 · Tomo" };
+export const metadata = { title: "家教行情分析" };
 
 function RateTable({ title, rows }: { title: string; rows: RateRow[] }) {
   return (
@@ -52,7 +53,7 @@ export default async function AdminMarketPage() {
   const m = aggregateMarket(tutors, jobs, {
     subjects: SUBJECTS,
     levels: LEVELS,
-    regions: REGIONS,
+    regions: CITY_REGIONS,
   });
 
   return (

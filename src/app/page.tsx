@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
@@ -204,8 +205,13 @@ function SectionHeading({
   return (
     <div className="flex items-center justify-center gap-4 sm:gap-8">
       {leftImg && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={leftImg} alt="" className="hidden h-24 w-auto object-contain sm:block" />
+        <Image
+          src={leftImg}
+          alt=""
+          width={96}
+          height={96}
+          className="hidden h-24 w-auto object-contain sm:block"
+        />
       )}
       <div className="text-center">
         <h2 className="font-serif text-3xl font-extrabold text-ink sm:text-4xl">
@@ -214,8 +220,13 @@ function SectionHeading({
         <div className="mx-auto mt-2 h-1 w-16 bg-sun" />
       </div>
       {rightImg && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={rightImg} alt="" className="hidden h-24 w-auto object-contain sm:block" />
+        <Image
+          src={rightImg}
+          alt=""
+          width={96}
+          height={96}
+          className="hidden h-24 w-auto object-contain sm:block"
+        />
       )}
     </div>
   );

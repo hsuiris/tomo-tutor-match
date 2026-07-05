@@ -1,8 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { FORUM_BOARDS } from "@/lib/forum";
 
-export const metadata = { title: "討論區 · Tomo" };
+export const metadata = { title: "討論區" };
 
 export default async function ForumHome() {
   const counts = await db.forumPost.groupBy({
@@ -42,10 +43,11 @@ export default async function ForumHome() {
                 </div>
                 {/* 右：完整圖片（固定相同高度，兩張一樣大） */}
                 <div className="flex shrink-0 items-end justify-center">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={b.image}
                     alt={b.title}
+                    width={158}
+                    height={144}
                     className="h-36 w-auto object-contain object-bottom"
                   />
                 </div>

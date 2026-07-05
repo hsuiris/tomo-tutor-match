@@ -5,7 +5,7 @@ import {
   deleteReview,
 } from "@/app/admin/actions";
 
-export const metadata = { title: "內容管理 · Tomo" };
+export const metadata = { title: "內容管理" };
 
 const PER = 50;
 const BOARD_LABEL: Record<string, string> = {

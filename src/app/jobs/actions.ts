@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { jobSchema, applicationSchema } from "@/lib/validations";
 import { notify } from "@/lib/email";
+import { notifySystem } from "@/lib/notification";
 import type { ActionState } from "@/lib/types";
 
 // 學生發布需求
@@ -141,6 +142,12 @@ export async function acceptApplication(applicationId: string) {
   });
   if (!app || app.job.studentId !== session.user.id) return;
 
+  // 其他落選者名單（通知用，需在標記 REJECTED 前取得）
+  const others = await db.application.findMany({
+    where: { jobId: app.job.id, id: { not: applicationId }, status: "PENDING" },
+    select: { tutor: { select: { userId: true } } },
+  });
+
   await db.$transaction([
     db.application.update({
       where: { id: applicationId },
@@ -165,6 +172,16 @@ export async function acceptApplication(applicationId: string) {
     html: `<p>恭喜！家長選擇了你來教授「${app.job.title}」，登入即可私訊聯繫。</p>`,
   });
 
+  // 站內通知其他落選者，別讓人一直等
+  for (const o of others) {
+    await notifySystem(
+      o.tutor.userId,
+      `案件「${app.job.title}」已選定其他老師`,
+      "這次未被選上，別氣餒，還有更多案件等你應徵。",
+      "/jobs"
+    );
+  }
+
   revalidatePath(`/jobs/${app.job.id}`);
 }
 
@@ -175,7 +192,10 @@ export async function rejectApplication(applicationId: string) {
 
   const app = await db.application.findUnique({
     where: { id: applicationId },
-    include: { job: { select: { id: true, studentId: true } } },
+    include: {
+      job: { select: { id: true, studentId: true, title: true } },
+      tutor: { select: { userId: true } },
+    },
   });
   if (!app || app.job.studentId !== session.user.id) return;
 
@@ -183,6 +203,14 @@ export async function rejectApplication(applicationId: string) {
     where: { id: applicationId },
     data: { status: "REJECTED" },
   });
+
+  // 站內通知被婉拒的老師
+  await notifySystem(
+    app.tutor.userId,
+    `案件「${app.job.title}」的應徵未被接受`,
+    "這次未被選上，別氣餒，還有更多案件等你應徵。",
+    "/jobs"
+  );
 
   revalidatePath(`/jobs/${app.job.id}`);
 }

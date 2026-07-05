@@ -5,11 +5,11 @@ import { useState } from "react";
 import {
   SUBJECTS,
   ALL_LEVELS,
-  REGIONS,
   EDU_LEVELS,
   SORT_OPTIONS,
   GENDER_OPTIONS,
 } from "@/lib/constants";
+import RegionPicker from "@/components/RegionPicker";
 
 export default function TutorFilters() {
   const router = useRouter();
@@ -204,12 +204,18 @@ export default function TutorFilters() {
         selected={levels}
         onToggle={(v) => toggle("levels", v)}
       />
-      <PillRow
-        label="地區（可複選）"
-        options={REGIONS}
-        selected={regions}
-        onToggle={(v) => toggle("regions", v)}
-      />
+      <div>
+        <label className="mb-2 block text-xs font-bold text-ink/60">
+          地區（可複選）
+        </label>
+        <RegionPicker
+          value={regions}
+          onChange={(next) => {
+            setRegions(next);
+            apply({ regions: next });
+          }}
+        />
+      </div>
       <PillRow
         label="教育程度（可複選）"
         options={EDU_LEVELS}

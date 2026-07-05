@@ -4,13 +4,13 @@ import { useActionState, useState, type ReactNode } from "react";
 import { updateProfile } from "@/app/dashboard/profile/actions";
 import {
   SUBJECTS,
-  REGIONS,
   EDU_LEVELS,
   levelsForSubjects,
   type TeachingMode,
   type Gender,
 } from "@/lib/constants";
 import Avatar from "@/components/Avatar";
+import RegionPicker from "@/components/RegionPicker";
 import type { ActionState } from "@/lib/types";
 
 export type ProfileInitial = {
@@ -357,31 +357,7 @@ export default function ProfileForm({
         <legend className="mb-2 text-sm font-medium text-ink/80">
           授課地區 <span className="text-red-500">*</span>
         </legend>
-        <div className="flex flex-wrap gap-2">
-          {REGIONS.map((r) => {
-            const active = regions.includes(r);
-            return (
-              <label
-                key={r}
-                className={`cursor-pointer rounded-full border px-3 py-1 text-sm transition ${
-                  active
-                    ? "border-line bg-sun text-paper"
-                    : "border-line text-ink/70 hover:border-line"
-                }`}
-              >
-                <input
-                  type="checkbox"
-                  name="regions"
-                  value={r}
-                  checked={active}
-                  onChange={() => toggle(regions, setRegions, r)}
-                  className="sr-only"
-                />
-                {r}
-              </label>
-            );
-          })}
-        </div>
+        <RegionPicker name="regions" value={regions} onChange={setRegions} />
         {err?.regions?.map((e) => (
           <p key={e} className="mt-1 text-xs text-red-500">
             {e}

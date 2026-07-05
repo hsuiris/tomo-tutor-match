@@ -3,12 +3,12 @@
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
-import { headers } from "next/headers";
 import { db } from "@/lib/db";
 import { signIn } from "@/auth";
 import { registerSchema, loginSchema } from "@/lib/validations";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { sendEmail } from "@/lib/email";
+import { siteUrl } from "@/lib/site";
 
 const TOO_MANY = "嘗試次數過多，請稍後再試";
 
@@ -143,10 +143,8 @@ export async function requestPasswordReset(
     data: { tokenHash: sha256(raw), userId: user.id, expiresAt },
   });
 
-  const h = await headers();
-  const host = h.get("host");
-  const proto = h.get("x-forwarded-proto") ?? "https";
-  const link = `${proto}://${host}/reset-password?token=${raw}`;
+  // 用固定站台網址組連結，不吃請求的 Host 標頭（防 host header poisoning）
+  const link = `${siteUrl}/reset-password?token=${raw}`;
   await sendEmail({
     to: email,
     subject: "Tomo：重設你的密碼",
@@ -171,8 +169,8 @@ export async function resetPassword(
   if (next !== confirm) {
     return { fieldErrors: { confirm: ["兩次輸入的新密碼不一致"] } };
   }
-  if (next.length < 6 || !/[A-Za-z]/.test(next) || !/[0-9]/.test(next)) {
-    return { fieldErrors: { next: ["密碼至少 6 字元，需含英文字母與數字"] } };
+  if (next.length < 8 || !/[A-Za-z]/.test(next) || !/[0-9]/.test(next)) {
+    return { fieldErrors: { next: ["密碼至少 8 字元，需含英文字母與數字"] } };
   }
 
   const record = await db.passwordResetToken.findUnique({

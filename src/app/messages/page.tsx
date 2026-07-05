@@ -53,7 +53,7 @@ export default async function MessagesPage() {
             </h2>
             {unread > 0 && (
               <form action={markNotificationsRead}>
-                <button className="text-xs font-bold text-cobalt hover:underline">
+                <button className="px-2 py-2 text-sm font-bold text-cobalt hover:underline">
                   全部標為已讀
                 </button>
               </form>

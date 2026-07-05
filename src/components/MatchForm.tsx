@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   SUBJECTS,
-  REGIONS,
   MODE_LABELS,
   GENDER_OPTIONS,
   MATCH_PRIORITIES,
   levelsForSubject,
   type TeachingMode,
 } from "@/lib/constants";
+import RegionOptions from "@/components/RegionOptions";
 
 type Defaults = {
   subject?: string;
@@ -96,11 +96,7 @@ export default function MatchForm({
             className={fieldCls}
           >
             <option value="">不限地區</option>
-            {REGIONS.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
+            <RegionOptions />
           </select>
         </div>
         <div>
@@ -170,11 +166,7 @@ export default function MatchForm({
             className={fieldCls}
           >
             <option value="">不限地區</option>
-            {REGIONS.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
+            <RegionOptions />
           </select>
         </div>
         <div>

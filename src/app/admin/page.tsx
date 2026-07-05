@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 
-export const metadata = { title: "後台總覽 · Tomo" };
+export const metadata = { title: "後台總覽" };
 
 const ROLE_LABEL: Record<string, string> = {
   STUDENT: "家長／學生",

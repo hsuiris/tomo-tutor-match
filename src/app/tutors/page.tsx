@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { Prisma } from "@/generated/prisma";
+import { expandRegions } from "@/lib/regions";
 import TutorCard from "@/components/TutorCard";
 import TutorFilters from "@/components/TutorFilters";
 import MatchForm from "@/components/MatchForm";
@@ -15,6 +16,12 @@ import {
   type MatchPriority,
   type MatchTutor,
 } from "@/lib/match";
+
+export const metadata = {
+  title: "找老師",
+  description: "瀏覽 Tomo 上已發布的家教老師：科目、學制、地區、時薪與評價，一站比較與聯繫。",
+  alternates: { canonical: "/tutors" },
+};
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -101,7 +108,7 @@ async function BrowseMode({
   const where: Prisma.TutorProfileWhereInput = { isPublished: true };
   if (subjects.length) where.subjects = { hasSome: subjects };
   if (levels.length) where.levels = { hasSome: levels };
-  if (regions.length) where.regions = { hasSome: regions };
+  if (regions.length) where.regions = { hasSome: expandRegions(regions) };
   if (eduLevels.length) where.eduLevel = { in: eduLevels };
   if (university)
     where.university = { contains: university, mode: "insensitive" };

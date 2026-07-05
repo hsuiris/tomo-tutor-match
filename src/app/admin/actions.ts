@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { notify } from "@/lib/email";
 import { notifySystem } from "@/lib/notification";
 
 async function requireAdmin() {
@@ -41,13 +42,19 @@ export async function approveVerification(id: string) {
     }),
   ]);
 
-  // 通知本人審核通過
+  // 通知本人審核通過（站內信 + email，久未登入者才收得到結果）
   await notifySystem(
     req.userId,
     `${VERIFY_LABEL[req.type]}已通過`,
     `你的${VERIFY_LABEL[req.type]}審核通過，個人檔案已顯示信任徽章。`,
     "/dashboard/account"
   );
+  await notify({
+    userId: req.userId,
+    kind: "system",
+    subject: `Tomo：${VERIFY_LABEL[req.type]}已通過`,
+    html: `<p>你的${VERIFY_LABEL[req.type]}審核通過，個人檔案已顯示信任徽章。</p>`,
+  });
 
   revalidatePath("/admin/verifications");
 }
@@ -66,13 +73,19 @@ export async function rejectVerification(id: string) {
     },
   });
 
-  // 通知本人審核未通過，可重新送審
+  // 通知本人審核未通過，可重新送審（站內信 + email）
   await notifySystem(
     req.userId,
     `${VERIFY_LABEL[req.type]}未通過`,
     `你的${VERIFY_LABEL[req.type]}審核未通過：${req.note}。可重新上傳清晰證件再次送審。`,
     "/dashboard/account"
   );
+  await notify({
+    userId: req.userId,
+    kind: "system",
+    subject: `Tomo：${VERIFY_LABEL[req.type]}未通過`,
+    html: `<p>你的${VERIFY_LABEL[req.type]}審核未通過：${req.note}。登入後可重新上傳清晰證件再次送審。</p>`,
+  });
 
   revalidatePath("/admin/verifications");
 }
