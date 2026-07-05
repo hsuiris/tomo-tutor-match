@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { jobSchema, applicationSchema } from "@/lib/validations";
 import { notify } from "@/lib/email";
 import { notifySystem } from "@/lib/notification";
+import { rateLimit } from "@/lib/rate-limit";
 import type { ActionState } from "@/lib/types";
 
 // 學生發布需求
@@ -116,6 +117,15 @@ export async function applyToJob(
     },
   });
 
+  // 應徵的案件自動存入收藏（收藏頁的「已應徵」區）
+  await db.favorite.upsert({
+    where: {
+      userId_jobId: { userId: session.user.id, jobId: parsed.data.jobId },
+    },
+    update: {},
+    create: { userId: session.user.id, jobId: parsed.data.jobId },
+  });
+
   // 通知案主有新應徵（依其通知偏好）
   await notify({
     userId: job.studentId,
@@ -125,7 +135,114 @@ export async function applyToJob(
   });
 
   revalidatePath(`/jobs/${parsed.data.jobId}`);
-  return { success: "應徵已送出" };
+  revalidatePath("/favorites");
+  return { success: "應徵已送出，並自動存入收藏的「已應徵」" };
+}
+
+// 老師取消應徵（僅限尚未被接受/婉拒時）
+export async function cancelApplication(applicationId: string) {
+  const session = await auth();
+  if (!session) return;
+
+  const app = await db.application.findUnique({
+    where: { id: applicationId },
+    include: {
+      tutor: { select: { userId: true } },
+      job: { select: { id: true } },
+    },
+  });
+  if (!app || app.tutor.userId !== session.user.id) return;
+  if (app.status !== "PENDING") return;
+
+  await db.application.delete({ where: { id: applicationId } });
+
+  revalidatePath(`/jobs/${app.job.id}`);
+  revalidatePath("/favorites");
+}
+
+// 老師編輯應徵訊息（僅限尚未被接受/婉拒時）
+export async function updateApplication(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const session = await auth();
+  if (!session) return { error: "請先登入" };
+
+  const applicationId = formData.get("applicationId")?.toString() ?? "";
+  const message = formData.get("message")?.toString().trim() ?? "";
+  if (message.length < 5) {
+    return { fieldErrors: { message: ["請寫下你的應徵訊息,至少 5 個字"] } };
+  }
+  if (message.length > 1000) {
+    return { fieldErrors: { message: ["訊息過長"] } };
+  }
+
+  const app = await db.application.findUnique({
+    where: { id: applicationId },
+    include: {
+      tutor: { select: { userId: true } },
+      job: { select: { id: true } },
+    },
+  });
+  if (!app || app.tutor.userId !== session.user.id) return { error: "沒有權限" };
+  if (app.status !== "PENDING") return { error: "此應徵已有結果，無法編輯" };
+
+  await db.application.update({
+    where: { id: applicationId },
+    data: { message },
+  });
+
+  revalidatePath(`/jobs/${app.job.id}`);
+  return { success: "應徵訊息已更新" };
+}
+
+// 應徵下的討論回覆（案主與該應徵老師皆可）
+export async function replyToApplication(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const session = await auth();
+  if (!session) return { error: "請先登入" };
+
+  const applicationId = formData.get("applicationId")?.toString() ?? "";
+  const body = formData.get("body")?.toString().trim() ?? "";
+  if (!body) return { fieldErrors: { body: ["請輸入回覆內容"] } };
+  if (body.length > 1000) return { fieldErrors: { body: ["回覆過長"] } };
+
+  // 防洗版：每人每小時最多 20 則
+  if (!(await rateLimit(`appreply:${session.user.id}`, 20, 3600))) {
+    return { error: "操作太頻繁，請稍後再試" };
+  }
+
+  const app = await db.application.findUnique({
+    where: { id: applicationId },
+    include: {
+      tutor: { select: { userId: true } },
+      job: { select: { id: true, studentId: true, title: true } },
+    },
+  });
+  if (!app) return { error: "找不到應徵" };
+
+  const me = session.user.id;
+  const isOwner = app.job.studentId === me;
+  const isApplicant = app.tutor.userId === me;
+  if (!isOwner && !isApplicant) return { error: "沒有權限" };
+
+  await db.applicationReply.create({
+    data: { applicationId, authorId: me, body },
+  });
+
+  // 站內通知另一方
+  const otherId = isOwner ? app.tutor.userId : app.job.studentId;
+  await notifySystem(
+    otherId,
+    `案件「${app.job.title}」的應徵討論有新回覆`,
+    body.length > 50 ? `${body.slice(0, 50)}…` : body,
+    `/jobs/${app.job.id}`
+  );
+
+  revalidatePath(`/jobs/${app.job.id}`);
+  return { success: "已回覆" };
 }
 
 // 學生接受某位老師（完成配對）

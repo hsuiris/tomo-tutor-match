@@ -7,6 +7,8 @@ import Avatar from "@/components/Avatar";
 import RatingStars from "@/components/RatingStars";
 import TrustBadges from "@/components/TrustBadges";
 import ApplyForm from "@/components/ApplyForm";
+import ApplicationControls from "@/components/ApplicationControls";
+import ApplicationReplyForm from "@/components/ApplicationReplyForm";
 import TutorCard, { type TutorCardData } from "@/components/TutorCard";
 import { publicName } from "@/lib/user";
 import { hasTutorProfile } from "@/lib/tutor";
@@ -72,6 +74,12 @@ export default async function JobDetailPage({
                   bgCheckVerified: true,
                 },
               },
+            },
+          },
+          replies: {
+            orderBy: { createdAt: "asc" },
+            include: {
+              author: { select: { id: true, name: true, displayName: true } },
             },
           },
         },
@@ -258,6 +266,11 @@ export default async function JobDetailPage({
               <span className="font-medium">
                 {APP_STATUS[myApplication.status].text}
               </span>
+              。此案件已自動存入
+              <Link href="/favorites" className="mx-0.5 font-medium text-cobalt hover:underline">
+                收藏的「已應徵」
+              </Link>
+              ;應徵訊息與討論在下方「應徵討論」區。
             </div>
           ) : job.status !== "OPEN" ? (
             <p className="text-sm text-ink/40">這個案件已不再開放應徵。</p>
@@ -267,22 +280,30 @@ export default async function JobDetailPage({
         </div>
       )}
 
-      {/* 學生（案主）視角：應徵者列表 */}
-      {isOwner && (
+      {/* 應徵討論：案主與已應徵的老師可見（像討論區，家長可回覆） */}
+      {(isOwner || myApplication) && (
         <div className="mt-6 rounded-2xl border border-line bg-paper p-6">
-          <h2 className="mb-4 font-bold text-ink">
-            應徵者（{job.applications.length}）
+          <h2 className="mb-1 font-bold text-ink">
+            應徵討論（{job.applications.length}）
           </h2>
+          <p className="mb-4 text-xs text-ink/40">
+            {isOwner
+              ? "老師的應徵訊息都在這裡，可以直接回覆詢問細節。"
+              : "應徵後可以看到其他老師的應徵與案主的回覆；案主可在你的應徵下回覆你。"}
+          </p>
           {job.applications.length === 0 ? (
             <p className="text-sm text-ink/40">還沒有老師應徵,再等等看。</p>
           ) : (
             <ul className="space-y-4">
               {job.applications.map((app) => {
                 const st = APP_STATUS[app.status];
+                const isMine = app.tutor.userId === session?.user.id;
                 return (
                   <li
                     key={app.id}
-                    className="rounded-xl border border-line/10 p-4"
+                    className={`rounded-xl border p-4 ${
+                      isMine ? "border-sun/50 bg-sun-soft/20" : "border-line/10"
+                    }`}
                   >
                     <div className="flex items-start gap-3">
                       <Avatar
@@ -298,6 +319,11 @@ export default async function JobDetailPage({
                           >
                             {publicName(app.tutor.user)}
                           </Link>
+                          {isMine && (
+                            <span className="rounded-full bg-sun px-2 py-0.5 text-xs font-bold text-paper">
+                              我的應徵
+                            </span>
+                          )}
                           <TrustBadges
                             idVerified={app.tutor.user.idVerified}
                             bgCheckVerified={app.tutor.user.bgCheckVerified}
@@ -315,12 +341,51 @@ export default async function JobDetailPage({
                             count={app.tutor.ratingCount}
                           />
                         </div>
-                        <p className="mt-2 text-sm text-ink/70">
+                        <p className="mt-2 whitespace-pre-wrap text-sm text-ink/70">
                           {app.message}
                         </p>
 
-                        {/* 只有案件還開放時才能操作 */}
-                        {job.status === "OPEN" && app.status === "PENDING" && (
+                        {/* 討論串（案主與該老師的往來） */}
+                        {app.replies.length > 0 && (
+                          <ul className="mt-3 space-y-2 border-l-2 border-line/40 pl-3">
+                            {app.replies.map((r) => (
+                              <li key={r.id} className="text-sm">
+                                <span className="font-medium text-ink">
+                                  {publicName(r.author)}
+                                </span>
+                                <span className="ml-1.5 rounded-full bg-sun-soft/60 px-1.5 py-0.5 text-[10px] font-medium text-ink/50">
+                                  {r.author.id === job.student.id ? "案主" : "老師"}
+                                </span>
+                                <span className="ml-2 text-xs text-ink/40">
+                                  {r.createdAt.toLocaleString("zh-TW")}
+                                </span>
+                                <p className="mt-0.5 whitespace-pre-wrap text-ink/70">
+                                  {r.body}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {/* 回覆框：案主可回覆任何應徵；老師只能回覆自己的 */}
+                        {(isOwner || isMine) && (
+                          <ApplicationReplyForm applicationId={app.id} />
+                        )}
+
+                        {/* 自己的應徵：編輯／取消（尚未有結果時） */}
+                        {isMine &&
+                          job.status === "OPEN" &&
+                          app.status === "PENDING" && (
+                            <ApplicationControls
+                              applicationId={app.id}
+                              message={app.message}
+                            />
+                          )}
+
+                        {/* 案主操作：只有案件還開放時 */}
+                        {isOwner &&
+                          job.status === "OPEN" &&
+                          app.status === "PENDING" && (
                           <div className="mt-3 flex gap-2">
                             <form action={acceptApplication.bind(null, app.id)}>
                               <button className="rounded-full bg-sun px-4 py-2.5 text-sm font-bold text-paper hover:bg-sun/80">
