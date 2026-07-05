@@ -52,7 +52,7 @@ export default async function JobsPage({
   const isTutor = session ? await hasTutorProfile(session.user.id) : false;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="flex items-end justify-between gap-4">
         <div>
           <h1 className="font-serif text-4xl font-extrabold text-ink">找學生</h1>

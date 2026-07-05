@@ -20,6 +20,16 @@ export async function markNotificationsRead() {
   revalidatePath("/messages");
 }
 
+// 刪除一則系統通知（只能刪自己的）
+export async function deleteNotification(id: string) {
+  const session = await auth();
+  if (!session) return;
+  await db.notification.deleteMany({
+    where: { id, userId: session.user.id },
+  });
+  revalidatePath("/messages");
+}
+
 // 取得或建立與某人的對話，回傳 conversationId（client 端再導轉）
 export async function startConversation(
   otherUserId: string
