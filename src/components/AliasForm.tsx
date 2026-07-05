@@ -54,7 +54,7 @@ export default function AliasForm({
             name="displayName"
             defaultValue={displayName === realName ? "" : displayName}
             placeholder={placeholder}
-            className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
           />
           <p className="text-xs text-ink/40">
             未填寫化名時,會以遮罩本名（如「王＊＊」）顯示,本名不會公開。

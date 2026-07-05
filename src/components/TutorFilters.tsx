@@ -95,7 +95,7 @@ export default function TutorFilters() {
     sort !== "recommended";
 
   const selectCls =
-    "rounded-xl border border-line bg-paper px-3 py-2 text-sm font-medium outline-none focus:bg-sun-soft/40";
+    "rounded-xl border border-line bg-white px-3 py-2 text-sm font-medium outline-none focus:bg-sun-soft/40";
 
   return (
     <form
@@ -115,7 +115,7 @@ export default function TutorFilters() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="老師姓名或自我介紹"
-            className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
           />
         </div>
 
@@ -129,7 +129,7 @@ export default function TutorFilters() {
               onChange={(e) => setMin(e.target.value)}
               type="number"
               placeholder="最低"
-              className="w-20 rounded-xl border border-line bg-paper px-2 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
+              className="w-20 rounded-xl border border-line bg-white px-2 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
             />
             <span className="text-ink/40">–</span>
             <input
@@ -137,7 +137,7 @@ export default function TutorFilters() {
               onChange={(e) => setMax(e.target.value)}
               type="number"
               placeholder="最高"
-              className="w-20 rounded-xl border border-line bg-paper px-2 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
+              className="w-20 rounded-xl border border-line bg-white px-2 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
             />
           </div>
         </div>
@@ -232,7 +232,7 @@ export default function TutorFilters() {
           onChange={(e) => setUniversity(e.target.value)}
           onBlur={() => apply()}
           placeholder="輸入學校名稱,如 台灣大學"
-          className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
+          className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
         />
       </div>
 

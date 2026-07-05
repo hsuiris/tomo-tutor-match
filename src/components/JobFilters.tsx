@@ -85,7 +85,7 @@ export default function JobFilters() {
               setGender(e.target.value);
               apply({ gender: e.target.value });
             }}
-            className="rounded-xl border border-line bg-paper px-3 py-2 text-sm font-medium outline-none focus:bg-sun-soft/40"
+            className="rounded-xl border border-line bg-white px-3 py-2 text-sm font-medium outline-none focus:bg-sun-soft/40"
           >
             <option value="">不限</option>
             {GENDER_OPTIONS.map((g) => (
