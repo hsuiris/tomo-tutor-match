@@ -6,7 +6,7 @@ export const registerSchema = z
     email: z.string().email("請輸入有效的 Email"),
     password: z
       .string()
-      .min(6, "密碼至少 6 個字元")
+      .min(8, "密碼至少 8 個字元")
       .regex(/[A-Za-z]/, "密碼需包含英文字母")
       .regex(/[0-9]/, "密碼需包含數字"),
     confirmPassword: z.string(),

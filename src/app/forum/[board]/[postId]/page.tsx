@@ -7,6 +7,25 @@ import { forumAuthor } from "@/lib/user";
 import ReplyForm from "@/components/ReplyForm";
 import BackLink from "@/components/BackLink";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ board: string; postId: string }>;
+}) {
+  const { board, postId } = await params;
+  if (!isBoardSlug(board)) return { title: "討論區" };
+  const post = await db.forumPost.findUnique({
+    where: { id: postId },
+    select: { title: true, body: true },
+  });
+  if (!post) return { title: "找不到主題" };
+  return {
+    title: post.title,
+    description: post.body.slice(0, 120),
+    alternates: { canonical: `/forum/${board}/${postId}` },
+  };
+}
+
 export default async function PostPage({
   params,
 }: {

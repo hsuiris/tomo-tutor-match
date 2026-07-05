@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { notify } from "@/lib/email";
 import { publicName } from "@/lib/user";
+import { rateLimit } from "@/lib/rate-limit";
 import type { ActionState } from "@/lib/types";
 
 // 把所有系統通知標為已讀
@@ -26,6 +27,11 @@ export async function startConversation(
   if (!session) return { error: "請先登入" };
   if (otherUserId === session.user.id) {
     return { error: "不能和自己對話" };
+  }
+
+  // 防騷擾：每人每小時最多開 10 個新對話
+  if (!(await rateLimit(`convo:${session.user.id}`, 10, 3600))) {
+    return { error: "操作太頻繁，請稍後再試" };
   }
 
   // 確認對方存在
@@ -59,6 +65,11 @@ export async function sendMessage(
   const body = formData.get("body")?.toString().trim() ?? "";
   if (!body) return { error: "訊息不能空白" };
   if (body.length > 2000) return { error: "訊息過長" };
+
+  // 防洗版：每人每 5 分鐘最多 30 則
+  if (!(await rateLimit(`msg:${session.user.id}`, 30, 300))) {
+    return { error: "訊息傳送太頻繁，請稍後再試" };
+  }
 
   const convo = await db.conversation.findUnique({
     where: { id: conversationId },

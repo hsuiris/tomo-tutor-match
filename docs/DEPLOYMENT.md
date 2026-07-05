@@ -40,13 +40,16 @@ build 指令（`package.json`）：`prisma generate && next build`
 
 Project → Settings → Environment Variables，**Production 與 Preview 都要設**（build 也要讀得到）：
 
-| 變數             | 值                                                                          |
-| ---------------- | --------------------------------------------------------------------------- |
-| `DATABASE_URL` | Neon**pooled** 連線字串（建議 `?sslmode=require&pgbouncer=true`）   |
-| `DIRECT_URL`   | Neon**direct（非 pooler）** 連線字串，供 `prisma migrate deploy` 用 |
-| `AUTH_SECRET`  | `openssl rand -base64 33` 產生的**全新**金鑰                        |
-| `GMAIL_USER` | （選用）Email 通知寄件帳號，如 `tomoocustomer@gmail.com`               |
+| 變數                   | 值                                                                               |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| `DATABASE_URL`       | Neon**pooled** 連線字串（建議 `?sslmode=require&pgbouncer=true`）        |
+| `DIRECT_URL`         | Neon**direct（非 pooler）** 連線字串，供 `prisma migrate deploy` 用      |
+| `AUTH_SECRET`        | `openssl rand -base64 33` 產生的**全新**金鑰                             |
+| `GMAIL_USER`         | （選用）Email 通知寄件帳號，如`tomoocustomer@gmail.com`                        |
 | `GMAIL_APP_PASSWORD` | （選用）Gmail**應用程式密碼**（16 碼，非帳號密碼）；需與 GMAIL_USER 一起設 |
+| `NEXT_PUBLIC_SITE_URL` | （選用）自訂網域完整網址（如 `https://tomo.tw`）；sitemap／OG／重設密碼信的絕對網址用它，未設時退回 Vercel 正式網域 |
+| `NEXT_PUBLIC_GA_ID` | （選用）GA4 評估 ID（`G-XXXXXXX`）；未設不載入 GA |
+| `NEXT_PUBLIC_GSC_VERIFICATION` | （選用）Google Search Console 的 meta 驗證碼；未設不輸出 |
 
 > 📧 **Email 通知**：使用者可在「帳號與安全 → 通知設定」開啟 Email 通知（新應徵、媒合結果、新訊息）。
 > 採 **Gmail SMTP**（免自有網域）：設 `GMAIL_USER` 與 `GMAIL_APP_PASSWORD` 即可寄送。

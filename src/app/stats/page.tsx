@@ -6,7 +6,7 @@ const SKILL_LEVEL_SET = new Set<string>(SKILL_LEVELS);
 import RateEstimator from "@/components/RateEstimator";
 import { parseExperienceYears, type MarketData } from "@/lib/estimate";
 
-export const metadata = { title: "家教行情統計 · Tomo" };
+export const metadata = { title: "家教行情統計" };
 
 function avg(nums: number[]): number {
   if (nums.length === 0) return 0;

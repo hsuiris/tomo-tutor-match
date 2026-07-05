@@ -81,9 +81,9 @@ export default function RegisterPage() {
           label="密碼"
           name="password"
           type="password"
-          placeholder="至少 6 字元，需含英文字母與數字"
+          placeholder="至少 8 字元，需含英文字母與數字"
           required
-          hint="至少 6 字元，需含英文字母與數字"
+          hint="至少 8 字元，需含英文字母與數字"
           errors={state.fieldErrors?.password}
         />
         <Field

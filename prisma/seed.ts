@@ -151,6 +151,11 @@ const reviewsByEmail: Record<string, { rating: number; comment: string }[]> = {
 };
 
 async function main() {
+  // 示範資料共用弱密碼且含 ADMIN 帳號，絕不可進正式環境
+  if (process.env.NODE_ENV === "production" || process.env.VERCEL_ENV === "production") {
+    throw new Error("seed 含示範帳號（admin@demo.com / test1234），禁止對 production 執行");
+  }
+
   const passwordHash = await bcrypt.hash("test1234", 10);
 
   // 兩位學生（用來當評價作者）

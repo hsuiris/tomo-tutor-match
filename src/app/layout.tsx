@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Serif_TC, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Link from "next/link";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import CookieNotice from "@/components/CookieNotice";
+import { siteUrl } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +33,34 @@ const notoSerifTC = Noto_Serif_TC({
   display: "optional",
 });
 
+const SITE_NAME = "Tomo 家教媒合平台";
+const SITE_DESC = "找家教、接案教學，一站搞定的家教媒合平台";
+
 export const metadata: Metadata = {
-  title: "Tomo 家教媒合平台",
-  description: "找家教、接案教學，一站搞定的家教媒合平台",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: SITE_NAME,
+    template: "%s · Tomo",
+  },
+  description: SITE_DESC,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESC,
+    locale: "zh_TW",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  // Google Search Console 驗證碼（未設定時不輸出）
+  verification: process.env.NEXT_PUBLIC_GSC_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GSC_VERIFICATION }
+    : undefined,
 };
+
+// GA4 評估 ID（未設定時整段略過，本機與 preview 不會誤送資料）
+const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 export default function RootLayout({
   children,
@@ -42,7 +69,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="zh-Hant"
+      lang="zh-TW"
       className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${notoSerifTC.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink">
@@ -56,15 +83,47 @@ export default function RootLayout({
             <span className="text-xs tracking-wide text-ink/70">
               © {new Date().getFullYear()} Tomo ・ 家教媒合平台
             </span>
-            <Link
-              href="/privacy"
-              className="mt-1 text-xs tracking-wide text-ink/60 hover:text-ink hover:underline"
-            >
-              隱私權政策與個資蒐集告知
-            </Link>
+            <span className="text-xs tracking-wide text-ink/60">
+              聯絡我們：
+              <a
+                href="mailto:tomoocustomer@gmail.com"
+                className="hover:text-ink hover:underline"
+              >
+                tomoocustomer@gmail.com
+              </a>
+            </span>
+            <div className="mt-1 flex gap-4">
+              <Link
+                href="/privacy"
+                className="text-xs tracking-wide text-ink/60 hover:text-ink hover:underline"
+              >
+                隱私權政策與個資蒐集告知
+              </Link>
+              <Link
+                href="/terms"
+                className="text-xs tracking-wide text-ink/60 hover:text-ink hover:underline"
+              >
+                服務條款
+              </Link>
+            </div>
           </div>
         </footer>
+        <CookieNotice />
         <Analytics />
+        {gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${gaId}');`}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );

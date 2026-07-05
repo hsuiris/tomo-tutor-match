@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
+import { rateLimit } from "@/lib/rate-limit";
 import type { ActionState } from "@/lib/types";
 
 // 在對方個人檔案底下留下評價（雙向：學生↔老師,需曾完成媒合）
@@ -21,6 +22,11 @@ export async function submitReview(
   const values = { comment: comment ?? "" };
 
   if (revieweeId === me) return { error: "不能評價自己", values };
+
+  // 防灌評價：每人每天最多 10 則
+  if (!(await rateLimit(`review:${me}`, 10, 86400))) {
+    return { error: "操作太頻繁，請明天再試", values };
+  }
   if (!Number.isInteger(rating) || rating < 1 || rating > 5) {
     return { error: "請給 1 到 5 顆星", values };
   }

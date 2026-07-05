@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import BackLink from "@/components/BackLink";
@@ -5,6 +6,21 @@ import { db } from "@/lib/db";
 import { FORUM_BOARDS, isBoardSlug } from "@/lib/forum";
 import { forumAuthor } from "@/lib/user";
 import NewPostForm from "@/components/NewPostForm";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ board: string }>;
+}) {
+  const { board } = await params;
+  if (!isBoardSlug(board)) return { title: "討論區" };
+  const meta = FORUM_BOARDS[board];
+  return {
+    title: meta.title,
+    description: meta.desc,
+    alternates: { canonical: `/forum/${board}` },
+  };
+}
 
 export default async function BoardPage({
   params,
@@ -22,6 +38,8 @@ export default async function BoardPage({
       author: { select: { name: true, displayName: true, role: true } },
       _count: { select: { replies: true } },
     },
+    // ponytail: 看板破百篇再做分頁；先設上限防整表載入
+    take: 100,
   });
 
   return (
@@ -29,10 +47,11 @@ export default async function BoardPage({
       <BackLink href="/forum">所有看板</BackLink>
       <div className="mt-3 mb-6 flex flex-wrap items-center justify-between gap-4">
         <h1 className="flex items-center gap-2.5 font-serif text-3xl font-extrabold text-ink">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={meta.image}
             alt={meta.title}
+            width={44}
+            height={44}
             className="h-11 w-auto object-contain"
           />
           {meta.title}

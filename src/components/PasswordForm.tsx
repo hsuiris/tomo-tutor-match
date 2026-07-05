@@ -24,7 +24,7 @@ export default function PasswordForm() {
         name="next"
         type="password"
         required
-        hint="至少 6 字元，需含英文字母與數字"
+        hint="至少 8 字元，需含英文字母與數字"
         errors={state.fieldErrors?.next}
       />
       <Field

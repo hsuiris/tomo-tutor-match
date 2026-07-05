@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import BackLink from "@/components/BackLink";
 
 export const metadata: Metadata = {
-  title: "隱私權政策與個資蒐集告知 ・ Tomo",
+  title: "隱私權政策與個資蒐集告知",
   description:
     "Tomo 依《個人資料保護法》告知個人資料之蒐集目的、類別、利用方式、保存期限與當事人權利。",
 };
