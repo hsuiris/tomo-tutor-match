@@ -9,6 +9,13 @@ import ContactButton from "@/components/ContactButton";
 import ReviewForm from "@/components/ReviewForm";
 import PhotoGallery from "@/components/PhotoGallery";
 import { publicName } from "@/lib/user";
+import {
+  parseExams,
+  parseRateRules,
+  parseAvailability,
+  rateRuleLabel,
+  slotLabel,
+} from "@/lib/profile-detail";
 import { MODE_LABELS, GENDER_LABELS, type TeachingMode } from "@/lib/constants";
 
 export async function generateMetadata({
@@ -60,6 +67,10 @@ export default async function UserProfilePage({
 
   const tp = user.tutorProfile;
   const name = publicName(user);
+  // 詳細欄位（成績/客製時薪/上課時間）
+  const exams = parseExams(tp?.exams);
+  const rateRules = parseRateRules(tp?.rateRules);
+  const availability = parseAvailability(tp?.availability);
 
   // 兩套獨立評分：老師（檔案統計）與學生（即時算被評為「學生身分」的評價）
   const tutorAvg = tp?.ratingAvg ?? 0;
@@ -209,6 +220,51 @@ export default async function UserProfilePage({
             />
             <Fact label="授課地區" value={tp.regions.join("、")} />
           </div>
+
+          {/* 各科目客製時薪 */}
+          {rateRules.length > 0 && (
+            <div className="mt-5 border-t border-line/10 pt-5">
+              <div className="mb-2 text-xs font-bold text-ink/50">各科目時薪</div>
+              <ul className="space-y-1 text-sm text-ink/80">
+                {rateRules.map((r, i) => (
+                  <li key={i}>・{rateRuleLabel(r)}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* 考試成績 */}
+          {exams.length > 0 && (
+            <div className="mt-5 border-t border-line/10 pt-5">
+              <div className="mb-2 text-xs font-bold text-ink/50">考試成績</div>
+              <div className="flex flex-wrap gap-2">
+                {exams.map((e, i) => (
+                  <span
+                    key={i}
+                    className="rounded-full bg-sun-soft px-3 py-1 text-sm font-medium text-cobalt"
+                  >
+                    {e.type} {e.score}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 可配合上課時間 */}
+          {availability && (
+            <div className="mt-5 border-t border-line/10 pt-5">
+              <div className="mb-2 text-xs font-bold text-ink/50">可配合上課時間</div>
+              {availability.mode === "discuss" ? (
+                <p className="text-sm text-ink/80">時間彈性，配對後可再私訊討論。</p>
+              ) : (
+                <ul className="space-y-1 text-sm text-ink/80">
+                  {availability.slots.map((s, i) => (
+                    <li key={i}>・{slotLabel(s)}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
         </div>
       )}
 

@@ -34,8 +34,8 @@ export function relationLabel(
   isMyTutor: boolean,
   isMyStudent: boolean
 ): string | null {
-  if (isMyTutor && isMyStudent) return "你的老師・你的學生";
-  if (isMyTutor) return "你的老師";
-  if (isMyStudent) return "你的學生";
+  if (isMyTutor && isMyStudent) return "老師・學生";
+  if (isMyTutor) return "老師";
+  if (isMyStudent) return "學生";
   return null;
 }

@@ -62,30 +62,33 @@ export default async function Navbar() {
         <div className="flex items-center gap-2">
           {user ? (
             <>
-              <Link
-                href="/favorites"
-                className="hidden items-center gap-1 text-sm font-bold text-ink transition hover:text-cobalt sm:flex"
-              >
-                <HeartIcon className="h-4 w-4 text-blush" fill="currentColor" /> 收藏
-              </Link>
-              <Link
-                href="/messages"
-                className="relative hidden items-center gap-1 text-sm font-bold text-ink transition hover:text-cobalt sm:flex"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-4 w-4 text-cobalt"
+              {/* 收藏／訊息拉開間距，與右側帳號按鈕也留白，整組往左 */}
+              <div className="mr-4 hidden items-center gap-6 sm:flex">
+                <Link
+                  href="/favorites"
+                  className="flex items-center gap-1 text-sm font-bold text-ink transition hover:text-cobalt"
                 >
-                  <path d="M12 3C6.8 3 2.5 6.6 2.5 11.1C2.5 13.6 3.9 15.8 6 17.3C6 18.3 5.6 19.7 4.6 20.7C4.4 20.9 4.5 21.3 4.8 21.3C6.8 21.2 8.5 20.3 9.5 19C10.3 19.2 11.1 19.3 12 19.3C17.2 19.3 21.5 15.6 21.5 11.1C21.5 6.6 17.2 3 12 3Z" />
-                </svg>
-                訊息
-                {unread > 0 && (
-                  <span className="absolute -right-3.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-blush px-1 text-[10px] font-bold leading-none text-white">
-                    {unread > 99 ? "99+" : unread}
-                  </span>
-                )}
-              </Link>
+                  <HeartIcon className="h-4 w-4 text-blush" fill="currentColor" /> 收藏
+                </Link>
+                <Link
+                  href="/messages"
+                  className="relative flex items-center gap-1 text-sm font-bold text-ink transition hover:text-cobalt"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="h-4 w-4 text-cobalt"
+                  >
+                    <path d="M12 3C6.8 3 2.5 6.6 2.5 11.1C2.5 13.6 3.9 15.8 6 17.3C6 18.3 5.6 19.7 4.6 20.7C4.4 20.9 4.5 21.3 4.8 21.3C6.8 21.2 8.5 20.3 9.5 19C10.3 19.2 11.1 19.3 12 19.3C17.2 19.3 21.5 15.6 21.5 11.1C21.5 6.6 17.2 3 12 3Z" />
+                  </svg>
+                  訊息
+                  {unread > 0 && (
+                    <span className="absolute -right-3.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-blush px-1 text-[10px] font-bold leading-none text-white">
+                      {unread > 99 ? "99+" : unread}
+                    </span>
+                  )}
+                </Link>
+              </div>
               <Link
                 href="/dashboard"
                 className="inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-sm font-bold text-ink transition hover:bg-sun"
