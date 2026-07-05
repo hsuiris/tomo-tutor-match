@@ -105,6 +105,14 @@ export default function RegisterPage() {
             <span>
               我已閱讀並同意{" "}
               <Link
+                href="/terms"
+                target="_blank"
+                className="font-medium text-cobalt hover:underline"
+              >
+                服務條款
+              </Link>
+              {" "}與{" "}
+              <Link
                 href="/privacy"
                 target="_blank"
                 className="font-medium text-cobalt hover:underline"
