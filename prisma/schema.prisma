@@ -251,7 +251,7 @@ model JobPost {
   title       String
   subject     String
   level       String? // 學生年級／學制
-  region      String
+  regions     String[] // 上課地區（可多選；含「線上」）
   mode        TeachingMode @default(BOTH)
   budget      Int? // 預算下限（每小時，新台幣）；配對以此為準
   budgetMax   Int? // 預算上限（可選；填了即為區間）

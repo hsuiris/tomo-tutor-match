@@ -107,7 +107,7 @@ async function BrowseMode({ sp }: { sp: Awaited<SearchParams> }) {
   const where: Prisma.JobPostWhereInput = { status: "OPEN" };
   if (subjects.length) where.subject = { in: subjects };
   if (levels.length) where.level = { in: levels };
-  if (regions.length) where.region = { in: expandRegions(regions) };
+  if (regions.length) where.regions = { hasSome: expandRegions(regions) };
   if (gender === "MALE" || gender === "FEMALE") {
     where.student = { gender };
   }
@@ -123,7 +123,7 @@ async function BrowseMode({ sp }: { sp: Awaited<SearchParams> }) {
         title: true,
         subject: true,
         level: true,
-        region: true,
+        regions: true,
         mode: true,
         budget: true,
         budgetMax: true,
@@ -298,7 +298,7 @@ async function MatchMode() {
       title: true,
       subject: true,
       level: true,
-      region: true,
+      regions: true,
       mode: true,
       budget: true,
       budgetMax: true,

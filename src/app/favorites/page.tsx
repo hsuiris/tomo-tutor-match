@@ -54,7 +54,7 @@ export default async function FavoritesPage() {
             title: true,
             subject: true,
             level: true,
-            region: true,
+            regions: true,
             mode: true,
             budget: true,
             budgetMax: true,

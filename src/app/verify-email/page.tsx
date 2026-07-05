@@ -2,7 +2,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { isEmailVerified, verifyEmailToken } from "@/lib/verify-email";
+import { hasTutorProfile } from "@/lib/tutor";
 import ResendVerificationButton from "@/components/ResendVerificationButton";
+import AutoRedirect from "@/components/AutoRedirect";
 
 export const metadata = {
   title: "驗證 Email",
@@ -18,23 +20,29 @@ export default async function VerifyEmailPage({
 
   // 帶 token：執行驗證（冪等，重複點連結不會壞）
   if (token) {
-    const ok = await verifyEmailToken(token);
+    const verifiedUserId = await verifyEmailToken(token);
+    // 啟用後導向個人檔案：老師 → 編輯老師檔案；一般用戶 → 帳號與安全
+    const profileHref =
+      verifiedUserId && (await hasTutorProfile(verifiedUserId))
+        ? "/dashboard/profile"
+        : "/dashboard/account";
     return (
       <div className="mx-auto max-w-md px-4 py-20 text-center">
-        {ok ? (
+        {verifiedUserId ? (
           <>
+            <AutoRedirect to={profileHref} />
             <p className="text-4xl">✅</p>
             <h1 className="mt-4 font-serif text-2xl font-extrabold text-ink">
               Email 驗證完成
             </h1>
             <p className="mt-2 text-ink/60">
-              你的帳號已啟用，現在可以使用所有功能了。
+              你的帳號已啟用，正在前往你的個人檔案⋯
             </p>
             <Link
-              href="/dashboard"
+              href={profileHref}
               className="mt-8 inline-block rounded-full bg-sun px-7 py-2.5 text-sm font-bold text-paper hover:bg-sun-dark"
             >
-              前往我的面板
+              前往個人檔案
             </Link>
           </>
         ) : (

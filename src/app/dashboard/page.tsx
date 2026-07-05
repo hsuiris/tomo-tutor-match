@@ -20,7 +20,7 @@ export default async function DashboardPage() {
       <div className="flex items-start justify-between gap-4">
         <div>
           <h1 className="font-serif text-4xl font-extrabold text-ink">
-            嗨,{user.name} 👋
+            嗨，{user.name} 👋
           </h1>
           <div className="mt-2 h-1 w-14 bg-sun" />
         </div>

@@ -42,7 +42,7 @@ export default async function AdminMatchesPage({
         id: true,
         title: true,
         subject: true,
-        region: true,
+        regions: true,
         status: true,
         createdAt: true,
         _count: { select: { applications: true } },
@@ -110,7 +110,7 @@ export default async function AdminMatchesPage({
                 <tr key={j.id} className="border-t border-line">
                   <td className="px-3 py-2 font-bold text-ink">{j.title}</td>
                   <td className="px-3 py-2 text-ink/70">{j.subject}</td>
-                  <td className="px-3 py-2 text-ink/70">{j.region}</td>
+                  <td className="px-3 py-2 text-ink/70">{j.regions.join("、")}</td>
                   <td className="px-3 py-2 text-ink/70">
                     {STATUS_LABEL[j.status]}
                   </td>
