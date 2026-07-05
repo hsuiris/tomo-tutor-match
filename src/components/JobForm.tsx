@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createJob } from "@/app/jobs/actions";
+import { createJob, updateJob } from "@/app/jobs/actions";
 import { SUBJECTS, levelsForSubject } from "@/lib/constants";
 import RegionOptions from "@/components/RegionOptions";
 import { SubmitButton, useFocusFirstError } from "@/components/ui/form";
@@ -10,12 +10,23 @@ import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
 
-export default function JobForm() {
+// 建立與編輯共用：帶 jobId + initial 即為編輯模式
+export default function JobForm({
+  jobId,
+  initial,
+}: {
+  jobId?: string;
+  initial?: Record<string, string>;
+} = {}) {
   const router = useRouter();
-  const [state, formAction] = useActionState(createJob, initialState);
+  const [state, formAction] = useActionState(
+    jobId ? updateJob : createJob,
+    initialState
+  );
   useFocusFirstError(state);
   const err = state.fieldErrors;
-  const v = state.values;
+  // 出錯回填優先，其次是編輯模式的既有值
+  const v = state.values ?? initial;
 
   // 科目決定年級／程度選項（技能類用 入門/初階/進階）
   const [subject, setSubject] = useState<string>(v?.subject ?? "");
@@ -46,6 +57,7 @@ export default function JobForm() {
 
   return (
     <form action={formAction} className="space-y-5">
+      {jobId && <input type="hidden" name="jobId" value={jobId} />}
       <div>
         <label className="mb-1 block text-sm font-medium text-ink/80">
           標題 <span className="text-red-500">*</span>
@@ -221,7 +233,7 @@ export default function JobForm() {
         </p>
       )}
 
-      <SubmitButton>發布需求</SubmitButton>
+      <SubmitButton>{jobId ? "儲存變更" : "發布需求"}</SubmitButton>
     </form>
   );
 }

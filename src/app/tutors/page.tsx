@@ -349,6 +349,9 @@ async function MatchMode({ sp }: { sp: Awaited<SearchParams> }) {
 }
 
 async function MatchResults({ criteria }: { criteria: MatchCriteria }) {
+  // 排除自己的老師檔案（自己不能洽談自己）
+  const session = await auth();
+  const me = session?.user.id;
   // 先以科目縮小候選；若科目沒有任何老師則放寬（讓評分挑出相近的）
   let where: Prisma.TutorProfileWhereInput = { isPublished: true };
   let broadened = false;
@@ -364,7 +367,7 @@ async function MatchResults({ criteria }: { criteria: MatchCriteria }) {
   }
 
   const pool = (await db.tutorProfile.findMany({
-    where,
+    where: { ...where, ...(me ? { userId: { not: me } } : {}) },
     take: POOL_LIMIT,
     orderBy: { ratingAvg: "desc" },
     select: TUTOR_SELECT,
