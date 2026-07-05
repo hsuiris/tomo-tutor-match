@@ -137,6 +137,7 @@ exports.Prisma.UserScalarFieldEnum = {
   notifyJobUpdates: 'notifyJobUpdates',
   notifyMessages: 'notifyMessages',
   disabled: 'disabled',
+  emailVerified: 'emailVerified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -148,6 +149,14 @@ exports.Prisma.NotificationScalarFieldEnum = {
   body: 'body',
   href: 'href',
   read: 'read',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.EmailVerificationTokenScalarFieldEnum = {
+  id: 'id',
+  tokenHash: 'tokenHash',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
   createdAt: 'createdAt'
 };
 
@@ -351,6 +360,7 @@ exports.ForumBoard = exports.$Enums.ForumBoard = {
 exports.Prisma.ModelName = {
   User: 'User',
   Notification: 'Notification',
+  EmailVerificationToken: 'EmailVerificationToken',
   PasswordResetToken: 'PasswordResetToken',
   Favorite: 'Favorite',
   VerificationRequest: 'VerificationRequest',

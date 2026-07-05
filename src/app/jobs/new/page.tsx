@@ -1,12 +1,14 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
+import { isEmailVerified } from "@/lib/verify-email";
 import JobForm from "@/components/JobForm";
 import AliasForm from "@/components/AliasForm";
 
 export default async function NewJobPage() {
   const session = await auth();
   if (!session) redirect("/login");
+  if (!(await isEmailVerified(session.user.id))) redirect("/verify-email");
 
   const user = await db.user.findUnique({
     where: { id: session.user.id },

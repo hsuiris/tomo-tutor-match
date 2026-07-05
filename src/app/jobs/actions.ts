@@ -7,6 +7,7 @@ import { jobSchema, applicationSchema } from "@/lib/validations";
 import { notify } from "@/lib/email";
 import { notifySystem } from "@/lib/notification";
 import { rateLimit } from "@/lib/rate-limit";
+import { isEmailVerified } from "@/lib/verify-email";
 import type { ActionState } from "@/lib/types";
 
 // 學生發布需求
@@ -16,6 +17,9 @@ export async function createJob(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   const budgetRaw = formData.get("budget")?.toString().trim();
   const budgetMaxRaw = formData.get("budgetMax")?.toString().trim();
@@ -70,6 +74,9 @@ export async function applyToJob(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   const raw = {
     jobId: formData.get("jobId")?.toString() ?? "",
@@ -203,6 +210,9 @@ export async function replyToApplication(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   const applicationId = formData.get("applicationId")?.toString() ?? "";
   const body = formData.get("body")?.toString().trim() ?? "";
