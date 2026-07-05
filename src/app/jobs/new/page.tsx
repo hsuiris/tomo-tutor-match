@@ -22,14 +22,15 @@ export default async function NewJobPage() {
         描述你的需求,讓適合的老師主動應徵。
       </p>
 
-      {/* 公開化名 */}
+      {/* 公開顯示名稱 */}
       <section className="mb-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
-        <h2 className="mb-1 font-bold text-ink">公開化名</h2>
+        <h2 className="mb-1 font-bold text-ink">公開顯示名稱</h2>
         <p className="mb-4 text-xs text-ink/40">
-          你的本名是「{user.name}」,僅平台保留;對外只顯示化名。
+          可選擇對外顯示化名或本名。
         </p>
         <AliasForm
           displayName={user.displayName ?? ""}
+          realName={user.name}
           placeholder="例如：可可、小明媽媽"
         />
       </section>

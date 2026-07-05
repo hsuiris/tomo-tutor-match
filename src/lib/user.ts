@@ -1,4 +1,4 @@
-// 公開顯示名稱：優先用化名，否則遮罩本名（本名永不對外完整顯示）
+// 公開顯示名稱：優先用 displayName（化名，或用戶選擇公開的本名），否則遮罩本名
 export function maskName(name: string): string {
   if (!name) return "匿名用戶";
   if (name.length <= 1) return name + "＊";

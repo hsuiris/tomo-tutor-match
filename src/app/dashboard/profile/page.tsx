@@ -75,11 +75,14 @@ export default async function ProfileEditPage() {
           initial={initial}
           aliasSlot={
             <div className="border-t border-line/60 pt-5">
-              <h2 className="mb-1 font-bold text-ink">公開化名</h2>
+              <h2 className="mb-1 font-bold text-ink">公開顯示名稱</h2>
               <p className="mb-3 text-xs text-ink/40">
-                你的本名是「{profile.user.name}」,僅平台保留。
+                可選擇對外顯示化名或本名。
               </p>
-              <AliasForm displayName={profile.user.displayName ?? ""} />
+              <AliasForm
+                displayName={profile.user.displayName ?? ""}
+                realName={profile.user.name}
+              />
             </div>
           }
         />

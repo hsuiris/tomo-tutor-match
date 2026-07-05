@@ -62,7 +62,7 @@ export async function updateNotifications(
   return { success: "通知設定已更新" };
 }
 
-// 更新公開化名
+// 更新公開顯示名稱（化名或本名；「本名」= displayName 設為本名，顯示端不需特判）
 export async function updateAlias(
   _prev: ActionState,
   formData: FormData
@@ -70,18 +70,28 @@ export async function updateAlias(
   const session = await auth();
   if (!session) return { error: "請先登入" };
 
-  const displayName = formData.get("displayName")?.toString().trim() ?? "";
-  if (displayName.length > 30) return { error: "化名過長" };
+  let displayName: string | null;
+  if (formData.get("nameMode")?.toString() === "real") {
+    const me = await db.user.findUnique({
+      where: { id: session.user.id },
+      select: { name: true },
+    });
+    if (!me) return { error: "請先登入" };
+    displayName = me.name;
+  } else {
+    displayName = formData.get("displayName")?.toString().trim() || null;
+    if (displayName && displayName.length > 30) return { error: "化名過長" };
+  }
 
   await db.user.update({
     where: { id: session.user.id },
-    data: { displayName: displayName || null },
+    data: { displayName },
   });
 
-  // 化名現在出現在老師檔案頁與發案頁
+  // 顯示名稱出現在老師檔案頁與發案頁
   revalidatePath("/dashboard/profile");
   revalidatePath("/jobs/new");
-  return { success: "化名已更新" };
+  return { success: "顯示名稱已更新" };
 }
 
 // 送出安全認證申請（上傳證件）
