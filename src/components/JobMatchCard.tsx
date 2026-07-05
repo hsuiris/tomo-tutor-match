@@ -53,7 +53,7 @@ export default function JobMatchCard({
                 {job.level}
               </span>
             )}
-            <span className="text-ink/50">📍 {job.region}</span>
+            <span className="text-ink/50">📍 {job.regions.join("、")}</span>
             <span className="text-ink/50">・ {MODE_LABELS[job.mode]}</span>
           </div>
         </div>
