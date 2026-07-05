@@ -7,6 +7,7 @@ import RatingStars from "@/components/RatingStars";
 import TrustBadges from "@/components/TrustBadges";
 import ContactButton from "@/components/ContactButton";
 import ReviewForm from "@/components/ReviewForm";
+import PhotoGallery from "@/components/PhotoGallery";
 import { publicName } from "@/lib/user";
 import { MODE_LABELS, GENDER_LABELS, type TeachingMode } from "@/lib/constants";
 
@@ -217,18 +218,7 @@ export default async function UserProfilePage({
           <h2 className="mb-4 font-serif text-2xl font-extrabold text-ink">
             檔案照片
           </h2>
-          <div className="flex flex-wrap gap-3">
-            {user.photoUrls.map((p, i) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={i}
-                src={p}
-                alt={`${name} 的照片 ${i + 1}`}
-                loading="lazy"
-                className="h-40 w-40 rounded-2xl border border-line object-cover"
-              />
-            ))}
-          </div>
+          <PhotoGallery photos={user.photoUrls} alt={name} />
         </div>
       )}
 

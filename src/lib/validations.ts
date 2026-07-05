@@ -64,7 +64,7 @@ export const profileSchema = z.object({
     .max(3_000_000)
     .refine((v) => v.startsWith("data:image/"), "頭像格式不正確")
     .optional(),
-  isPublished: z.boolean(),
+  // 接案開關（isPublished）由面板切換獨佔，存檔不動它
 }).refine(
   (d) =>
     d.hourlyRate == null ||
