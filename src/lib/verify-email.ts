@@ -41,14 +41,16 @@ export async function sendVerificationEmail(
   });
 }
 
-// 用 token 完成驗證。回傳 true=成功、false=無效或過期
-export async function verifyEmailToken(rawToken: string): Promise<boolean> {
-  if (!rawToken) return false;
+// 用 token 完成驗證。成功回傳 userId，無效或過期回傳 null
+export async function verifyEmailToken(
+  rawToken: string
+): Promise<string | null> {
+  if (!rawToken) return null;
   const record = await db.emailVerificationToken.findUnique({
     where: { tokenHash: sha256(rawToken) },
     select: { userId: true, expiresAt: true },
   });
-  if (!record || record.expiresAt < new Date()) return false;
+  if (!record || record.expiresAt < new Date()) return null;
 
   await db.$transaction([
     db.user.update({
@@ -57,5 +59,5 @@ export async function verifyEmailToken(rawToken: string): Promise<boolean> {
     }),
     db.emailVerificationToken.deleteMany({ where: { userId: record.userId } }),
   ]);
-  return true;
+  return record.userId;
 }
