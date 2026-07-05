@@ -129,6 +129,44 @@ export async function updateJob(
   return { redirectTo: `/jobs/${jobId}` };
 }
 
+// 案主刪除自己發布的需求（應徵、收藏由 schema cascade 一併刪除）
+export async function deleteOwnJob(
+  jobId: string
+): Promise<{ redirectTo?: string; error?: string }> {
+  const session = await auth();
+  if (!session) return { error: "請先登入" };
+
+  const job = await db.jobPost.findUnique({
+    where: { id: jobId },
+    select: {
+      studentId: true,
+      title: true,
+      applications: {
+        where: { status: "PENDING" },
+        select: { tutor: { select: { userId: true } } },
+      },
+    },
+  });
+  if (!job || job.studentId !== session.user.id) return { error: "沒有權限" };
+
+  // 先通知還在等待的應徵老師，再刪除
+  for (const app of job.applications) {
+    await notifySystem(
+      app.tutor.userId,
+      `案件「${job.title}」已由案主移除`,
+      "這個需求已下架，你的應徵一併結束。看看其他開放中的案件吧。",
+      "/jobs"
+    );
+  }
+
+  await db.jobPost.delete({ where: { id: jobId } });
+
+  revalidatePath("/jobs");
+  revalidatePath("/favorites");
+  revalidatePath("/dashboard/jobs");
+  return { redirectTo: "/dashboard/jobs" };
+}
+
 // 老師應徵案件
 export async function applyToJob(
   _prev: ActionState,
