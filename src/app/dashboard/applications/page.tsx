@@ -31,7 +31,7 @@ export default async function MyApplicationsPage() {
           id: true,
           title: true,
           subject: true,
-          region: true,
+          regions: true,
           mode: true,
           budget: true,
           budgetMax: true,
@@ -81,7 +81,7 @@ export default async function MyApplicationsPage() {
                     <span className="rounded-full bg-sun-soft px-2 py-0.5 font-medium text-cobalt">
                       {app.job.subject}
                     </span>
-                    <span>📍 {app.job.region}</span>
+                    <span>📍 {app.job.regions.join("、")}</span>
                     <span>・ {MODE_LABELS[app.job.mode as TeachingMode]}</span>
                   </div>
                   <p className="mt-2 line-clamp-2 text-sm text-ink/60">

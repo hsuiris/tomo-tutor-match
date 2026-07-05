@@ -13255,7 +13255,6 @@ export namespace Prisma {
     title: string | null
     subject: string | null
     level: string | null
-    region: string | null
     mode: $Enums.TeachingMode | null
     budget: number | null
     budgetMax: number | null
@@ -13273,7 +13272,6 @@ export namespace Prisma {
     title: string | null
     subject: string | null
     level: string | null
-    region: string | null
     mode: $Enums.TeachingMode | null
     budget: number | null
     budgetMax: number | null
@@ -13291,7 +13289,7 @@ export namespace Prisma {
     title: number
     subject: number
     level: number
-    region: number
+    regions: number
     mode: number
     budget: number
     budgetMax: number
@@ -13321,7 +13319,6 @@ export namespace Prisma {
     title?: true
     subject?: true
     level?: true
-    region?: true
     mode?: true
     budget?: true
     budgetMax?: true
@@ -13339,7 +13336,6 @@ export namespace Prisma {
     title?: true
     subject?: true
     level?: true
-    region?: true
     mode?: true
     budget?: true
     budgetMax?: true
@@ -13357,7 +13353,7 @@ export namespace Prisma {
     title?: true
     subject?: true
     level?: true
-    region?: true
+    regions?: true
     mode?: true
     budget?: true
     budgetMax?: true
@@ -13462,7 +13458,7 @@ export namespace Prisma {
     title: string
     subject: string
     level: string | null
-    region: string
+    regions: string[]
     mode: $Enums.TeachingMode
     budget: number | null
     budgetMax: number | null
@@ -13499,7 +13495,7 @@ export namespace Prisma {
     title?: boolean
     subject?: boolean
     level?: boolean
-    region?: boolean
+    regions?: boolean
     mode?: boolean
     budget?: boolean
     budgetMax?: boolean
@@ -13521,7 +13517,7 @@ export namespace Prisma {
     title?: boolean
     subject?: boolean
     level?: boolean
-    region?: boolean
+    regions?: boolean
     mode?: boolean
     budget?: boolean
     budgetMax?: boolean
@@ -13540,7 +13536,7 @@ export namespace Prisma {
     title?: boolean
     subject?: boolean
     level?: boolean
-    region?: boolean
+    regions?: boolean
     mode?: boolean
     budget?: boolean
     budgetMax?: boolean
@@ -13559,7 +13555,7 @@ export namespace Prisma {
     title?: boolean
     subject?: boolean
     level?: boolean
-    region?: boolean
+    regions?: boolean
     mode?: boolean
     budget?: boolean
     budgetMax?: boolean
@@ -13571,7 +13567,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type JobPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "title" | "subject" | "level" | "region" | "mode" | "budget" | "budgetMax" | "description" | "studentStatus" | "parentNeeds" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPost"]>
+  export type JobPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "studentId" | "title" | "subject" | "level" | "regions" | "mode" | "budget" | "budgetMax" | "description" | "studentStatus" | "parentNeeds" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["jobPost"]>
   export type JobPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     student?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | JobPost$applicationsArgs<ExtArgs>
@@ -13598,7 +13594,7 @@ export namespace Prisma {
       title: string
       subject: string
       level: string | null
-      region: string
+      regions: string[]
       mode: $Enums.TeachingMode
       budget: number | null
       budgetMax: number | null
@@ -14039,7 +14035,7 @@ export namespace Prisma {
     readonly title: FieldRef<"JobPost", 'String'>
     readonly subject: FieldRef<"JobPost", 'String'>
     readonly level: FieldRef<"JobPost", 'String'>
-    readonly region: FieldRef<"JobPost", 'String'>
+    readonly regions: FieldRef<"JobPost", 'String[]'>
     readonly mode: FieldRef<"JobPost", 'TeachingMode'>
     readonly budget: FieldRef<"JobPost", 'Int'>
     readonly budgetMax: FieldRef<"JobPost", 'Int'>
@@ -21269,7 +21265,7 @@ export namespace Prisma {
     title: 'title',
     subject: 'subject',
     level: 'level',
-    region: 'region',
+    regions: 'regions',
     mode: 'mode',
     budget: 'budget',
     budgetMax: 'budgetMax',
@@ -22302,7 +22298,7 @@ export namespace Prisma {
     title?: StringFilter<"JobPost"> | string
     subject?: StringFilter<"JobPost"> | string
     level?: StringNullableFilter<"JobPost"> | string | null
-    region?: StringFilter<"JobPost"> | string
+    regions?: StringNullableListFilter<"JobPost">
     mode?: EnumTeachingModeFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableFilter<"JobPost"> | number | null
     budgetMax?: IntNullableFilter<"JobPost"> | number | null
@@ -22323,7 +22319,7 @@ export namespace Prisma {
     title?: SortOrder
     subject?: SortOrder
     level?: SortOrderInput | SortOrder
-    region?: SortOrder
+    regions?: SortOrder
     mode?: SortOrder
     budget?: SortOrderInput | SortOrder
     budgetMax?: SortOrderInput | SortOrder
@@ -22347,7 +22343,7 @@ export namespace Prisma {
     title?: StringFilter<"JobPost"> | string
     subject?: StringFilter<"JobPost"> | string
     level?: StringNullableFilter<"JobPost"> | string | null
-    region?: StringFilter<"JobPost"> | string
+    regions?: StringNullableListFilter<"JobPost">
     mode?: EnumTeachingModeFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableFilter<"JobPost"> | number | null
     budgetMax?: IntNullableFilter<"JobPost"> | number | null
@@ -22368,7 +22364,7 @@ export namespace Prisma {
     title?: SortOrder
     subject?: SortOrder
     level?: SortOrderInput | SortOrder
-    region?: SortOrder
+    regions?: SortOrder
     mode?: SortOrder
     budget?: SortOrderInput | SortOrder
     budgetMax?: SortOrderInput | SortOrder
@@ -22394,7 +22390,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"JobPost"> | string
     subject?: StringWithAggregatesFilter<"JobPost"> | string
     level?: StringNullableWithAggregatesFilter<"JobPost"> | string | null
-    region?: StringWithAggregatesFilter<"JobPost"> | string
+    regions?: StringNullableListFilter<"JobPost">
     mode?: EnumTeachingModeWithAggregatesFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableWithAggregatesFilter<"JobPost"> | number | null
     budgetMax?: IntNullableWithAggregatesFilter<"JobPost"> | number | null
@@ -23603,7 +23599,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -23624,7 +23620,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -23643,7 +23639,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -23664,7 +23660,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -23684,7 +23680,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -23701,7 +23697,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -23719,7 +23715,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -24934,7 +24930,7 @@ export namespace Prisma {
     title?: SortOrder
     subject?: SortOrder
     level?: SortOrder
-    region?: SortOrder
+    regions?: SortOrder
     mode?: SortOrder
     budget?: SortOrder
     budgetMax?: SortOrder
@@ -24957,7 +24953,6 @@ export namespace Prisma {
     title?: SortOrder
     subject?: SortOrder
     level?: SortOrder
-    region?: SortOrder
     mode?: SortOrder
     budget?: SortOrder
     budgetMax?: SortOrder
@@ -24975,7 +24970,6 @@ export namespace Prisma {
     title?: SortOrder
     subject?: SortOrder
     level?: SortOrder
-    region?: SortOrder
     mode?: SortOrder
     budget?: SortOrder
     budgetMax?: SortOrder
@@ -26265,6 +26259,10 @@ export namespace Prisma {
     deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
   }
 
+  export type JobPostCreateregionsInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutJobPostsInput = {
     create?: XOR<UserCreateWithoutJobPostsInput, UserUncheckedCreateWithoutJobPostsInput>
     connectOrCreate?: UserCreateOrConnectWithoutJobPostsInput
@@ -26297,6 +26295,11 @@ export namespace Prisma {
     connectOrCreate?: FavoriteCreateOrConnectWithoutJobInput | FavoriteCreateOrConnectWithoutJobInput[]
     createMany?: FavoriteCreateManyJobInputEnvelope
     connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
+  export type JobPostUpdateregionsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type EnumJobStatusFieldUpdateOperationsInput = {
@@ -27050,7 +27053,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -27069,7 +27072,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -27529,7 +27532,7 @@ export namespace Prisma {
     title?: StringFilter<"JobPost"> | string
     subject?: StringFilter<"JobPost"> | string
     level?: StringNullableFilter<"JobPost"> | string | null
-    region?: StringFilter<"JobPost"> | string
+    regions?: StringNullableListFilter<"JobPost">
     mode?: EnumTeachingModeFilter<"JobPost"> | $Enums.TeachingMode
     budget?: IntNullableFilter<"JobPost"> | number | null
     budgetMax?: IntNullableFilter<"JobPost"> | number | null
@@ -28483,7 +28486,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -28503,7 +28506,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -28673,7 +28676,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -28693,7 +28696,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -29921,7 +29924,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -29941,7 +29944,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -30048,7 +30051,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -30068,7 +30071,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -31209,7 +31212,7 @@ export namespace Prisma {
     title: string
     subject: string
     level?: string | null
-    region: string
+    regions?: JobPostCreateregionsInput | string[]
     mode?: $Enums.TeachingMode
     budget?: number | null
     budgetMax?: number | null
@@ -31335,7 +31338,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -31354,7 +31357,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null
@@ -31373,7 +31376,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     subject?: StringFieldUpdateOperationsInput | string
     level?: NullableStringFieldUpdateOperationsInput | string | null
-    region?: StringFieldUpdateOperationsInput | string
+    regions?: JobPostUpdateregionsInput | string[]
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
     budget?: NullableIntFieldUpdateOperationsInput | number | null
     budgetMax?: NullableIntFieldUpdateOperationsInput | number | null

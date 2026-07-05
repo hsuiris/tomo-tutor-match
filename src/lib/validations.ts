@@ -78,7 +78,7 @@ export const jobSchema = z.object({
   title: z.string().min(4, "標題至少 4 個字").max(100),
   subject: z.string().min(1, "請選擇科目"),
   level: z.string().min(1, "請選擇年級／學制"),
-  region: z.string().min(1, "請選擇地區"),
+  regions: z.array(z.string()).min(1, "請至少選擇一個地區"),
   mode: z.enum(["ONLINE", "IN_PERSON", "BOTH"]),
   // 預算區間（皆可選；只填一邊也行）
   budget: z.number().int().positive("預算需為正整數").max(100000).optional(),

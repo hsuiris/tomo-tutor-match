@@ -24,7 +24,6 @@ export default async function EditJobPage({
     title: job.title,
     subject: job.subject,
     level: job.level ?? "",
-    region: job.region,
     mode: job.mode,
     budget: job.budget?.toString() ?? "",
     budgetMax: job.budgetMax?.toString() ?? "",
@@ -40,7 +39,7 @@ export default async function EditJobPage({
       <p className="mt-1 mb-6 text-sm text-ink/60">
         修改後已應徵的老師也會看到最新內容。
       </p>
-      <JobForm jobId={job.id} initial={initial} />
+      <JobForm jobId={job.id} initial={initial} initialRegions={job.regions} />
     </div>
   );
 }

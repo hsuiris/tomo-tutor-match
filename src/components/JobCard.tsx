@@ -8,7 +8,7 @@ export type JobCardData = {
   title: string;
   subject: string;
   level: string | null;
-  region: string;
+  regions: string[];
   mode: TeachingMode;
   budget: number | null;
   budgetMax: number | null;
@@ -62,7 +62,7 @@ export default function JobCard({
             {job.level}
           </span>
         )}
-        <span className="text-ink/50">📍 {job.region}</span>
+        <span className="text-ink/50">📍 {job.regions.join("、")}</span>
         <span className="text-ink/50">・ {MODE_LABELS[job.mode]}</span>
       </div>
 

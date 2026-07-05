@@ -29,14 +29,14 @@ export async function generateMetadata({
   const { id } = await params;
   const job = await db.jobPost.findUnique({
     where: { id },
-    select: { title: true, subject: true, region: true, description: true },
+    select: { title: true, subject: true, regions: true, description: true },
   });
   if (!job) return { title: "找不到案件" };
   return {
     title: job.title,
     description:
       job.description?.slice(0, 120) ||
-      `${job.region}・${job.subject} 家教需求，歡迎老師應徵。`,
+      `${job.regions.join("、")}・${job.subject} 家教需求，歡迎老師應徵。`,
     alternates: { canonical: `/jobs/${id}` },
   };
 }
@@ -107,7 +107,7 @@ export default async function JobDetailPage({
         userId: { not: job.student.id },
         subjects: { has: job.subject },
         ...(job.level ? { levels: { has: job.level } } : {}),
-        regions: { hasSome: [job.region, "線上"] },
+        regions: { hasSome: [...job.regions, "線上"] },
         ...(job.budget != null
           ? { OR: [{ hourlyRate: { lte: job.budget } }, { hourlyRate: null }] }
           : {}),
@@ -189,7 +189,7 @@ export default async function JobDetailPage({
               {job.level}
             </span>
           )}
-          <span className="text-ink/60">📍 {job.region}</span>
+          <span className="text-ink/60">📍 {job.regions.join("、")}</span>
           <span className="text-ink/60">
             ・ {MODE_LABELS[job.mode as TeachingMode]}
           </span>
@@ -247,7 +247,7 @@ export default async function JobDetailPage({
           </h2>
           <p className="mt-1 text-sm text-ink/60">
             根據你的需求（{job.subject}
-            {job.level ? `・${job.level}` : ""}・{job.region}
+            {job.level ? `・${job.level}` : ""}・{job.regions.join("、")}
             {amountRange(job.budget, job.budgetMax)
               ? `・預算 $${amountRange(job.budget, job.budgetMax)}`
               : ""}）為你篩選,

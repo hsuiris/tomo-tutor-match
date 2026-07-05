@@ -323,7 +323,7 @@ export type MatchJob = {
   title: string;
   subject: string;
   level: string | null;
-  region: string;
+  regions: string[];
   mode: TeachingMode;
   budget: number | null;
   budgetMax: number | null;
@@ -374,28 +374,36 @@ export function scoreJob(job: MatchJob, profile: JobMatchProfile): ScoredJob {
     });
   }
 
-  // 2. 地區 / 授課方式
+  // 2. 地區 / 授課方式（案件可多地區，任一涵蓋即符合）
   {
-    const wantsOnline = job.region === "線上";
     const teachesOnline =
       profile.mode === "ONLINE" ||
       profile.mode === "BOTH" ||
       profile.regions.includes("線上");
+    const offline = job.regions.filter((r) => r !== "線上");
+    const acceptsOnline = job.regions.includes("線上");
+    const covered = offline.find((r) => regionsCover(profile.regions, r));
     let fitness: number;
     let reason: MatchReason | undefined;
-    if (wantsOnline) {
-      fitness = teachesOnline ? 1 : 0;
-      if (teachesOnline) reason = { label: "可線上授課", positive: true };
-      else reason = { label: "對方要線上、你未提供", positive: false };
-    } else if (regionsCover(profile.regions, job.region)) {
+    if (covered) {
       fitness = 1;
-      reason = { label: `在你的授課地區 ${job.region}`, positive: true };
+      reason = { label: `在你的授課地區 ${covered}`, positive: true };
+    } else if (acceptsOnline && teachesOnline) {
+      fitness = 1;
+      reason = { label: "可線上授課", positive: true };
+    } else if (acceptsOnline && offline.length === 0) {
+      // 對方只要線上、你未提供
+      fitness = 0;
+      reason = { label: "對方要線上、你未提供", positive: false };
     } else if (teachesOnline) {
       fitness = 0.5;
       reason = { label: "可改線上授課", positive: true };
     } else {
       fitness = 0;
-      reason = { label: `不在你的授課地區（${job.region}）`, positive: false };
+      reason = {
+        label: `不在你的授課地區（${job.regions.join("、")}）`,
+        positive: false,
+      };
     }
     dims.push({ key: "region", weight: JOB_WEIGHTS.region, fitness, active: true, reason });
   }

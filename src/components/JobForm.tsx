@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createJob, updateJob } from "@/app/jobs/actions";
 import { SUBJECTS, levelsForSubject } from "@/lib/constants";
-import RegionOptions from "@/components/RegionOptions";
+import RegionPicker from "@/components/RegionPicker";
 import { SubmitButton, useFocusFirstError } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
@@ -14,9 +14,11 @@ const initialState: ActionState = {};
 export default function JobForm({
   jobId,
   initial,
+  initialRegions,
 }: {
   jobId?: string;
   initial?: Record<string, string>;
+  initialRegions?: string[];
 } = {}) {
   const router = useRouter();
   const [state, formAction] = useActionState(
@@ -31,6 +33,8 @@ export default function JobForm({
   // 科目決定年級／程度選項（技能類用 入門/初階/進階）
   const [subject, setSubject] = useState<string>(v?.subject ?? "");
   const [level, setLevel] = useState<string>(v?.level ?? "");
+  // 地區多選（client state 在驗證失敗時自然保留）
+  const [regions, setRegions] = useState<string[]>(initialRegions ?? []);
   const levelOptions = levelsForSubject(subject);
 
   // 出錯時顯示紅字錯誤，否則顯示灰字限制提示
@@ -130,22 +134,6 @@ export default function JobForm({
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium text-ink/80">
-            地區 <span className="text-red-500">*</span>
-          </label>
-          <select name="region" defaultValue={v?.region ?? ""} className={inputCls}>
-            <option value="" disabled>
-              請選擇
-            </option>
-            <RegionOptions />
-          </select>
-          {err?.region?.map((e) => (
-            <p key={e} className="mt-1 text-xs text-red-500">
-              {e}
-            </p>
-          ))}
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-medium text-ink/80">
             授課方式
           </label>
           <select name="mode" defaultValue={v?.mode ?? "BOTH"} className={inputCls}>
@@ -154,6 +142,18 @@ export default function JobForm({
             <option value="IN_PERSON">僅實體</option>
           </select>
         </div>
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          上課地區（可複選） <span className="text-red-500">*</span>
+        </label>
+        <RegionPicker value={regions} onChange={setRegions} name="regions" />
+        {err?.regions?.map((e) => (
+          <p key={e} className="mt-1 text-xs text-red-500">
+            {e}
+          </p>
+        ))}
       </div>
 
       <div>

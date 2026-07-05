@@ -232,7 +232,7 @@ exports.Prisma.JobPostScalarFieldEnum = {
   title: 'title',
   subject: 'subject',
   level: 'level',
-  region: 'region',
+  regions: 'regions',
   mode: 'mode',
   budget: 'budget',
   budgetMax: 'budgetMax',

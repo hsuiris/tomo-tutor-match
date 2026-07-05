@@ -88,7 +88,7 @@ function job(over: Partial<MatchJob> = {}): MatchJob {
     title: "x",
     subject: "數學",
     level: "高中",
-    region: "台北市",
+    regions: ["台北市"],
     mode: "BOTH",
     budget: 500,
     budgetMax: 700,
