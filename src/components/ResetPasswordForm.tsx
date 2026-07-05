@@ -3,12 +3,13 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { resetPassword, type ActionState } from "@/app/(auth)/actions";
-import { Field, SubmitButton } from "@/components/ui/form";
+import { Field, SubmitButton, useFocusFirstError } from "@/components/ui/form";
 
 const initialState: ActionState = {};
 
 export default function ResetPasswordForm({ token }: { token: string }) {
   const [state, formAction] = useActionState(resetPassword, initialState);
+  useFocusFirstError(state);
 
   if (state.success) {
     return (

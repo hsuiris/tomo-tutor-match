@@ -2,13 +2,14 @@
 
 import { useActionState } from "react";
 import { changePassword } from "@/app/dashboard/account/actions";
-import { Field, SubmitButton } from "@/components/ui/form";
+import { Field, SubmitButton, useFocusFirstError } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
 
 export default function PasswordForm() {
   const [state, formAction] = useActionState(changePassword, initialState);
+  useFocusFirstError(state);
 
   return (
     <form action={formAction} className="space-y-4">

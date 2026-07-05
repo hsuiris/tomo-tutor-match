@@ -5,6 +5,7 @@ import Link from "next/link";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import GoBack from "@/components/GoBack";
 import CookieNotice from "@/components/CookieNotice";
 import { siteUrl } from "@/lib/site";
 
@@ -74,7 +75,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink">
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <GoBack />
+          {children}
+        </main>
         <footer className="border-t border-line bg-[#faf8f2]">
           <div className="mx-auto flex max-w-6xl flex-col items-center gap-1 px-4 py-10 text-center">
             <span className="font-serif text-2xl font-bold tracking-tight text-ink">

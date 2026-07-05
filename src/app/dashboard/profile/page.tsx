@@ -96,7 +96,7 @@ export default async function ProfileEditPage() {
           eduVerified={profile.user.eduVerified}
           requests={profile.user.verificationRequests}
           showEducation
-          intro="完成認證後,你的檔案會顯示信任徽章,讓家長更放心託付,也保障你接案的安全。證件僅供審核,審核後即刪除。"
+          intro="安全認證為選填，沒有認證也能正常刊登檔案與應徵案件；但完成認證會顯示信任徽章，家長與老師雙方都會更放心。證件僅供審核，審核後即刪除。"
         />
       </div>
     </div>

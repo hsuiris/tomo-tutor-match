@@ -3,12 +3,13 @@
 import { useActionState } from "react";
 import Link from "next/link";
 import { loginUser, type ActionState } from "../actions";
-import { Field, SubmitButton } from "@/components/ui/form";
+import { Field, SubmitButton, useFocusFirstError } from "@/components/ui/form";
 
 const initialState: ActionState = {};
 
 export default function LoginPage() {
   const [state, formAction] = useActionState(loginUser, initialState);
+  useFocusFirstError(state);
 
   return (
     <div>

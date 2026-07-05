@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createJob } from "@/app/jobs/actions";
 import { SUBJECTS, levelsForSubject } from "@/lib/constants";
 import RegionOptions from "@/components/RegionOptions";
-import { SubmitButton } from "@/components/ui/form";
+import { SubmitButton, useFocusFirstError } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
@@ -13,6 +13,7 @@ const initialState: ActionState = {};
 export default function JobForm() {
   const router = useRouter();
   const [state, formAction] = useActionState(createJob, initialState);
+  useFocusFirstError(state);
   const err = state.fieldErrors;
   const v = state.values;
 
