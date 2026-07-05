@@ -285,6 +285,7 @@ exports.Prisma.ForumPostScalarFieldEnum = {
   title: 'title',
   body: 'body',
   createdAt: 'createdAt',
+  editedAt: 'editedAt',
   lastReplyAt: 'lastReplyAt'
 };
 
@@ -294,7 +295,9 @@ exports.Prisma.ForumReplyScalarFieldEnum = {
   authorId: 'authorId',
   anonymous: 'anonymous',
   body: 'body',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  editedAt: 'editedAt',
+  parentId: 'parentId'
 };
 
 exports.Prisma.SortOrder = {

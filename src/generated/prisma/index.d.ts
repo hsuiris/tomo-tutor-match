@@ -2651,6 +2651,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ForumReplyCountOutputType
+   */
+
+  export type ForumReplyCountOutputType = {
+    children: number
+  }
+
+  export type ForumReplyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    children?: boolean | ForumReplyCountOutputTypeCountChildrenArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ForumReplyCountOutputType without action
+   */
+  export type ForumReplyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumReplyCountOutputType
+     */
+    select?: ForumReplyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ForumReplyCountOutputType without action
+   */
+  export type ForumReplyCountOutputTypeCountChildrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ForumReplyWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -18802,6 +18833,7 @@ export namespace Prisma {
     title: string | null
     body: string | null
     createdAt: Date | null
+    editedAt: Date | null
     lastReplyAt: Date | null
   }
 
@@ -18813,6 +18845,7 @@ export namespace Prisma {
     title: string | null
     body: string | null
     createdAt: Date | null
+    editedAt: Date | null
     lastReplyAt: Date | null
   }
 
@@ -18824,6 +18857,7 @@ export namespace Prisma {
     title: number
     body: number
     createdAt: number
+    editedAt: number
     lastReplyAt: number
     _all: number
   }
@@ -18837,6 +18871,7 @@ export namespace Prisma {
     title?: true
     body?: true
     createdAt?: true
+    editedAt?: true
     lastReplyAt?: true
   }
 
@@ -18848,6 +18883,7 @@ export namespace Prisma {
     title?: true
     body?: true
     createdAt?: true
+    editedAt?: true
     lastReplyAt?: true
   }
 
@@ -18859,6 +18895,7 @@ export namespace Prisma {
     title?: true
     body?: true
     createdAt?: true
+    editedAt?: true
     lastReplyAt?: true
     _all?: true
   }
@@ -18943,6 +18980,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt: Date
+    editedAt: Date | null
     lastReplyAt: Date
     _count: ForumPostCountAggregateOutputType | null
     _min: ForumPostMinAggregateOutputType | null
@@ -18971,6 +19009,7 @@ export namespace Prisma {
     title?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
     lastReplyAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
     replies?: boolean | ForumPost$repliesArgs<ExtArgs>
@@ -18985,6 +19024,7 @@ export namespace Prisma {
     title?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
     lastReplyAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumPost"]>
@@ -18997,6 +19037,7 @@ export namespace Prisma {
     title?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
     lastReplyAt?: boolean
     author?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumPost"]>
@@ -19009,10 +19050,11 @@ export namespace Prisma {
     title?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
     lastReplyAt?: boolean
   }
 
-  export type ForumPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "board" | "authorId" | "anonymous" | "title" | "body" | "createdAt" | "lastReplyAt", ExtArgs["result"]["forumPost"]>
+  export type ForumPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "board" | "authorId" | "anonymous" | "title" | "body" | "createdAt" | "editedAt" | "lastReplyAt", ExtArgs["result"]["forumPost"]>
   export type ForumPostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | UserDefaultArgs<ExtArgs>
     replies?: boolean | ForumPost$repliesArgs<ExtArgs>
@@ -19039,6 +19081,7 @@ export namespace Prisma {
       title: string
       body: string
       createdAt: Date
+      editedAt: Date | null
       lastReplyAt: Date
     }, ExtArgs["result"]["forumPost"]>
     composites: {}
@@ -19472,6 +19515,7 @@ export namespace Prisma {
     readonly title: FieldRef<"ForumPost", 'String'>
     readonly body: FieldRef<"ForumPost", 'String'>
     readonly createdAt: FieldRef<"ForumPost", 'DateTime'>
+    readonly editedAt: FieldRef<"ForumPost", 'DateTime'>
     readonly lastReplyAt: FieldRef<"ForumPost", 'DateTime'>
   }
     
@@ -19928,6 +19972,8 @@ export namespace Prisma {
     anonymous: boolean | null
     body: string | null
     createdAt: Date | null
+    editedAt: Date | null
+    parentId: string | null
   }
 
   export type ForumReplyMaxAggregateOutputType = {
@@ -19937,6 +19983,8 @@ export namespace Prisma {
     anonymous: boolean | null
     body: string | null
     createdAt: Date | null
+    editedAt: Date | null
+    parentId: string | null
   }
 
   export type ForumReplyCountAggregateOutputType = {
@@ -19946,6 +19994,8 @@ export namespace Prisma {
     anonymous: number
     body: number
     createdAt: number
+    editedAt: number
+    parentId: number
     _all: number
   }
 
@@ -19957,6 +20007,8 @@ export namespace Prisma {
     anonymous?: true
     body?: true
     createdAt?: true
+    editedAt?: true
+    parentId?: true
   }
 
   export type ForumReplyMaxAggregateInputType = {
@@ -19966,6 +20018,8 @@ export namespace Prisma {
     anonymous?: true
     body?: true
     createdAt?: true
+    editedAt?: true
+    parentId?: true
   }
 
   export type ForumReplyCountAggregateInputType = {
@@ -19975,6 +20029,8 @@ export namespace Prisma {
     anonymous?: true
     body?: true
     createdAt?: true
+    editedAt?: true
+    parentId?: true
     _all?: true
   }
 
@@ -20057,6 +20113,8 @@ export namespace Prisma {
     anonymous: boolean
     body: string
     createdAt: Date
+    editedAt: Date | null
+    parentId: string | null
     _count: ForumReplyCountAggregateOutputType | null
     _min: ForumReplyMinAggregateOutputType | null
     _max: ForumReplyMaxAggregateOutputType | null
@@ -20083,8 +20141,13 @@ export namespace Prisma {
     anonymous?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
+    parentId?: boolean
     post?: boolean | ForumPostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | ForumReply$parentArgs<ExtArgs>
+    children?: boolean | ForumReply$childrenArgs<ExtArgs>
+    _count?: boolean | ForumReplyCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forumReply"]>
 
   export type ForumReplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -20094,8 +20157,11 @@ export namespace Prisma {
     anonymous?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
+    parentId?: boolean
     post?: boolean | ForumPostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | ForumReply$parentArgs<ExtArgs>
   }, ExtArgs["result"]["forumReply"]>
 
   export type ForumReplySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -20105,8 +20171,11 @@ export namespace Prisma {
     anonymous?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
+    parentId?: boolean
     post?: boolean | ForumPostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | ForumReply$parentArgs<ExtArgs>
   }, ExtArgs["result"]["forumReply"]>
 
   export type ForumReplySelectScalar = {
@@ -20116,20 +20185,27 @@ export namespace Prisma {
     anonymous?: boolean
     body?: boolean
     createdAt?: boolean
+    editedAt?: boolean
+    parentId?: boolean
   }
 
-  export type ForumReplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "postId" | "authorId" | "anonymous" | "body" | "createdAt", ExtArgs["result"]["forumReply"]>
+  export type ForumReplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "postId" | "authorId" | "anonymous" | "body" | "createdAt" | "editedAt" | "parentId", ExtArgs["result"]["forumReply"]>
   export type ForumReplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | ForumPostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | ForumReply$parentArgs<ExtArgs>
+    children?: boolean | ForumReply$childrenArgs<ExtArgs>
+    _count?: boolean | ForumReplyCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ForumReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | ForumPostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | ForumReply$parentArgs<ExtArgs>
   }
   export type ForumReplyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     post?: boolean | ForumPostDefaultArgs<ExtArgs>
     author?: boolean | UserDefaultArgs<ExtArgs>
+    parent?: boolean | ForumReply$parentArgs<ExtArgs>
   }
 
   export type $ForumReplyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -20137,6 +20213,8 @@ export namespace Prisma {
     objects: {
       post: Prisma.$ForumPostPayload<ExtArgs>
       author: Prisma.$UserPayload<ExtArgs>
+      parent: Prisma.$ForumReplyPayload<ExtArgs> | null
+      children: Prisma.$ForumReplyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -20145,6 +20223,8 @@ export namespace Prisma {
       anonymous: boolean
       body: string
       createdAt: Date
+      editedAt: Date | null
+      parentId: string | null
     }, ExtArgs["result"]["forumReply"]>
     composites: {}
   }
@@ -20541,6 +20621,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     post<T extends ForumPostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ForumPostDefaultArgs<ExtArgs>>): Prisma__ForumPostClient<$Result.GetResult<Prisma.$ForumPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    parent<T extends ForumReply$parentArgs<ExtArgs> = {}>(args?: Subset<T, ForumReply$parentArgs<ExtArgs>>): Prisma__ForumReplyClient<$Result.GetResult<Prisma.$ForumReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    children<T extends ForumReply$childrenArgs<ExtArgs> = {}>(args?: Subset<T, ForumReply$childrenArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForumReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -20576,6 +20658,8 @@ export namespace Prisma {
     readonly anonymous: FieldRef<"ForumReply", 'Boolean'>
     readonly body: FieldRef<"ForumReply", 'String'>
     readonly createdAt: FieldRef<"ForumReply", 'DateTime'>
+    readonly editedAt: FieldRef<"ForumReply", 'DateTime'>
+    readonly parentId: FieldRef<"ForumReply", 'String'>
   }
     
 
@@ -20972,6 +21056,49 @@ export namespace Prisma {
   }
 
   /**
+   * ForumReply.parent
+   */
+  export type ForumReply$parentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumReply
+     */
+    select?: ForumReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForumReply
+     */
+    omit?: ForumReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumReplyInclude<ExtArgs> | null
+    where?: ForumReplyWhereInput
+  }
+
+  /**
+   * ForumReply.children
+   */
+  export type ForumReply$childrenArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ForumReply
+     */
+    select?: ForumReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ForumReply
+     */
+    omit?: ForumReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumReplyInclude<ExtArgs> | null
+    where?: ForumReplyWhereInput
+    orderBy?: ForumReplyOrderByWithRelationInput | ForumReplyOrderByWithRelationInput[]
+    cursor?: ForumReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ForumReplyScalarFieldEnum | ForumReplyScalarFieldEnum[]
+  }
+
+  /**
    * ForumReply without action
    */
   export type ForumReplyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -21210,6 +21337,7 @@ export namespace Prisma {
     title: 'title',
     body: 'body',
     createdAt: 'createdAt',
+    editedAt: 'editedAt',
     lastReplyAt: 'lastReplyAt'
   };
 
@@ -21222,7 +21350,9 @@ export namespace Prisma {
     authorId: 'authorId',
     anonymous: 'anonymous',
     body: 'body',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    editedAt: 'editedAt',
+    parentId: 'parentId'
   };
 
   export type ForumReplyScalarFieldEnum = (typeof ForumReplyScalarFieldEnum)[keyof typeof ForumReplyScalarFieldEnum]
@@ -22527,6 +22657,7 @@ export namespace Prisma {
     title?: StringFilter<"ForumPost"> | string
     body?: StringFilter<"ForumPost"> | string
     createdAt?: DateTimeFilter<"ForumPost"> | Date | string
+    editedAt?: DateTimeNullableFilter<"ForumPost"> | Date | string | null
     lastReplyAt?: DateTimeFilter<"ForumPost"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     replies?: ForumReplyListRelationFilter
@@ -22540,6 +22671,7 @@ export namespace Prisma {
     title?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrderInput | SortOrder
     lastReplyAt?: SortOrder
     author?: UserOrderByWithRelationInput
     replies?: ForumReplyOrderByRelationAggregateInput
@@ -22556,6 +22688,7 @@ export namespace Prisma {
     title?: StringFilter<"ForumPost"> | string
     body?: StringFilter<"ForumPost"> | string
     createdAt?: DateTimeFilter<"ForumPost"> | Date | string
+    editedAt?: DateTimeNullableFilter<"ForumPost"> | Date | string | null
     lastReplyAt?: DateTimeFilter<"ForumPost"> | Date | string
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
     replies?: ForumReplyListRelationFilter
@@ -22569,6 +22702,7 @@ export namespace Prisma {
     title?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrderInput | SortOrder
     lastReplyAt?: SortOrder
     _count?: ForumPostCountOrderByAggregateInput
     _max?: ForumPostMaxOrderByAggregateInput
@@ -22586,6 +22720,7 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"ForumPost"> | string
     body?: StringWithAggregatesFilter<"ForumPost"> | string
     createdAt?: DateTimeWithAggregatesFilter<"ForumPost"> | Date | string
+    editedAt?: DateTimeNullableWithAggregatesFilter<"ForumPost"> | Date | string | null
     lastReplyAt?: DateTimeWithAggregatesFilter<"ForumPost"> | Date | string
   }
 
@@ -22599,8 +22734,12 @@ export namespace Prisma {
     anonymous?: BoolFilter<"ForumReply"> | boolean
     body?: StringFilter<"ForumReply"> | string
     createdAt?: DateTimeFilter<"ForumReply"> | Date | string
+    editedAt?: DateTimeNullableFilter<"ForumReply"> | Date | string | null
+    parentId?: StringNullableFilter<"ForumReply"> | string | null
     post?: XOR<ForumPostScalarRelationFilter, ForumPostWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    parent?: XOR<ForumReplyNullableScalarRelationFilter, ForumReplyWhereInput> | null
+    children?: ForumReplyListRelationFilter
   }
 
   export type ForumReplyOrderByWithRelationInput = {
@@ -22610,8 +22749,12 @@ export namespace Prisma {
     anonymous?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
     post?: ForumPostOrderByWithRelationInput
     author?: UserOrderByWithRelationInput
+    parent?: ForumReplyOrderByWithRelationInput
+    children?: ForumReplyOrderByRelationAggregateInput
   }
 
   export type ForumReplyWhereUniqueInput = Prisma.AtLeast<{
@@ -22624,8 +22767,12 @@ export namespace Prisma {
     anonymous?: BoolFilter<"ForumReply"> | boolean
     body?: StringFilter<"ForumReply"> | string
     createdAt?: DateTimeFilter<"ForumReply"> | Date | string
+    editedAt?: DateTimeNullableFilter<"ForumReply"> | Date | string | null
+    parentId?: StringNullableFilter<"ForumReply"> | string | null
     post?: XOR<ForumPostScalarRelationFilter, ForumPostWhereInput>
     author?: XOR<UserScalarRelationFilter, UserWhereInput>
+    parent?: XOR<ForumReplyNullableScalarRelationFilter, ForumReplyWhereInput> | null
+    children?: ForumReplyListRelationFilter
   }, "id">
 
   export type ForumReplyOrderByWithAggregationInput = {
@@ -22635,6 +22782,8 @@ export namespace Prisma {
     anonymous?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrderInput | SortOrder
+    parentId?: SortOrderInput | SortOrder
     _count?: ForumReplyCountOrderByAggregateInput
     _max?: ForumReplyMaxOrderByAggregateInput
     _min?: ForumReplyMinOrderByAggregateInput
@@ -22650,6 +22799,8 @@ export namespace Prisma {
     anonymous?: BoolWithAggregatesFilter<"ForumReply"> | boolean
     body?: StringWithAggregatesFilter<"ForumReply"> | string
     createdAt?: DateTimeWithAggregatesFilter<"ForumReply"> | Date | string
+    editedAt?: DateTimeNullableWithAggregatesFilter<"ForumReply"> | Date | string | null
+    parentId?: StringNullableWithAggregatesFilter<"ForumReply"> | string | null
   }
 
   export type UserCreateInput = {
@@ -23816,6 +23967,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
     author: UserCreateNestedOneWithoutForumPostsInput
     replies?: ForumReplyCreateNestedManyWithoutPostInput
@@ -23829,6 +23981,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
     replies?: ForumReplyUncheckedCreateNestedManyWithoutPostInput
   }
@@ -23840,6 +23993,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutForumPostsNestedInput
     replies?: ForumReplyUpdateManyWithoutPostNestedInput
@@ -23853,6 +24007,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
     replies?: ForumReplyUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -23865,6 +24020,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
   }
 
@@ -23875,6 +24031,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23886,6 +24043,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -23894,8 +24052,11 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     post: ForumPostCreateNestedOneWithoutRepliesInput
     author: UserCreateNestedOneWithoutForumRepliesInput
+    parent?: ForumReplyCreateNestedOneWithoutChildrenInput
+    children?: ForumReplyCreateNestedManyWithoutParentInput
   }
 
   export type ForumReplyUncheckedCreateInput = {
@@ -23905,6 +24066,9 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
+    parentId?: string | null
+    children?: ForumReplyUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ForumReplyUpdateInput = {
@@ -23912,8 +24076,11 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     post?: ForumPostUpdateOneRequiredWithoutRepliesNestedInput
     author?: UserUpdateOneRequiredWithoutForumRepliesNestedInput
+    parent?: ForumReplyUpdateOneWithoutChildrenNestedInput
+    children?: ForumReplyUpdateManyWithoutParentNestedInput
   }
 
   export type ForumReplyUncheckedUpdateInput = {
@@ -23923,6 +24090,9 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    children?: ForumReplyUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ForumReplyCreateManyInput = {
@@ -23932,6 +24102,8 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
+    parentId?: string | null
   }
 
   export type ForumReplyUpdateManyMutationInput = {
@@ -23939,6 +24111,7 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ForumReplyUncheckedUpdateManyInput = {
@@ -23948,6 +24121,8 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -25000,6 +25175,7 @@ export namespace Prisma {
     title?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrder
     lastReplyAt?: SortOrder
   }
 
@@ -25011,6 +25187,7 @@ export namespace Prisma {
     title?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrder
     lastReplyAt?: SortOrder
   }
 
@@ -25022,6 +25199,7 @@ export namespace Prisma {
     title?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrder
     lastReplyAt?: SortOrder
   }
 
@@ -25040,6 +25218,11 @@ export namespace Prisma {
     isNot?: ForumPostWhereInput
   }
 
+  export type ForumReplyNullableScalarRelationFilter = {
+    is?: ForumReplyWhereInput | null
+    isNot?: ForumReplyWhereInput | null
+  }
+
   export type ForumReplyCountOrderByAggregateInput = {
     id?: SortOrder
     postId?: SortOrder
@@ -25047,6 +25230,8 @@ export namespace Prisma {
     anonymous?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrder
+    parentId?: SortOrder
   }
 
   export type ForumReplyMaxOrderByAggregateInput = {
@@ -25056,6 +25241,8 @@ export namespace Prisma {
     anonymous?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrder
+    parentId?: SortOrder
   }
 
   export type ForumReplyMinOrderByAggregateInput = {
@@ -25065,6 +25252,8 @@ export namespace Prisma {
     anonymous?: SortOrder
     body?: SortOrder
     createdAt?: SortOrder
+    editedAt?: SortOrder
+    parentId?: SortOrder
   }
 
   export type TutorProfileCreateNestedOneWithoutUserInput = {
@@ -26380,6 +26569,26 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type ForumReplyCreateNestedOneWithoutChildrenInput = {
+    create?: XOR<ForumReplyCreateWithoutChildrenInput, ForumReplyUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: ForumReplyCreateOrConnectWithoutChildrenInput
+    connect?: ForumReplyWhereUniqueInput
+  }
+
+  export type ForumReplyCreateNestedManyWithoutParentInput = {
+    create?: XOR<ForumReplyCreateWithoutParentInput, ForumReplyUncheckedCreateWithoutParentInput> | ForumReplyCreateWithoutParentInput[] | ForumReplyUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ForumReplyCreateOrConnectWithoutParentInput | ForumReplyCreateOrConnectWithoutParentInput[]
+    createMany?: ForumReplyCreateManyParentInputEnvelope
+    connect?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+  }
+
+  export type ForumReplyUncheckedCreateNestedManyWithoutParentInput = {
+    create?: XOR<ForumReplyCreateWithoutParentInput, ForumReplyUncheckedCreateWithoutParentInput> | ForumReplyCreateWithoutParentInput[] | ForumReplyUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ForumReplyCreateOrConnectWithoutParentInput | ForumReplyCreateOrConnectWithoutParentInput[]
+    createMany?: ForumReplyCreateManyParentInputEnvelope
+    connect?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+  }
+
   export type ForumPostUpdateOneRequiredWithoutRepliesNestedInput = {
     create?: XOR<ForumPostCreateWithoutRepliesInput, ForumPostUncheckedCreateWithoutRepliesInput>
     connectOrCreate?: ForumPostCreateOrConnectWithoutRepliesInput
@@ -26394,6 +26603,44 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutForumRepliesInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutForumRepliesInput, UserUpdateWithoutForumRepliesInput>, UserUncheckedUpdateWithoutForumRepliesInput>
+  }
+
+  export type ForumReplyUpdateOneWithoutChildrenNestedInput = {
+    create?: XOR<ForumReplyCreateWithoutChildrenInput, ForumReplyUncheckedCreateWithoutChildrenInput>
+    connectOrCreate?: ForumReplyCreateOrConnectWithoutChildrenInput
+    upsert?: ForumReplyUpsertWithoutChildrenInput
+    disconnect?: ForumReplyWhereInput | boolean
+    delete?: ForumReplyWhereInput | boolean
+    connect?: ForumReplyWhereUniqueInput
+    update?: XOR<XOR<ForumReplyUpdateToOneWithWhereWithoutChildrenInput, ForumReplyUpdateWithoutChildrenInput>, ForumReplyUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type ForumReplyUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ForumReplyCreateWithoutParentInput, ForumReplyUncheckedCreateWithoutParentInput> | ForumReplyCreateWithoutParentInput[] | ForumReplyUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ForumReplyCreateOrConnectWithoutParentInput | ForumReplyCreateOrConnectWithoutParentInput[]
+    upsert?: ForumReplyUpsertWithWhereUniqueWithoutParentInput | ForumReplyUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ForumReplyCreateManyParentInputEnvelope
+    set?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    disconnect?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    delete?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    connect?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    update?: ForumReplyUpdateWithWhereUniqueWithoutParentInput | ForumReplyUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ForumReplyUpdateManyWithWhereWithoutParentInput | ForumReplyUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ForumReplyScalarWhereInput | ForumReplyScalarWhereInput[]
+  }
+
+  export type ForumReplyUncheckedUpdateManyWithoutParentNestedInput = {
+    create?: XOR<ForumReplyCreateWithoutParentInput, ForumReplyUncheckedCreateWithoutParentInput> | ForumReplyCreateWithoutParentInput[] | ForumReplyUncheckedCreateWithoutParentInput[]
+    connectOrCreate?: ForumReplyCreateOrConnectWithoutParentInput | ForumReplyCreateOrConnectWithoutParentInput[]
+    upsert?: ForumReplyUpsertWithWhereUniqueWithoutParentInput | ForumReplyUpsertWithWhereUniqueWithoutParentInput[]
+    createMany?: ForumReplyCreateManyParentInputEnvelope
+    set?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    disconnect?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    delete?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    connect?: ForumReplyWhereUniqueInput | ForumReplyWhereUniqueInput[]
+    update?: ForumReplyUpdateWithWhereUniqueWithoutParentInput | ForumReplyUpdateWithWhereUniqueWithoutParentInput[]
+    updateMany?: ForumReplyUpdateManyWithWhereWithoutParentInput | ForumReplyUpdateManyWithWhereWithoutParentInput[]
+    deleteMany?: ForumReplyScalarWhereInput | ForumReplyScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -27043,6 +27290,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
     replies?: ForumReplyCreateNestedManyWithoutPostInput
   }
@@ -27054,6 +27302,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
     replies?: ForumReplyUncheckedCreateNestedManyWithoutPostInput
   }
@@ -27073,7 +27322,10 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     post: ForumPostCreateNestedOneWithoutRepliesInput
+    parent?: ForumReplyCreateNestedOneWithoutChildrenInput
+    children?: ForumReplyCreateNestedManyWithoutParentInput
   }
 
   export type ForumReplyUncheckedCreateWithoutAuthorInput = {
@@ -27082,6 +27334,9 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
+    parentId?: string | null
+    children?: ForumReplyUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ForumReplyCreateOrConnectWithoutAuthorInput = {
@@ -27487,6 +27742,7 @@ export namespace Prisma {
     title?: StringFilter<"ForumPost"> | string
     body?: StringFilter<"ForumPost"> | string
     createdAt?: DateTimeFilter<"ForumPost"> | Date | string
+    editedAt?: DateTimeNullableFilter<"ForumPost"> | Date | string | null
     lastReplyAt?: DateTimeFilter<"ForumPost"> | Date | string
   }
 
@@ -27516,6 +27772,8 @@ export namespace Prisma {
     anonymous?: BoolFilter<"ForumReply"> | boolean
     body?: StringFilter<"ForumReply"> | string
     createdAt?: DateTimeFilter<"ForumReply"> | Date | string
+    editedAt?: DateTimeNullableFilter<"ForumReply"> | Date | string | null
+    parentId?: StringNullableFilter<"ForumReply"> | string | null
   }
 
   export type PasswordResetTokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -30494,7 +30752,10 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     author: UserCreateNestedOneWithoutForumRepliesInput
+    parent?: ForumReplyCreateNestedOneWithoutChildrenInput
+    children?: ForumReplyCreateNestedManyWithoutParentInput
   }
 
   export type ForumReplyUncheckedCreateWithoutPostInput = {
@@ -30503,6 +30764,9 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
+    parentId?: string | null
+    children?: ForumReplyUncheckedCreateNestedManyWithoutParentInput
   }
 
   export type ForumReplyCreateOrConnectWithoutPostInput = {
@@ -30619,6 +30883,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
     author: UserCreateNestedOneWithoutForumPostsInput
   }
@@ -30631,6 +30896,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
   }
 
@@ -30714,6 +30980,65 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutForumRepliesInput, UserUncheckedCreateWithoutForumRepliesInput>
   }
 
+  export type ForumReplyCreateWithoutChildrenInput = {
+    id?: string
+    anonymous?: boolean
+    body: string
+    createdAt?: Date | string
+    editedAt?: Date | string | null
+    post: ForumPostCreateNestedOneWithoutRepliesInput
+    author: UserCreateNestedOneWithoutForumRepliesInput
+    parent?: ForumReplyCreateNestedOneWithoutChildrenInput
+  }
+
+  export type ForumReplyUncheckedCreateWithoutChildrenInput = {
+    id?: string
+    postId: string
+    authorId: string
+    anonymous?: boolean
+    body: string
+    createdAt?: Date | string
+    editedAt?: Date | string | null
+    parentId?: string | null
+  }
+
+  export type ForumReplyCreateOrConnectWithoutChildrenInput = {
+    where: ForumReplyWhereUniqueInput
+    create: XOR<ForumReplyCreateWithoutChildrenInput, ForumReplyUncheckedCreateWithoutChildrenInput>
+  }
+
+  export type ForumReplyCreateWithoutParentInput = {
+    id?: string
+    anonymous?: boolean
+    body: string
+    createdAt?: Date | string
+    editedAt?: Date | string | null
+    post: ForumPostCreateNestedOneWithoutRepliesInput
+    author: UserCreateNestedOneWithoutForumRepliesInput
+    children?: ForumReplyCreateNestedManyWithoutParentInput
+  }
+
+  export type ForumReplyUncheckedCreateWithoutParentInput = {
+    id?: string
+    postId: string
+    authorId: string
+    anonymous?: boolean
+    body: string
+    createdAt?: Date | string
+    editedAt?: Date | string | null
+    children?: ForumReplyUncheckedCreateNestedManyWithoutParentInput
+  }
+
+  export type ForumReplyCreateOrConnectWithoutParentInput = {
+    where: ForumReplyWhereUniqueInput
+    create: XOR<ForumReplyCreateWithoutParentInput, ForumReplyUncheckedCreateWithoutParentInput>
+  }
+
+  export type ForumReplyCreateManyParentInputEnvelope = {
+    data: ForumReplyCreateManyParentInput | ForumReplyCreateManyParentInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ForumPostUpsertWithoutRepliesInput = {
     update: XOR<ForumPostUpdateWithoutRepliesInput, ForumPostUncheckedUpdateWithoutRepliesInput>
     create: XOR<ForumPostCreateWithoutRepliesInput, ForumPostUncheckedCreateWithoutRepliesInput>
@@ -30732,6 +31057,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneRequiredWithoutForumPostsNestedInput
   }
@@ -30744,6 +31070,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -30828,6 +31155,55 @@ export namespace Prisma {
     applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
+  export type ForumReplyUpsertWithoutChildrenInput = {
+    update: XOR<ForumReplyUpdateWithoutChildrenInput, ForumReplyUncheckedUpdateWithoutChildrenInput>
+    create: XOR<ForumReplyCreateWithoutChildrenInput, ForumReplyUncheckedCreateWithoutChildrenInput>
+    where?: ForumReplyWhereInput
+  }
+
+  export type ForumReplyUpdateToOneWithWhereWithoutChildrenInput = {
+    where?: ForumReplyWhereInput
+    data: XOR<ForumReplyUpdateWithoutChildrenInput, ForumReplyUncheckedUpdateWithoutChildrenInput>
+  }
+
+  export type ForumReplyUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anonymous?: BoolFieldUpdateOperationsInput | boolean
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    post?: ForumPostUpdateOneRequiredWithoutRepliesNestedInput
+    author?: UserUpdateOneRequiredWithoutForumRepliesNestedInput
+    parent?: ForumReplyUpdateOneWithoutChildrenNestedInput
+  }
+
+  export type ForumReplyUncheckedUpdateWithoutChildrenInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    anonymous?: BoolFieldUpdateOperationsInput | boolean
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ForumReplyUpsertWithWhereUniqueWithoutParentInput = {
+    where: ForumReplyWhereUniqueInput
+    update: XOR<ForumReplyUpdateWithoutParentInput, ForumReplyUncheckedUpdateWithoutParentInput>
+    create: XOR<ForumReplyCreateWithoutParentInput, ForumReplyUncheckedCreateWithoutParentInput>
+  }
+
+  export type ForumReplyUpdateWithWhereUniqueWithoutParentInput = {
+    where: ForumReplyWhereUniqueInput
+    data: XOR<ForumReplyUpdateWithoutParentInput, ForumReplyUncheckedUpdateWithoutParentInput>
+  }
+
+  export type ForumReplyUpdateManyWithWhereWithoutParentInput = {
+    where: ForumReplyScalarWhereInput
+    data: XOR<ForumReplyUpdateManyMutationInput, ForumReplyUncheckedUpdateManyWithoutParentInput>
+  }
+
   export type JobPostCreateManyStudentInput = {
     id?: string
     title: string
@@ -30910,6 +31286,7 @@ export namespace Prisma {
     title: string
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
     lastReplyAt?: Date | string
   }
 
@@ -30919,6 +31296,8 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
+    parentId?: string | null
   }
 
   export type PasswordResetTokenCreateManyUserInput = {
@@ -31191,6 +31570,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
     replies?: ForumReplyUpdateManyWithoutPostNestedInput
   }
@@ -31202,6 +31582,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
     replies?: ForumReplyUncheckedUpdateManyWithoutPostNestedInput
   }
@@ -31213,6 +31594,7 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     lastReplyAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -31221,7 +31603,10 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     post?: ForumPostUpdateOneRequiredWithoutRepliesNestedInput
+    parent?: ForumReplyUpdateOneWithoutChildrenNestedInput
+    children?: ForumReplyUpdateManyWithoutParentNestedInput
   }
 
   export type ForumReplyUncheckedUpdateWithoutAuthorInput = {
@@ -31230,6 +31615,9 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    children?: ForumReplyUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ForumReplyUncheckedUpdateManyWithoutAuthorInput = {
@@ -31238,6 +31626,8 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PasswordResetTokenUpdateWithoutUserInput = {
@@ -31528,6 +31918,8 @@ export namespace Prisma {
     anonymous?: boolean
     body: string
     createdAt?: Date | string
+    editedAt?: Date | string | null
+    parentId?: string | null
   }
 
   export type ForumReplyUpdateWithoutPostInput = {
@@ -31535,7 +31927,10 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     author?: UserUpdateOneRequiredWithoutForumRepliesNestedInput
+    parent?: ForumReplyUpdateOneWithoutChildrenNestedInput
+    children?: ForumReplyUpdateManyWithoutParentNestedInput
   }
 
   export type ForumReplyUncheckedUpdateWithoutPostInput = {
@@ -31544,6 +31939,9 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+    children?: ForumReplyUncheckedUpdateManyWithoutParentNestedInput
   }
 
   export type ForumReplyUncheckedUpdateManyWithoutPostInput = {
@@ -31552,6 +31950,50 @@ export namespace Prisma {
     anonymous?: BoolFieldUpdateOperationsInput | boolean
     body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    parentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ForumReplyCreateManyParentInput = {
+    id?: string
+    postId: string
+    authorId: string
+    anonymous?: boolean
+    body: string
+    createdAt?: Date | string
+    editedAt?: Date | string | null
+  }
+
+  export type ForumReplyUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    anonymous?: BoolFieldUpdateOperationsInput | boolean
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    post?: ForumPostUpdateOneRequiredWithoutRepliesNestedInput
+    author?: UserUpdateOneRequiredWithoutForumRepliesNestedInput
+    children?: ForumReplyUpdateManyWithoutParentNestedInput
+  }
+
+  export type ForumReplyUncheckedUpdateWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    anonymous?: BoolFieldUpdateOperationsInput | boolean
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    children?: ForumReplyUncheckedUpdateManyWithoutParentNestedInput
+  }
+
+  export type ForumReplyUncheckedUpdateManyWithoutParentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    anonymous?: BoolFieldUpdateOperationsInput | boolean
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

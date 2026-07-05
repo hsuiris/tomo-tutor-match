@@ -128,13 +128,14 @@ export default async function FavoritesPage() {
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {appliedFavs.map((f) => (
                   <div key={f.id}>
-                    <div className="relative">
-                      <JobCard job={f.job!} favorited />
-                      <span className="absolute right-3 top-3 rounded-full bg-cobalt px-2.5 py-0.5 text-xs font-bold text-paper">
+                    {/* 狀態章獨立一行，避免和卡片右上的徵求中/愛心打架 */}
+                    <div className="mb-1.5 flex justify-end">
+                      <span className="rounded-full bg-cobalt px-2.5 py-0.5 text-xs font-bold text-paper">
                         {APP_STATUS_TEXT[appStatusByJob.get(f.job!.id) ?? ""] ??
                           "已應徵"}
                       </span>
                     </div>
+                    <JobCard job={f.job!} favorited />
                     <FavoriteExtras favoriteId={f.id} note={f.note} />
                   </div>
                 ))}
