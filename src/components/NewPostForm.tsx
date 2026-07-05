@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createPost } from "@/app/forum/actions";
-import { SubmitButton } from "@/components/ui/form";
+import { SubmitButton, useFocusFirstError } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
@@ -11,6 +11,7 @@ const initialState: ActionState = {};
 export default function NewPostForm({ board }: { board: "TUTOR" | "PARENT" }) {
   const router = useRouter();
   const [state, formAction] = useActionState(createPost, initialState);
+  useFocusFirstError(state);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {

@@ -2,13 +2,14 @@
 
 import { useActionState } from "react";
 import { applyToJob } from "@/app/jobs/actions";
-import { SubmitButton } from "@/components/ui/form";
+import { SubmitButton, useFocusFirstError } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
 
 export default function ApplyForm({ jobId }: { jobId: string }) {
   const [state, formAction] = useActionState(applyToJob, initialState);
+  useFocusFirstError(state);
 
   if (state.success) {
     return (

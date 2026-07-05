@@ -10,6 +10,7 @@ import {
   type Gender,
 } from "@/lib/constants";
 import Avatar from "@/components/Avatar";
+import { useFocusFirstError } from "@/components/ui/form";
 import RegionPicker from "@/components/RegionPicker";
 import type { ActionState } from "@/lib/types";
 
@@ -41,6 +42,7 @@ export default function ProfileForm({
   aliasSlot?: ReactNode;
 }) {
   const [state, formAction] = useActionState(updateProfile, initialState);
+  useFocusFirstError(state);
   const [subjects, setSubjects] = useState<string[]>(initial.subjects);
   const [levels, setLevels] = useState<string[]>(initial.levels);
   const [regions, setRegions] = useState<string[]>(initial.regions);

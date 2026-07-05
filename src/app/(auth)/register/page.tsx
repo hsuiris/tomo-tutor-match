@@ -3,12 +3,13 @@
 import { useActionState, useState } from "react";
 import Link from "next/link";
 import { registerUser, type ActionState } from "../actions";
-import { Field, SubmitButton } from "@/components/ui/form";
+import { Field, SubmitButton, useFocusFirstError } from "@/components/ui/form";
 
 const initialState: ActionState = {};
 
 export default function RegisterPage() {
   const [state, formAction] = useActionState(registerUser, initialState);
+  useFocusFirstError(state);
   const [gender, setGender] = useState<"MALE" | "FEMALE" | "UNDISCLOSED">(
     "UNDISCLOSED"
   );
