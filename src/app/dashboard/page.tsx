@@ -55,11 +55,6 @@ export default async function DashboardPage() {
               title="我發布的需求"
               desc="管理你的案件、查看應徵者並完成配對"
             />
-            <DashCard
-              href="/tutors"
-              title="尋找家教老師"
-              desc="瀏覽並篩選適合的老師"
-            />
           </div>
         </section>
 
@@ -82,11 +77,6 @@ export default async function DashboardPage() {
                   href="/dashboard/applications"
                   title="我的應徵"
                   desc="查看你應徵過的案件與錄取狀態"
-                />
-                <DashCard
-                  href="/jobs"
-                  title="瀏覽家教需求"
-                  desc="尋找適合的案件並送出應徵"
                 />
               </>
             ) : (
