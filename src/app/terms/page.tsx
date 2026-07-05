@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "服務條款",
-  description: "Tomo 家教媒合平台服務條款：帳號規範、媒合機制、費用、責任限制與帳號終止。",
+  description: "Tomo 家教媒合平台服務條款：帳號規範、媒合機制、評價規範、費用、責任限制與帳號終止。",
 };
 
-// ponytail: 法務初稿，上線前請律師覆核（同 privacy/page.tsx）。
+// ponytail: 法務完稿前仍請律師覆核（同 privacy/page.tsx）。
 const CONTACT_EMAIL = "tomoocustomer@gmail.com";
 const UPDATED_AT = "2026-07-05";
 
@@ -27,7 +27,7 @@ export default function TermsPage() {
 
       <Section title="一、服務內容">
         <p>
-          本平台提供家教需求刊登、老師檔案刊登、媒合配對、站內訊息與雙向評價等功能。
+          本平台提供家教需求刊登、老師檔案刊登、媒合配對、站內訊息、討論區與雙向評價等功能。
           本平台為<strong>媒合平台</strong>，非家教服務之提供者，亦非任何一方之代理人；
           實際授課內容、時間、地點與報酬，由學生／家長與老師雙方自行約定。
         </p>
@@ -60,38 +60,72 @@ export default function TermsPage() {
         </ul>
       </Section>
 
-      <Section title="五、內容與智慧財產權">
+      <Section title="五、評價規範">
+        <ul className="list-disc space-y-1 pl-5">
+          <li>評價功能限於<strong>曾實際完成媒合</strong>之雙方互評，應基於真實互動經驗撰寫。</li>
+          <li>不得以評價進行威脅、勒索、報復，或刊登與教學互動無關之內容。</li>
+          <li>
+            本平台得移除違反本條或第三條之評價；除此之外，本平台不介入、不代為修改評價內容，
+            亦不保證評價之正確性。
+          </li>
+        </ul>
+      </Section>
+
+      <Section title="六、內容與智慧財產權">
         <ul className="list-disc space-y-1 pl-5">
           <li>您於本平台刊登之內容（檔案、發文、評價等）仍屬您所有；您授權本平台為提供服務之目的展示該內容。</li>
           <li>本平台之網站設計、程式與商標屬本平台所有，未經同意不得重製或使用。</li>
         </ul>
       </Section>
 
-      <Section title="六、責任限制">
+      <Section title="七、通知方式">
+        <p>
+          本平台之正式通知以<strong>站內通知</strong>及<strong>您註冊的 Email</strong> 為之，
+          發送至該 Email 即視為已送達。請保持 Email 有效並留意收信（含垃圾郵件匣）；
+          您可於帳號設定調整非必要通知之接收偏好。
+        </p>
+      </Section>
+
+      <Section title="八、服務變更與中止">
+        <ul className="list-disc space-y-1 pl-5">
+          <li>本平台得因功能調整、系統維護或不可抗力，暫停或變更全部或部分服務；重大變更將於網站公告。</li>
+          <li>本平台若決定終止營運，將於合理期間前公告，供您備份或處理帳號資料。</li>
+        </ul>
+      </Section>
+
+      <Section title="九、責任限制">
         <ul className="list-disc space-y-1 pl-5">
           <li>本平台就使用者間之互動（含授課品質、報酬給付、人身安全）不負擔保責任；請於見面前自行確認對方身分。</li>
           <li>本平台以「現狀」提供服務，不保證服務不中斷或無錯誤；因系統維護、第三方服務中斷所生之損害，於法令允許範圍內本平台不負賠償責任。</li>
         </ul>
       </Section>
 
-      <Section title="七、帳號終止">
+      <Section title="十、檢舉與申訴">
+        <p>
+          發現違規內容（不實檔案、騷擾訊息、不當評價等），請來信檢舉並附上相關頁面連結或截圖；
+          本平台將於合理期間內查處並回覆。對本平台之處置有異議，亦得循同一管道申訴。
+        </p>
+      </Section>
+
+      <Section title="十一、帳號終止">
         <p>
           您得隨時停止使用並聯絡我們刪除帳號。若您違反本條款或法令，本平台得暫停或終止您的帳號，
           且就已刊登之違規內容得逕行移除。
         </p>
       </Section>
 
-      <Section title="八、條款修訂與準據法">
+      <Section title="十二、其他">
         <ul className="list-disc space-y-1 pl-5">
           <li>本平台得修訂本條款，重大變更將於網站公告；公告後繼續使用即視為同意修訂後之條款。</li>
+          <li>本條款任一條文經認定無效或無法執行時，不影響其餘條文之效力。</li>
           <li>本條款以中華民國法律為準據法；因本條款所生爭議，以臺灣臺北地方法院為第一審管轄法院。</li>
         </ul>
       </Section>
 
-      <Section title="九、聯絡方式">
+      <Section title="十三、聯絡方式">
         <p>
-          對本條款有任何疑問，請來信：
-          <a href={`mailto:${CONTACT_EMAIL}`} className="underline hover:text-ink">
+          對本條款有任何疑問，或欲檢舉、申訴，請來信：
+          <a href={`mailto:${CONTACT_EMAIL}`} className="ml-1 underline hover:text-ink">
             {CONTACT_EMAIL}
           </a>
         </p>

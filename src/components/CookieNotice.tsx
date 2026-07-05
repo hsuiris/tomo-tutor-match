@@ -26,7 +26,8 @@ export default function CookieNotice() {
     >
       <div className="mx-auto flex max-w-6xl flex-col items-start gap-2 sm:flex-row sm:items-center">
         <p className="flex-1 text-sm text-ink/80">
-          本網站使用必要 Cookie 維持登入狀態與基本功能，繼續瀏覽即表示你同意。詳見
+          本網站使用必要 Cookie 維持登入狀態，並以匿名方式統計流量以改善服務，
+          繼續瀏覽即表示你同意。詳見
           <Link href="/privacy" className="mx-1 underline hover:text-ink">
             隱私權政策
           </Link>

@@ -15,7 +15,7 @@ export const registerSchema = z
     }),
     // checkbox 勾選時 FormData 值為 "on"，未勾選則缺欄位 → 報錯
     consent: z.literal("on", {
-      message: "請先閱讀並勾選同意隱私權政策與個資蒐集告知",
+      message: "請先閱讀並勾選同意服務條款與隱私權政策",
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {
