@@ -2746,6 +2746,7 @@ export namespace Prisma {
     role: number
     gender: number
     avatarUrl: number
+    photoUrls: number
     idVerified: number
     bgCheckVerified: number
     eduVerified: number
@@ -2811,6 +2812,7 @@ export namespace Prisma {
     role?: true
     gender?: true
     avatarUrl?: true
+    photoUrls?: true
     idVerified?: true
     bgCheckVerified?: true
     eduVerified?: true
@@ -2905,6 +2907,7 @@ export namespace Prisma {
     role: $Enums.Role
     gender: $Enums.Gender
     avatarUrl: string | null
+    photoUrls: string[]
     idVerified: boolean
     bgCheckVerified: boolean
     eduVerified: boolean
@@ -2943,6 +2946,7 @@ export namespace Prisma {
     role?: boolean
     gender?: boolean
     avatarUrl?: boolean
+    photoUrls?: boolean
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -2980,6 +2984,7 @@ export namespace Prisma {
     role?: boolean
     gender?: boolean
     avatarUrl?: boolean
+    photoUrls?: boolean
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -3001,6 +3006,7 @@ export namespace Prisma {
     role?: boolean
     gender?: boolean
     avatarUrl?: boolean
+    photoUrls?: boolean
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -3022,6 +3028,7 @@ export namespace Prisma {
     role?: boolean
     gender?: boolean
     avatarUrl?: boolean
+    photoUrls?: boolean
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -3034,7 +3041,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "displayName" | "role" | "gender" | "avatarUrl" | "idVerified" | "bgCheckVerified" | "eduVerified" | "emailNotifications" | "notifyJobUpdates" | "notifyMessages" | "disabled" | "emailVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "passwordHash" | "name" | "displayName" | "role" | "gender" | "avatarUrl" | "photoUrls" | "idVerified" | "bgCheckVerified" | "eduVerified" | "emailNotifications" | "notifyJobUpdates" | "notifyMessages" | "disabled" | "emailVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tutorProfile?: boolean | User$tutorProfileArgs<ExtArgs>
     jobPosts?: boolean | User$jobPostsArgs<ExtArgs>
@@ -3084,6 +3091,7 @@ export namespace Prisma {
       role: $Enums.Role
       gender: $Enums.Gender
       avatarUrl: string | null
+      photoUrls: string[]
       idVerified: boolean
       bgCheckVerified: boolean
       eduVerified: boolean
@@ -3540,6 +3548,7 @@ export namespace Prisma {
     readonly role: FieldRef<"User", 'Role'>
     readonly gender: FieldRef<"User", 'Gender'>
     readonly avatarUrl: FieldRef<"User", 'String'>
+    readonly photoUrls: FieldRef<"User", 'String[]'>
     readonly idVerified: FieldRef<"User", 'Boolean'>
     readonly bgCheckVerified: FieldRef<"User", 'Boolean'>
     readonly eduVerified: FieldRef<"User", 'Boolean'>
@@ -21136,6 +21145,7 @@ export namespace Prisma {
     role: 'role',
     gender: 'gender',
     avatarUrl: 'avatarUrl',
+    photoUrls: 'photoUrls',
     idVerified: 'idVerified',
     bgCheckVerified: 'bgCheckVerified',
     eduVerified: 'eduVerified',
@@ -21573,6 +21583,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     gender?: EnumGenderFilter<"User"> | $Enums.Gender
     avatarUrl?: StringNullableFilter<"User"> | string | null
+    photoUrls?: StringNullableListFilter<"User">
     idVerified?: BoolFilter<"User"> | boolean
     bgCheckVerified?: BoolFilter<"User"> | boolean
     eduVerified?: BoolFilter<"User"> | boolean
@@ -21609,6 +21620,7 @@ export namespace Prisma {
     role?: SortOrder
     gender?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
+    photoUrls?: SortOrder
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
@@ -21648,6 +21660,7 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     gender?: EnumGenderFilter<"User"> | $Enums.Gender
     avatarUrl?: StringNullableFilter<"User"> | string | null
+    photoUrls?: StringNullableListFilter<"User">
     idVerified?: BoolFilter<"User"> | boolean
     bgCheckVerified?: BoolFilter<"User"> | boolean
     eduVerified?: BoolFilter<"User"> | boolean
@@ -21684,6 +21697,7 @@ export namespace Prisma {
     role?: SortOrder
     gender?: SortOrder
     avatarUrl?: SortOrderInput | SortOrder
+    photoUrls?: SortOrder
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
@@ -21711,6 +21725,7 @@ export namespace Prisma {
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     gender?: EnumGenderWithAggregatesFilter<"User"> | $Enums.Gender
     avatarUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    photoUrls?: StringNullableListFilter<"User">
     idVerified?: BoolWithAggregatesFilter<"User"> | boolean
     bgCheckVerified?: BoolWithAggregatesFilter<"User"> | boolean
     eduVerified?: BoolWithAggregatesFilter<"User"> | boolean
@@ -22808,6 +22823,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -22844,6 +22860,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -22880,6 +22897,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -22916,6 +22934,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -22952,6 +22971,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -22973,6 +22993,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -22994,6 +23015,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -24165,6 +24187,14 @@ export namespace Prisma {
     not?: NestedEnumGenderFilter<$PrismaModel> | $Enums.Gender
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -24331,6 +24361,7 @@ export namespace Prisma {
     role?: SortOrder
     gender?: SortOrder
     avatarUrl?: SortOrder
+    photoUrls?: SortOrder
     idVerified?: SortOrder
     bgCheckVerified?: SortOrder
     eduVerified?: SortOrder
@@ -24728,14 +24759,6 @@ export namespace Prisma {
     body?: SortOrder
     createdAt?: SortOrder
     readAt?: SortOrder
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -25250,6 +25273,10 @@ export namespace Prisma {
     parentId?: SortOrder
   }
 
+  export type UserCreatephotoUrlsInput = {
+    set: string[]
+  }
+
   export type TutorProfileCreateNestedOneWithoutUserInput = {
     create?: XOR<TutorProfileCreateWithoutUserInput, TutorProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: TutorProfileCreateOrConnectWithoutUserInput
@@ -25472,6 +25499,11 @@ export namespace Prisma {
 
   export type EnumGenderFieldUpdateOperationsInput = {
     set?: $Enums.Gender
+  }
+
+  export type UserUpdatephotoUrlsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -27898,6 +27930,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -27933,6 +27966,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -27984,6 +28018,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28019,6 +28054,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28054,6 +28090,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28089,6 +28126,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28140,6 +28178,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28175,6 +28214,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28210,6 +28250,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28245,6 +28286,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28296,6 +28338,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28331,6 +28374,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28366,6 +28410,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28401,6 +28446,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28544,6 +28590,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28579,6 +28626,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28718,6 +28766,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28753,6 +28802,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28804,6 +28854,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28839,6 +28890,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -28874,6 +28926,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28909,6 +28962,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28949,6 +29003,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -28984,6 +29039,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -29061,6 +29117,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29096,6 +29153,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29142,6 +29200,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29177,6 +29236,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29249,6 +29309,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -29284,6 +29345,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -29362,6 +29424,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29397,6 +29460,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29432,6 +29496,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -29467,6 +29532,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -29572,6 +29638,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29607,6 +29674,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29686,6 +29754,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -29721,6 +29790,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -29826,6 +29896,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -29861,6 +29932,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30187,6 +30259,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30222,6 +30295,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30302,6 +30376,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30337,6 +30412,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30372,6 +30448,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30407,6 +30484,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30447,6 +30525,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30482,6 +30561,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30533,6 +30613,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30568,6 +30649,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30614,6 +30696,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30649,6 +30732,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30684,6 +30768,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30719,6 +30804,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30802,6 +30888,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30837,6 +30924,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -30917,6 +31005,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -30952,6 +31041,7 @@ export namespace Prisma {
     role?: $Enums.Role
     gender?: $Enums.Gender
     avatarUrl?: string | null
+    photoUrls?: UserCreatephotoUrlsInput | string[]
     idVerified?: boolean
     bgCheckVerified?: boolean
     eduVerified?: boolean
@@ -31097,6 +31187,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean
@@ -31132,6 +31223,7 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
     avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    photoUrls?: UserUpdatephotoUrlsInput | string[]
     idVerified?: BoolFieldUpdateOperationsInput | boolean
     bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
     eduVerified?: BoolFieldUpdateOperationsInput | boolean

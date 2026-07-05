@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import ProfileForm, { type ProfileInitial } from "@/components/ProfileForm";
 import AliasForm from "@/components/AliasForm";
 import VerificationSection from "@/components/VerificationSection";
+import PhotosForm from "@/components/PhotosForm";
 import type { TeachingMode } from "@/lib/constants";
 
 export default async function ProfileEditPage() {
@@ -20,6 +21,7 @@ export default async function ProfileEditPage() {
           displayName: true,
           gender: true,
           avatarUrl: true,
+          photoUrls: true,
           idVerified: true,
           bgCheckVerified: true,
           eduVerified: true,
@@ -86,6 +88,15 @@ export default async function ProfileEditPage() {
             </div>
           }
         />
+      </div>
+
+      {/* 檔案照片 */}
+      <div className="mt-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
+        <h2 className="mb-1 font-bold text-ink">檔案照片</h2>
+        <p className="mb-4 text-xs text-ink/40">
+          附上教學環境、證書或成果照，讓家長更認識你（選填）。
+        </p>
+        <PhotosForm initial={profile.user.photoUrls} />
       </div>
 
       {/* 安全認證 */}

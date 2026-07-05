@@ -211,6 +211,27 @@ export default async function UserProfilePage({
         </div>
       )}
 
+      {/* 檔案照片 */}
+      {user.photoUrls.length > 0 && (
+        <div className="mt-6 rounded-xl border border-line bg-paper p-6">
+          <h2 className="mb-4 font-serif text-2xl font-extrabold text-ink">
+            檔案照片
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {user.photoUrls.map((p, i) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={i}
+                src={p}
+                alt={`${name} 的照片 ${i + 1}`}
+                loading="lazy"
+                className="h-40 w-40 rounded-2xl border border-line object-cover"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* 評價牆 */}
       <div className="mt-6 rounded-xl border border-line bg-paper p-6">
         <h2 className="mb-4 font-serif text-2xl font-extrabold text-ink">

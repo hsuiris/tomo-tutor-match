@@ -66,6 +66,12 @@ export default async function JobDetailPage({
               subjects: true,
               ratingAvg: true,
               ratingCount: true,
+              // 應徵者比較表用
+              experience: true,
+              education: true,
+              university: true,
+              eduLevel: true,
+              mode: true,
               user: {
                 select: {
                   name: true,
@@ -73,6 +79,7 @@ export default async function JobDetailPage({
                   avatarUrl: true,
                   idVerified: true,
                   bgCheckVerified: true,
+                  eduVerified: true,
                 },
               },
             },
@@ -290,6 +297,89 @@ export default async function JobDetailPage({
           ) : (
             <ApplyForm jobId={job.id} />
           )}
+        </div>
+      )}
+
+      {/* 應徵者比較表：案主視角、兩位以上應徵時，幫家長整理差異 */}
+      {isOwner && job.applications.length >= 2 && (
+        <div className="mt-6 rounded-2xl border border-line bg-paper p-6">
+          <h2 className="mb-1 font-bold text-ink">
+            應徵老師比較（{job.applications.length} 位）
+          </h2>
+          <p className="mb-4 text-xs text-ink/40">
+            系統整理各應徵老師的資料，方便你比較後選擇。點老師名字可看完整檔案與評價。
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="border-b border-line text-left text-xs text-ink/50">
+                  <th className="px-3 py-2 font-bold">老師</th>
+                  <th className="px-3 py-2 font-bold">評價</th>
+                  <th className="px-3 py-2 font-bold">時薪</th>
+                  <th className="px-3 py-2 font-bold">認證</th>
+                  <th className="px-3 py-2 font-bold">學歷</th>
+                  <th className="px-3 py-2 font-bold">教學經驗</th>
+                  <th className="px-3 py-2 font-bold">授課方式</th>
+                  <th className="px-3 py-2 font-bold">狀態</th>
+                </tr>
+              </thead>
+              <tbody>
+                {job.applications.map((app) => {
+                  const st = APP_STATUS[app.status];
+                  const verifs = [
+                    app.tutor.user.idVerified && "實名",
+                    app.tutor.user.bgCheckVerified && "良民證",
+                    app.tutor.user.eduVerified && "學歷",
+                  ].filter(Boolean);
+                  return (
+                    <tr key={app.id} className="border-b border-line/40 align-top">
+                      <td className="px-3 py-2.5">
+                        <Link
+                          href={`/tutors/${app.tutor.id}`}
+                          className="font-bold text-ink hover:text-cobalt"
+                        >
+                          {publicName(app.tutor.user)}
+                        </Link>
+                      </td>
+                      <td className="px-3 py-2.5 whitespace-nowrap">
+                        {app.tutor.ratingCount > 0
+                          ? `★ ${app.tutor.ratingAvg.toFixed(1)}（${app.tutor.ratingCount}）`
+                          : "尚無評價"}
+                      </td>
+                      <td className="px-3 py-2.5 whitespace-nowrap font-bold text-cobalt">
+                        {amountRange(app.tutor.hourlyRate, app.tutor.hourlyRateMax)
+                          ? `$${amountRange(app.tutor.hourlyRate, app.tutor.hourlyRateMax)}`
+                          : "面議"}
+                      </td>
+                      <td className="px-3 py-2.5">
+                        {verifs.length ? verifs.join("・") : "—"}
+                      </td>
+                      <td className="px-3 py-2.5">
+                        {[app.tutor.eduLevel, app.tutor.university]
+                          .filter(Boolean)
+                          .join("・") || "—"}
+                      </td>
+                      <td className="max-w-[180px] px-3 py-2.5">
+                        <span className="line-clamp-2">
+                          {app.tutor.experience || "—"}
+                        </span>
+                      </td>
+                      <td className="px-3 py-2.5 whitespace-nowrap">
+                        {MODE_LABELS[app.tutor.mode as TeachingMode]}
+                      </td>
+                      <td className="px-3 py-2.5 whitespace-nowrap">
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-xs font-medium ${st.cls}`}
+                        >
+                          {st.text}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
