@@ -5,7 +5,6 @@ import { db } from "@/lib/db";
 import { FORUM_BOARDS, isBoardSlug } from "@/lib/forum";
 import { forumAuthor } from "@/lib/user";
 import ReplyForm from "@/components/ReplyForm";
-import BackLink from "@/components/BackLink";
 
 export async function generateMetadata({
   params,
@@ -52,7 +51,6 @@ export default async function PostPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
-      <BackLink href={`/forum/${board}`}>{meta.title}</BackLink>
 
       {/* 主題 */}
       <div className="mt-3 rounded-2xl border border-line bg-paper p-6">
