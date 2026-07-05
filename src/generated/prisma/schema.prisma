@@ -342,6 +342,7 @@ model ForumPost {
   title       String
   body        String
   createdAt   DateTime     @default(now())
+  editedAt    DateTime? // 作者最後編輯時間（顯示「已編輯」）
   lastReplyAt DateTime     @default(now())
   replies     ForumReply[]
 
@@ -357,6 +358,13 @@ model ForumReply {
   anonymous Boolean   @default(false)
   body      String
   createdAt DateTime  @default(now())
+  editedAt  DateTime? // 作者最後編輯時間（顯示「已編輯」）
+
+  // 巢狀回覆（一層）：回覆某則留言；刪除父留言連同子回覆一併刪除
+  parentId String?
+  parent   ForumReply?  @relation("ReplyChildren", fields: [parentId], references: [id], onDelete: Cascade)
+  children ForumReply[] @relation("ReplyChildren")
 
   @@index([postId])
+  @@index([parentId])
 }
