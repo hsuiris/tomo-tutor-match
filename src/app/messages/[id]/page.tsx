@@ -35,11 +35,15 @@ export default async function ChatRoomPage({
   const hat = relationLabel(myTutorIds.has(other.id), myStudentIds.has(other.id));
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-2xl flex-col px-4 py-4">
+    // 高度扣掉導覽列與返回鍵，避免整頁捲動
+    <div className="mx-auto flex h-[calc(100vh-7.5rem)] max-w-2xl flex-col px-4 py-4">
       <ChatPoller />
 
+      {/* 聊天視窗：白底卡片 */}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-white shadow-sm">
+
       {/* 標頭 */}
-      <div className="flex items-center gap-3 border-b border-line/15 pb-3">
+      <div className="flex items-center gap-3 border-b border-line/15 px-4 py-3">
         <Avatar name={publicName(other)} url={other.avatarUrl} size={40} />
         <span className="font-bold text-ink">
           {publicName(other)}
@@ -52,7 +56,7 @@ export default async function ChatRoomPage({
       </div>
 
       {/* 訊息區 */}
-      <div className="flex-1 space-y-2 overflow-y-auto py-4">
+      <div className="flex-1 space-y-2 overflow-y-auto px-4 py-4">
         {convo.messages.length === 0 ? (
           <p className="mt-8 text-center text-sm text-ink/40">
             還沒有訊息,打聲招呼吧 👋
@@ -85,8 +89,7 @@ export default async function ChatRoomPage({
       </div>
 
       {/* 輸入框 */}
-      <div className="-mx-4">
-        <MessageComposer conversationId={convo.id} />
+      <MessageComposer conversationId={convo.id} />
       </div>
     </div>
   );

@@ -107,6 +107,9 @@ model User {
 
   // 系統通知（審核結果等）
   notifications Notification[]
+
+  // 應徵討論回覆
+  applicationReplies ApplicationReply[] @relation("ApplicationReplies")
 }
 
 // 系統通知：平台主動發給使用者的訊息（如身分認證審核結果），顯示在訊息頁
@@ -148,6 +151,7 @@ model Favorite {
   jobId          String?
   job            JobPost?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
+  note      String? // 收藏備註（只有自己看得到）
   createdAt DateTime @default(now())
 
   @@unique([userId, tutorProfileId])
@@ -261,8 +265,23 @@ model Application {
   status    ApplicationStatus @default(PENDING)
   createdAt DateTime          @default(now())
 
+  // 應徵下的討論（案主與該應徵老師可回覆）
+  replies ApplicationReply[]
+
   @@unique([jobId, tutorId]) // 同一案件同一老師只能應徵一次
   @@index([tutorId])
+}
+
+model ApplicationReply {
+  id            String      @id @default(cuid())
+  applicationId String
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  authorId      String
+  author        User        @relation("ApplicationReplies", fields: [authorId], references: [id], onDelete: Cascade)
+  body          String
+  createdAt     DateTime    @default(now())
+
+  @@index([applicationId])
 }
 
 // 評價／留言：留在「被評價者」的個人檔案底下（雙向：學生↔老師）

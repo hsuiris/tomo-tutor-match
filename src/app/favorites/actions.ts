@@ -34,3 +34,30 @@ export async function toggleFavorite(
   revalidatePath("/favorites");
   return { favorited: true };
 }
+
+// 收藏備註（只有自己看得到）
+export async function updateFavoriteNote(
+  favoriteId: string,
+  note: string
+): Promise<{ error?: string }> {
+  const session = await auth();
+  if (!session) return { error: "請先登入" };
+  if (note.length > 200) return { error: "備註過長（200 字內）" };
+
+  await db.favorite.updateMany({
+    where: { id: favoriteId, userId: session.user.id },
+    data: { note: note.trim() || null },
+  });
+  revalidatePath("/favorites");
+  return {};
+}
+
+// 從收藏移除
+export async function removeFavorite(favoriteId: string) {
+  const session = await auth();
+  if (!session) return;
+  await db.favorite.deleteMany({
+    where: { id: favoriteId, userId: session.user.id },
+  });
+  revalidatePath("/favorites");
+}

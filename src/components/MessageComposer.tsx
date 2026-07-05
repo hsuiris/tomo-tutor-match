@@ -28,7 +28,7 @@ export default function MessageComposer({
     <form
       ref={formRef}
       action={formAction}
-      className="flex items-center gap-2 border-t border-line/15 bg-paper p-3"
+      className="flex items-center gap-2 border-t border-line/15 bg-white p-3"
     >
       <input type="hidden" name="conversationId" value={conversationId} />
       <input
