@@ -78,6 +78,7 @@ model User {
 
   // 帳號狀態
   disabled        Boolean @default(false) // admin 停用帳號（停用後無法登入；既有 JWT session 自然到期前仍有效）
+  emailVerified   DateTime? // Email 驗證完成時間；null = 未驗證（會員區與互動功能被擋）
 
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
@@ -104,6 +105,7 @@ model User {
   forumReplies ForumReply[] @relation("ForumReplies")
 
   passwordResets PasswordResetToken[]
+  emailVerifications EmailVerificationToken[]
 
   // 系統通知（審核結果等）
   notifications Notification[]
@@ -128,6 +130,17 @@ model Notification {
 }
 
 // 忘記密碼重設權杖：只存雜湊（外洩也無法直接使用），單次有效、有期限
+model EmailVerificationToken {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique // sha256(raw token)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
 model PasswordResetToken {
   id        String   @id @default(cuid())
   tokenHash String   @unique // sha256(raw token)

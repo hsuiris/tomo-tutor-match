@@ -162,11 +162,22 @@ export default async function JobDetailPage({
       <div className="mt-4 rounded-2xl border border-line bg-paper p-6">
         <div className="flex items-start justify-between gap-3">
           <h1 className="font-serif text-3xl font-extrabold text-ink">{job.title}</h1>
-          {job.status === "MATCHED" && (
-            <span className="shrink-0 rounded-full bg-sun-soft/50 px-3 py-1 text-sm text-ink/60">
-              已配對
-            </span>
-          )}
+          <div className="flex shrink-0 items-center gap-2">
+            {/* 自己發布的需求：編輯而非應徵 */}
+            {isOwner && job.status === "OPEN" && (
+              <Link
+                href={`/jobs/${job.id}/edit`}
+                className="rounded-full border border-line bg-paper px-4 py-1.5 text-sm font-bold text-ink/70 hover:bg-sun-soft/50"
+              >
+                ✏️ 編輯需求
+              </Link>
+            )}
+            {job.status === "MATCHED" && (
+              <span className="rounded-full bg-sun-soft/50 px-3 py-1 text-sm text-ink/60">
+                已配對
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">

@@ -9,6 +9,12 @@ import { registerSchema, loginSchema } from "@/lib/validations";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
 import { sendEmail } from "@/lib/email";
 import { siteUrl } from "@/lib/site";
+import { auth } from "@/auth";
+import {
+  emailServiceConfigured,
+  isEmailVerified,
+  sendVerificationEmail,
+} from "@/lib/verify-email";
 
 const TOO_MANY = "嘗試次數過多，請稍後再試";
 
@@ -55,18 +61,52 @@ export async function registerUser(
   const passwordHash = await bcrypt.hash(password, 10);
 
   // 統一帳號：註冊都是一般使用者（role 預設 STUDENT），要教學再到面板「成為老師」
-  await db.user.create({
-    data: { name, email, passwordHash, gender },
+  const user = await db.user.create({
+    data: {
+      name,
+      email,
+      passwordHash,
+      gender,
+      // Email 服務未設定（本機開發等）時直接視為已驗證，避免無信可收而被鎖死
+      ...(emailServiceConfigured() ? {} : { emailVerified: new Date() }),
+    },
   });
+
+  // 寄出 Email 驗證信；驗證完成前擋會員區與互動功能
+  if (emailServiceConfigured()) {
+    await sendVerificationEmail(user.id, email);
+  }
 
   // 註冊成功後自動登入（signIn 成功會丟出 redirect）
   await signIn("credentials", {
     email,
     password,
-    redirectTo: "/dashboard",
+    redirectTo: emailServiceConfigured() ? "/verify-email" : "/dashboard",
   });
 
   return {};
+}
+
+// 重寄 Email 驗證信（已登入未驗證的使用者）
+export async function resendVerificationEmail(): Promise<ActionState> {
+  const session = await auth();
+  if (!session) return { error: "請先登入" };
+
+  if (await isEmailVerified(session.user.id)) {
+    return { success: "你的 Email 已完成驗證" };
+  }
+  if (!(await rateLimit(`verifymail:${session.user.id}`, 3, 3600))) {
+    return { error: TOO_MANY };
+  }
+
+  const user = await db.user.findUnique({
+    where: { id: session.user.id },
+    select: { email: true },
+  });
+  if (!user) return { error: "找不到帳號" };
+
+  await sendVerificationEmail(session.user.id, user.email);
+  return { success: "驗證信已重寄，請到信箱查看（含垃圾郵件匣）" };
 }
 
 // 登入

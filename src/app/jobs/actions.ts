@@ -7,6 +7,7 @@ import { jobSchema, applicationSchema } from "@/lib/validations";
 import { notify } from "@/lib/email";
 import { notifySystem } from "@/lib/notification";
 import { rateLimit } from "@/lib/rate-limit";
+import { isEmailVerified } from "@/lib/verify-email";
 import type { ActionState } from "@/lib/types";
 
 // 學生發布需求
@@ -16,6 +17,9 @@ export async function createJob(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   const budgetRaw = formData.get("budget")?.toString().trim();
   const budgetMaxRaw = formData.get("budgetMax")?.toString().trim();
@@ -63,6 +67,70 @@ export async function createJob(
   return { redirectTo: `/jobs/${job.id}` };
 }
 
+// 案主編輯自己發布的需求（僅限徵求中）
+export async function updateJob(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
+  const session = await auth();
+  if (!session) return { error: "請先登入" };
+
+  const jobId = formData.get("jobId")?.toString() ?? "";
+  const existing = await db.jobPost.findUnique({
+    where: { id: jobId },
+    select: { studentId: true, status: true },
+  });
+  if (!existing || existing.studentId !== session.user.id) {
+    return { error: "沒有權限" };
+  }
+  if (existing.status !== "OPEN") {
+    return { error: "已配對或關閉的案件無法編輯" };
+  }
+
+  const budgetRaw = formData.get("budget")?.toString().trim();
+  const budgetMaxRaw = formData.get("budgetMax")?.toString().trim();
+  const raw = {
+    title: formData.get("title")?.toString().trim() ?? "",
+    subject: formData.get("subject")?.toString() ?? "",
+    level: formData.get("level")?.toString() ?? "",
+    region: formData.get("region")?.toString() ?? "",
+    mode: formData.get("mode")?.toString(),
+    budget: budgetRaw ? Number(budgetRaw) : undefined,
+    budgetMax: budgetMaxRaw ? Number(budgetMaxRaw) : undefined,
+    description: formData.get("description")?.toString().trim() ?? "",
+    studentStatus: formData.get("studentStatus")?.toString().trim() ?? "",
+    parentNeeds: formData.get("parentNeeds")?.toString().trim() ?? "",
+  };
+
+  const parsed = jobSchema.safeParse(raw);
+  if (!parsed.success) {
+    return {
+      fieldErrors: parsed.error.flatten().fieldErrors,
+      values: {
+        title: raw.title,
+        subject: raw.subject,
+        level: raw.level,
+        region: raw.region,
+        mode: raw.mode ?? "BOTH",
+        budget: budgetRaw ?? "",
+        budgetMax: budgetMaxRaw ?? "",
+        description: raw.description,
+        studentStatus: raw.studentStatus,
+        parentNeeds: raw.parentNeeds,
+      },
+    };
+  }
+
+  await db.jobPost.update({
+    where: { id: jobId },
+    data: { ...parsed.data, description: parsed.data.description ?? "" },
+  });
+
+  revalidatePath("/jobs");
+  revalidatePath(`/jobs/${jobId}`);
+  return { redirectTo: `/jobs/${jobId}` };
+}
+
 // 老師應徵案件
 export async function applyToJob(
   _prev: ActionState,
@@ -70,6 +138,9 @@ export async function applyToJob(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   const raw = {
     jobId: formData.get("jobId")?.toString() ?? "",
@@ -126,7 +197,13 @@ export async function applyToJob(
     create: { userId: session.user.id, jobId: parsed.data.jobId },
   });
 
-  // 通知案主有新應徵（依其通知偏好）
+  // 通知案主有新應徵：站內通知（訊息頁）+ Email（依其通知偏好）
+  await notifySystem(
+    job.studentId,
+    `你的案件「${job.title}」收到新應徵`,
+    "有老師應徵了你的家教需求，點擊查看應徵訊息並回覆。",
+    `/jobs/${parsed.data.jobId}`
+  );
   await notify({
     userId: job.studentId,
     kind: "jobUpdate",
@@ -136,6 +213,7 @@ export async function applyToJob(
 
   revalidatePath(`/jobs/${parsed.data.jobId}`);
   revalidatePath("/favorites");
+  revalidatePath("/messages");
   return { success: "應徵已送出，並自動存入收藏的「已應徵」" };
 }
 
@@ -203,6 +281,9 @@ export async function replyToApplication(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   const applicationId = formData.get("applicationId")?.toString() ?? "";
   const body = formData.get("body")?.toString().trim() ?? "";
@@ -281,7 +362,13 @@ export async function acceptApplication(applicationId: string) {
     }),
   ]);
 
-  // 通知被錄取的老師（依其通知偏好）
+  // 通知被錄取的老師：站內通知 + Email（依其通知偏好）
+  await notifySystem(
+    app.tutor.userId,
+    `你被選上了！案件「${app.job.title}」`,
+    "恭喜！家長選擇了你，點擊查看案件並私訊聯繫。",
+    `/jobs/${app.job.id}`
+  );
   await notify({
     userId: app.tutor.userId,
     kind: "jobUpdate",

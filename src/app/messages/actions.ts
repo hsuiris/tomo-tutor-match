@@ -6,6 +6,7 @@ import { db } from "@/lib/db";
 import { notify } from "@/lib/email";
 import { publicName } from "@/lib/user";
 import { rateLimit } from "@/lib/rate-limit";
+import { isEmailVerified } from "@/lib/verify-email";
 import type { ActionState } from "@/lib/types";
 
 // 把所有系統通知標為已讀
@@ -25,6 +26,9 @@ export async function startConversation(
 ): Promise<{ conversationId?: string; error?: string }> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
   if (otherUserId === session.user.id) {
     return { error: "不能和自己對話" };
   }
@@ -60,6 +64,9 @@ export async function sendMessage(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   const conversationId = formData.get("conversationId")?.toString() ?? "";
   const body = formData.get("body")?.toString().trim() ?? "";

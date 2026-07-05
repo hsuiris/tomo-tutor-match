@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { rateLimit } from "@/lib/rate-limit";
+import { isEmailVerified } from "@/lib/verify-email";
 import type { ActionState } from "@/lib/types";
 
 const TOO_MANY = "操作太頻繁，請稍後再試";
@@ -19,6 +20,9 @@ export async function createPost(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   // 防灌文：每人每小時最多 5 篇
   if (!(await rateLimit(`forum:post:${session.user.id}`, 5, 3600))) {
@@ -51,6 +55,9 @@ export async function createReply(
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
+  if (!(await isEmailVerified(session.user.id))) {
+    return { error: "請先完成 Email 驗證（到信箱點擊驗證連結）" };
+  }
 
   // 防洗版：每人每小時最多 20 則回覆
   if (!(await rateLimit(`forum:reply:${session.user.id}`, 20, 3600))) {

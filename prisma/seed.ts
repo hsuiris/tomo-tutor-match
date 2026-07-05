@@ -334,6 +334,12 @@ async function main() {
     });
   }
 
+  // demo 帳號一律視為已驗證（seed 僅限開發環境）
+  await db.user.updateMany({
+    where: { email: { endsWith: "@demo.com" } },
+    data: { emailVerified: new Date() },
+  });
+
   console.log(`✅ Seed 完成：${tutors.length} 位老師 + 學生、評價者、討論區範例`);
 }
 
