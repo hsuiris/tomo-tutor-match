@@ -32,7 +32,7 @@ export default function ApplyForm({ jobId }: { jobId: string }) {
         rows={4}
         placeholder="向學生介紹你自己,說明你能如何幫助達成學習目標"
         defaultValue={state.values?.message}
-        className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+        className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
       />
       {state.fieldErrors?.message?.length ? (
         state.fieldErrors.message.map((e) => (

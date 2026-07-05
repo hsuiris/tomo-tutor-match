@@ -39,7 +39,7 @@ export default function ForumReplyActions({
             name="body"
             rows={3}
             defaultValue={body}
-            className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
           />
           {state.fieldErrors?.body?.map((e) => (
             <p key={e} className="text-xs text-red-500">{e}</p>

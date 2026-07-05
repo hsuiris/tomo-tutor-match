@@ -256,7 +256,7 @@ export default function ProfileForm({
           <select
             name="eduLevel"
             defaultValue={v?.eduLevel ?? initial.eduLevel}
-            className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
           >
             <option value="">未填寫</option>
             {EDU_LEVELS.map((lv) => (
@@ -274,7 +274,7 @@ export default function ProfileForm({
             name="university"
             defaultValue={v?.university ?? initial.university}
             placeholder="例如：國立台灣大學"
-            className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
           />
           {err?.university?.map((e) => (
             <p key={e} className="mt-1 text-xs text-red-500">
@@ -317,7 +317,7 @@ export default function ProfileForm({
           <select
             name="mode"
             defaultValue={v?.mode ?? initial.mode}
-            className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+            className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
           >
             <option value="BOTH">線上 / 實體皆可</option>
             <option value="ONLINE">僅線上</option>
@@ -334,7 +334,7 @@ export default function ProfileForm({
               type="number"
               defaultValue={v?.hourlyRate ?? initial.hourlyRate}
               placeholder="最低"
-              className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+              className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
             />
             <span className="text-ink/40">–</span>
             <input
@@ -342,7 +342,7 @@ export default function ProfileForm({
               type="number"
               defaultValue={v?.hourlyRateMax ?? initial.hourlyRateMax}
               placeholder="最高"
-              className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+              className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
             />
           </div>
           {(err?.hourlyRate ?? err?.hourlyRateMax)?.map((e) => (
@@ -422,7 +422,7 @@ function TextArea({
         defaultValue={defaultValue}
         placeholder={placeholder}
         rows={3}
-        className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+        className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
       />
       {errors?.map((e) => (
         <p key={e} className="mt-1 text-xs text-red-500">

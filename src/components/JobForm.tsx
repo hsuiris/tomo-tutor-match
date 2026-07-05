@@ -55,9 +55,9 @@ export default function JobForm({
   }, [state.redirectTo, router]);
 
   const inputCls =
-    "w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line";
+    "w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line";
   const textareaCls =
-    "w-full rounded-2xl border border-line px-3 py-2 text-sm outline-none focus:border-line";
+    "w-full rounded-2xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line";
 
   return (
     <form action={formAction} className="space-y-5">

@@ -64,7 +64,7 @@ export default function MatchForm({
   }
 
   const fieldCls =
-    "w-full rounded-xl border border-line bg-paper px-3 py-2.5 text-sm font-bold outline-none focus:bg-sun-soft/40";
+    "w-full rounded-xl border border-line bg-white px-3 py-2.5 text-sm font-bold outline-none focus:bg-sun-soft/40";
   const labelCls = "mb-1.5 block text-xs font-bold text-ink/60";
 
   if (variant === "compact") {

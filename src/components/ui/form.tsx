@@ -55,7 +55,7 @@ export function Field({
         placeholder={placeholder}
         defaultValue={defaultValue}
         aria-invalid={errors?.length ? true : undefined}
-        className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm font-medium outline-none transition placeholder:text-ink/40 focus:bg-sun-soft/40 aria-[invalid]:border-blush"
+        className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm font-medium outline-none transition placeholder:text-ink/40 focus:bg-sun-soft/40 aria-[invalid]:border-blush"
       />
       {errors?.length ? (
         errors.map((e) => (

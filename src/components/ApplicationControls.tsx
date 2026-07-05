@@ -27,7 +27,7 @@ export default function ApplicationControls({
           name="message"
           rows={4}
           defaultValue={message}
-          className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm outline-none focus:bg-sun-soft/30"
+          className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:bg-sun-soft/30"
         />
         {state.fieldErrors?.message?.map((e) => (
           <p key={e} className="text-xs text-red-500">

@@ -51,7 +51,7 @@ export default function ReplyForm({
         placeholder={parentId ? "回覆這則留言…" : "寫下你的回覆…"}
         defaultValue={state.values?.body}
         autoFocus={compact}
-        className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+        className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
       />
       {state.fieldErrors?.body?.map((e) => (
         <p key={e} className="text-xs text-red-500">

@@ -35,7 +35,7 @@ export default function MessageComposer({
         name="body"
         autoComplete="off"
         placeholder="輸入訊息…"
-        className="flex-1 rounded-full border border-line px-4 py-2 text-sm outline-none focus:border-line"
+        className="flex-1 rounded-full border border-line bg-white px-4 py-2 text-sm outline-none focus:border-line"
       />
       <button
         type="submit"

@@ -63,7 +63,7 @@ export default function ReviewForm({
         rows={3}
         placeholder="分享上課心得,幫助其他家長與學生（選填）"
         defaultValue={state.values?.comment}
-        className="w-full rounded-xl border border-line bg-paper px-3 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
+        className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm font-medium outline-none placeholder:text-ink/40 focus:bg-sun-soft/40"
       />
 
       {state.error && (

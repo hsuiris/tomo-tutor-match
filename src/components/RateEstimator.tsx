@@ -138,7 +138,7 @@ export default function RateEstimator({
                 max={50}
                 value={years}
                 onChange={(e) => setYears(Math.max(0, Number(e.target.value) || 0))}
-                className="w-full rounded-xl border border-line bg-paper px-3 py-2.5 text-sm font-bold outline-none focus:bg-sun-soft/40"
+                className="w-full rounded-xl border border-line bg-white px-3 py-2.5 text-sm font-bold outline-none focus:bg-sun-soft/40"
               />
             </div>
             <div>
@@ -148,7 +148,7 @@ export default function RateEstimator({
               <select
                 value={eduLevel}
                 onChange={(e) => setEduLevel(e.target.value)}
-                className="w-full rounded-xl border border-line bg-paper px-3 py-2.5 text-sm font-bold outline-none focus:bg-sun-soft/40"
+                className="w-full rounded-xl border border-line bg-white px-3 py-2.5 text-sm font-bold outline-none focus:bg-sun-soft/40"
               >
                 <option value="">未填</option>
                 {EDU_LEVELS.map((e) => (

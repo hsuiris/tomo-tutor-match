@@ -40,7 +40,7 @@ export default function NewPostForm({ board }: { board: "TUTOR" | "PARENT" }) {
           name="title"
           placeholder="主題標題"
           defaultValue={state.values?.title}
-          className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+          className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
         />
         {state.fieldErrors?.title?.length ? (
           state.fieldErrors.title.map((e) => (
@@ -58,7 +58,7 @@ export default function NewPostForm({ board }: { board: "TUTOR" | "PARENT" }) {
           rows={4}
           placeholder="分享你的問題或經驗…"
           defaultValue={state.values?.body}
-          className="w-full rounded-xl border border-line px-3 py-2 text-sm outline-none focus:border-line"
+          className="w-full rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none focus:border-line"
         />
         {state.fieldErrors?.body?.length ? (
           state.fieldErrors.body.map((e) => (

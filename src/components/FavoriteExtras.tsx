@@ -26,7 +26,7 @@ export default function FavoriteExtras({
             rows={2}
             maxLength={200}
             placeholder="寫點備註,例如：時段可以、等回覆⋯（只有你看得到）"
-            className="w-full rounded-lg border border-line bg-paper px-2.5 py-1.5 text-sm outline-none focus:bg-sun-soft/30"
+            className="w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-sm outline-none focus:bg-sun-soft/30"
           />
           {error && <p className="text-xs text-red-500">{error}</p>}
           <div className="flex gap-2">
