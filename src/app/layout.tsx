@@ -29,9 +29,10 @@ const playfair = Playfair_Display({
 const notoSerifTC = Noto_Serif_TC({
   variable: "--font-serif-tc",
   weight: ["500", "600", "700", "900"],
-  // CJK 字檔大、無法 preload；用 optional + 等寬度量替代字型，
-  // 避免標題晚出現時的閃動，字體下載快取後即時套用
-  display: "optional",
+  // CJK 字檔大、無法 preload。用 swap（而非 optional）：下載完成後一定會套用，
+  // 不會像 optional 那樣「來不及就整頁放棄」。載入前先用系統宋體/黑體頂著。
+  display: "swap",
+  fallback: ["Songti TC", "Noto Serif CJK TC", "PingFang TC", "serif"],
 });
 
 const SITE_NAME = "Tomo 家教媒合平台";
