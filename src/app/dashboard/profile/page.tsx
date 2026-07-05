@@ -6,6 +6,11 @@ import ProfileForm, { type ProfileInitial } from "@/components/ProfileForm";
 import AliasForm from "@/components/AliasForm";
 import VerificationSection from "@/components/VerificationSection";
 import PhotosForm from "@/components/PhotosForm";
+import {
+  parseExams,
+  parseRateRules,
+  parseAvailability,
+} from "@/lib/profile-detail";
 import type { TeachingMode } from "@/lib/constants";
 
 export default async function ProfileEditPage() {
@@ -49,6 +54,9 @@ export default async function ProfileEditPage() {
     mode: profile.mode as TeachingMode,
     gender: profile.user.gender as ProfileInitial["gender"],
     avatarUrl: profile.user.avatarUrl ?? "",
+    exams: parseExams(profile.exams),
+    rateRules: parseRateRules(profile.rateRules),
+    availability: parseAvailability(profile.availability),
   };
 
   return (

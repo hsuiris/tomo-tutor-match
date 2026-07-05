@@ -11993,6 +11993,9 @@ export namespace Prisma {
     university: number
     eduLevel: number
     mode: number
+    exams: number
+    rateRules: number
+    availability: number
     isPublished: number
     ratingAvg: number
     ratingCount: number
@@ -12066,6 +12069,9 @@ export namespace Prisma {
     university?: true
     eduLevel?: true
     mode?: true
+    exams?: true
+    rateRules?: true
+    availability?: true
     isPublished?: true
     ratingAvg?: true
     ratingCount?: true
@@ -12174,6 +12180,9 @@ export namespace Prisma {
     university: string | null
     eduLevel: string | null
     mode: $Enums.TeachingMode
+    exams: JsonValue | null
+    rateRules: JsonValue | null
+    availability: JsonValue | null
     isPublished: boolean
     ratingAvg: number
     ratingCount: number
@@ -12214,6 +12223,9 @@ export namespace Prisma {
     university?: boolean
     eduLevel?: boolean
     mode?: boolean
+    exams?: boolean
+    rateRules?: boolean
+    availability?: boolean
     isPublished?: boolean
     ratingAvg?: boolean
     ratingCount?: boolean
@@ -12239,6 +12251,9 @@ export namespace Prisma {
     university?: boolean
     eduLevel?: boolean
     mode?: boolean
+    exams?: boolean
+    rateRules?: boolean
+    availability?: boolean
     isPublished?: boolean
     ratingAvg?: boolean
     ratingCount?: boolean
@@ -12261,6 +12276,9 @@ export namespace Prisma {
     university?: boolean
     eduLevel?: boolean
     mode?: boolean
+    exams?: boolean
+    rateRules?: boolean
+    availability?: boolean
     isPublished?: boolean
     ratingAvg?: boolean
     ratingCount?: boolean
@@ -12283,6 +12301,9 @@ export namespace Prisma {
     university?: boolean
     eduLevel?: boolean
     mode?: boolean
+    exams?: boolean
+    rateRules?: boolean
+    availability?: boolean
     isPublished?: boolean
     ratingAvg?: boolean
     ratingCount?: boolean
@@ -12290,7 +12311,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type TutorProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "subjects" | "levels" | "regions" | "hourlyRate" | "hourlyRateMax" | "experience" | "education" | "university" | "eduLevel" | "mode" | "isPublished" | "ratingAvg" | "ratingCount" | "createdAt" | "updatedAt", ExtArgs["result"]["tutorProfile"]>
+  export type TutorProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "subjects" | "levels" | "regions" | "hourlyRate" | "hourlyRateMax" | "experience" | "education" | "university" | "eduLevel" | "mode" | "exams" | "rateRules" | "availability" | "isPublished" | "ratingAvg" | "ratingCount" | "createdAt" | "updatedAt", ExtArgs["result"]["tutorProfile"]>
   export type TutorProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     applications?: boolean | TutorProfile$applicationsArgs<ExtArgs>
@@ -12325,6 +12346,9 @@ export namespace Prisma {
       university: string | null
       eduLevel: string | null
       mode: $Enums.TeachingMode
+      exams: Prisma.JsonValue | null
+      rateRules: Prisma.JsonValue | null
+      availability: Prisma.JsonValue | null
       isPublished: boolean
       ratingAvg: number
       ratingCount: number
@@ -12769,6 +12793,9 @@ export namespace Prisma {
     readonly university: FieldRef<"TutorProfile", 'String'>
     readonly eduLevel: FieldRef<"TutorProfile", 'String'>
     readonly mode: FieldRef<"TutorProfile", 'TeachingMode'>
+    readonly exams: FieldRef<"TutorProfile", 'Json'>
+    readonly rateRules: FieldRef<"TutorProfile", 'Json'>
+    readonly availability: FieldRef<"TutorProfile", 'Json'>
     readonly isPublished: FieldRef<"TutorProfile", 'Boolean'>
     readonly ratingAvg: FieldRef<"TutorProfile", 'Float'>
     readonly ratingCount: FieldRef<"TutorProfile", 'Int'>
@@ -21259,6 +21286,9 @@ export namespace Prisma {
     university: 'university',
     eduLevel: 'eduLevel',
     mode: 'mode',
+    exams: 'exams',
+    rateRules: 'rateRules',
+    availability: 'availability',
     isPublished: 'isPublished',
     ratingAvg: 'ratingAvg',
     ratingCount: 'ratingCount',
@@ -21372,6 +21402,14 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -21386,6 +21424,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -21509,6 +21556,20 @@ export namespace Prisma {
    * Reference to a field of type 'TeachingMode[]'
    */
   export type ListEnumTeachingModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TeachingMode[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -22193,6 +22254,9 @@ export namespace Prisma {
     university?: StringNullableFilter<"TutorProfile"> | string | null
     eduLevel?: StringNullableFilter<"TutorProfile"> | string | null
     mode?: EnumTeachingModeFilter<"TutorProfile"> | $Enums.TeachingMode
+    exams?: JsonNullableFilter<"TutorProfile">
+    rateRules?: JsonNullableFilter<"TutorProfile">
+    availability?: JsonNullableFilter<"TutorProfile">
     isPublished?: BoolFilter<"TutorProfile"> | boolean
     ratingAvg?: FloatFilter<"TutorProfile"> | number
     ratingCount?: IntFilter<"TutorProfile"> | number
@@ -22217,6 +22281,9 @@ export namespace Prisma {
     university?: SortOrderInput | SortOrder
     eduLevel?: SortOrderInput | SortOrder
     mode?: SortOrder
+    exams?: SortOrderInput | SortOrder
+    rateRules?: SortOrderInput | SortOrder
+    availability?: SortOrderInput | SortOrder
     isPublished?: SortOrder
     ratingAvg?: SortOrder
     ratingCount?: SortOrder
@@ -22244,6 +22311,9 @@ export namespace Prisma {
     university?: StringNullableFilter<"TutorProfile"> | string | null
     eduLevel?: StringNullableFilter<"TutorProfile"> | string | null
     mode?: EnumTeachingModeFilter<"TutorProfile"> | $Enums.TeachingMode
+    exams?: JsonNullableFilter<"TutorProfile">
+    rateRules?: JsonNullableFilter<"TutorProfile">
+    availability?: JsonNullableFilter<"TutorProfile">
     isPublished?: BoolFilter<"TutorProfile"> | boolean
     ratingAvg?: FloatFilter<"TutorProfile"> | number
     ratingCount?: IntFilter<"TutorProfile"> | number
@@ -22268,6 +22338,9 @@ export namespace Prisma {
     university?: SortOrderInput | SortOrder
     eduLevel?: SortOrderInput | SortOrder
     mode?: SortOrder
+    exams?: SortOrderInput | SortOrder
+    rateRules?: SortOrderInput | SortOrder
+    availability?: SortOrderInput | SortOrder
     isPublished?: SortOrder
     ratingAvg?: SortOrder
     ratingCount?: SortOrder
@@ -22297,6 +22370,9 @@ export namespace Prisma {
     university?: StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
     eduLevel?: StringNullableWithAggregatesFilter<"TutorProfile"> | string | null
     mode?: EnumTeachingModeWithAggregatesFilter<"TutorProfile"> | $Enums.TeachingMode
+    exams?: JsonNullableWithAggregatesFilter<"TutorProfile">
+    rateRules?: JsonNullableWithAggregatesFilter<"TutorProfile">
+    availability?: JsonNullableWithAggregatesFilter<"TutorProfile">
     isPublished?: BoolWithAggregatesFilter<"TutorProfile"> | boolean
     ratingAvg?: FloatWithAggregatesFilter<"TutorProfile"> | number
     ratingCount?: IntWithAggregatesFilter<"TutorProfile"> | number
@@ -23475,6 +23551,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -23499,6 +23578,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -23521,6 +23603,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -23545,6 +23630,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -23568,6 +23656,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -23588,6 +23679,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -23609,6 +23703,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -24778,6 +24875,29 @@ export namespace Prisma {
     notIn?: $Enums.TeachingMode[] | ListEnumTeachingModeFieldRefInput<$PrismaModel>
     not?: NestedEnumTeachingModeFilter<$PrismaModel> | $Enums.TeachingMode
   }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type FloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
@@ -24825,6 +24945,9 @@ export namespace Prisma {
     university?: SortOrder
     eduLevel?: SortOrder
     mode?: SortOrder
+    exams?: SortOrder
+    rateRules?: SortOrder
+    availability?: SortOrder
     isPublished?: SortOrder
     ratingAvg?: SortOrder
     ratingCount?: SortOrder
@@ -24906,6 +25029,32 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTeachingModeFilter<$PrismaModel>
     _max?: NestedEnumTeachingModeFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -26947,6 +27096,29 @@ export namespace Prisma {
     _min?: NestedEnumTeachingModeFilter<$PrismaModel>
     _max?: NestedEnumTeachingModeFilter<$PrismaModel>
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
@@ -27044,6 +27216,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -27066,6 +27241,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -27508,6 +27686,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -27530,6 +27711,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -28491,6 +28675,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -28514,6 +28701,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -28677,6 +28867,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -28700,6 +28893,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -30047,6 +30243,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -30070,6 +30269,9 @@ export namespace Prisma {
     university?: string | null
     eduLevel?: string | null
     mode?: $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: boolean
     ratingAvg?: number
     ratingCount?: number
@@ -30180,6 +30382,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number
@@ -30203,6 +30408,9 @@ export namespace Prisma {
     university?: NullableStringFieldUpdateOperationsInput | string | null
     eduLevel?: NullableStringFieldUpdateOperationsInput | string | null
     mode?: EnumTeachingModeFieldUpdateOperationsInput | $Enums.TeachingMode
+    exams?: NullableJsonNullValueInput | InputJsonValue
+    rateRules?: NullableJsonNullValueInput | InputJsonValue
+    availability?: NullableJsonNullValueInput | InputJsonValue
     isPublished?: BoolFieldUpdateOperationsInput | boolean
     ratingAvg?: FloatFieldUpdateOperationsInput | number
     ratingCount?: IntFieldUpdateOperationsInput | number

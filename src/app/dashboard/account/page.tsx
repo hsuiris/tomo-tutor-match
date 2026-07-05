@@ -5,7 +5,6 @@ import { db } from "@/lib/db";
 import PasswordForm from "@/components/PasswordForm";
 import NotificationForm from "@/components/NotificationForm";
 import VerificationSection from "@/components/VerificationSection";
-import PhotosForm from "@/components/PhotosForm";
 
 export default async function AccountPage() {
   const session = await auth();
@@ -15,7 +14,6 @@ export default async function AccountPage() {
     where: { id: session.user.id },
     select: {
       role: true,
-      photoUrls: true,
       idVerified: true,
       bgCheckVerified: true,
       eduVerified: true,
@@ -57,15 +55,6 @@ export default async function AccountPage() {
           />
         </div>
       )}
-
-      {/* 檔案照片 */}
-      <section className="mt-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
-        <h2 className="mb-1 font-bold text-ink">檔案照片</h2>
-        <p className="mb-4 text-xs text-ink/40">
-          附上照片讓對方更認識你（選填）。
-        </p>
-        <PhotosForm initial={user.photoUrls} />
-      </section>
 
       {/* 通知設定 */}
       <section className="mt-6 rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">

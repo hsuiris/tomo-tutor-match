@@ -10,6 +10,14 @@ import {
   type Gender,
 } from "@/lib/constants";
 import Avatar from "@/components/Avatar";
+import RateRulesField from "@/components/RateRulesField";
+import ExamScoresField from "@/components/ExamScoresField";
+import AvailabilityField from "@/components/AvailabilityField";
+import type {
+  ExamScore,
+  RateRule,
+  Availability,
+} from "@/lib/profile-detail";
 import { useFocusFirstError } from "@/components/ui/form";
 import RegionPicker from "@/components/RegionPicker";
 import type { ActionState } from "@/lib/types";
@@ -29,6 +37,9 @@ export type ProfileInitial = {
   mode: TeachingMode;
   gender: Gender;
   avatarUrl: string;
+  exams: ExamScore[];
+  rateRules: RateRule[];
+  availability: Availability | null;
 };
 
 const initialState: ActionState = {};
@@ -331,8 +342,40 @@ export default function ProfileForm({
               {e}
             </p>
           ))}
-          <p className="mt-1 text-xs text-ink/40">可只填一邊，例如「500 起」或固定「800」</p>
+          <p className="mt-1 text-xs text-ink/40">
+            此為預設時薪；不同科目/年級可在下方單獨設定
+          </p>
         </div>
+      </div>
+
+      {/* 各科目/年級客製時薪（連動已選專長科目） */}
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          各科目時薪（選填）
+        </label>
+        <p className="mb-2 text-xs text-ink/40">
+          教不同科目/年級收費不同時，可在此分別設定；未列到的沿用上方預設時薪。
+        </p>
+        <RateRulesField subjects={subjects} initial={initial.rateRules} />
+      </div>
+
+      {/* 考試成績 */}
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          考試成績（選填）
+        </label>
+        <p className="mb-2 text-xs text-ink/40">
+          附上會考、學測、指考、多益等成績，讓家長更信任你的實力。
+        </p>
+        <ExamScoresField initial={initial.exams} />
+      </div>
+
+      {/* 可配合上課時間 */}
+      <div>
+        <label className="mb-1 block text-sm font-medium text-ink/80">
+          可配合上課時間（選填）
+        </label>
+        <AvailabilityField initial={initial.availability} />
       </div>
 
       {/* 授課地區（線上 / 選擇地區） */}

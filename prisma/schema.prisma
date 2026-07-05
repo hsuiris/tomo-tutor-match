@@ -233,6 +233,12 @@ model TutorProfile {
   university  String? // 畢業大學
   eduLevel    String? // 教育程度（學士/碩士/博士/在學中…）
   mode        TeachingMode @default(BOTH)
+  // 考試成績 [{ type, score }]（會考/學測/指考/多益…）
+  exams       Json? // ExamScore[]
+  // 各科目/年級客製時薪 [{ subject, level?, rate, rateMax? }]（未列到者用 hourlyRate）
+  rateRules   Json? // RateRule[]
+  // 可配合上課時間 { mode: "slots"|"discuss", slots?: [{ days, start, end, hours? }] }
+  availability Json?
   isPublished Boolean  @default(false)
   ratingAvg   Float    @default(0)
   ratingCount Int      @default(0)
