@@ -51,7 +51,7 @@ export default async function AccountPage() {
             eduVerified={user.eduVerified}
             requests={user.verificationRequests}
             showEducation={false}
-            intro="完成認證能保障媒合與接案的安全，也讓老師更信任你。證件僅供審核使用，審核後即刪除。"
+            intro="安全認證為選填，沒有認證也能正常使用平台徵家教；但完成認證會顯示信任徽章，家長與老師雙方都會更放心。證件僅供審核使用，審核後即刪除。"
           />
         </div>
       )}
