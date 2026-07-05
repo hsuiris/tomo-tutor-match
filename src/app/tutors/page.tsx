@@ -92,6 +92,8 @@ async function BrowseMode({
 }: {
   sp: Awaited<SearchParams>;
 }) {
+  const session = await auth();
+  const me = session?.user.id;
   const q = str(sp.q);
   const subjects = arr(sp.subject);
   const levels = arr(sp.level);
@@ -156,6 +158,7 @@ async function BrowseMode({
       take: PAGE_SIZE,
       select: {
         id: true,
+        userId: true,
         bio: true,
         subjects: true,
         levels: true,
@@ -222,7 +225,12 @@ async function BrowseMode({
       ) : (
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {tutors.map((t) => (
-            <TutorCard key={t.id} tutor={t} favorited={favTutorIds.has(t.id)} />
+            <TutorCard
+              key={t.id}
+              tutor={t}
+              favorited={favTutorIds.has(t.id)}
+              mine={t.userId === me}
+            />
           ))}
         </div>
       )}

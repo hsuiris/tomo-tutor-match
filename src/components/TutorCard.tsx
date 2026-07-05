@@ -33,9 +33,12 @@ export type TutorCardData = {
 export default function TutorCard({
   tutor,
   favorited = false,
+  mine = false,
 }: {
   tutor: TutorCardData;
   favorited?: boolean;
+  // 這張卡是目前登入者自己的檔案（列表中標註）
+  mine?: boolean;
 }) {
   return (
     <div className="relative">
@@ -51,8 +54,13 @@ export default function TutorCard({
           <Avatar name={publicName(tutor.user)} url={tutor.user.avatarUrl} />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="truncate font-serif text-lg font-bold text-ink">
-            {publicName(tutor.user)}
+          <h3 className="flex min-w-0 items-center gap-1.5 font-serif text-lg font-bold text-ink">
+            <span className="truncate">{publicName(tutor.user)}</span>
+            {mine && (
+              <span className="shrink-0 rounded-full bg-cobalt px-2 py-0.5 text-[10px] font-bold text-paper">
+                我的檔案
+              </span>
+            )}
           </h3>
           <div className="mt-0.5">
             <RatingStars value={tutor.ratingAvg} count={tutor.ratingCount} />
