@@ -27,3 +27,19 @@ export async function becomeTutor() {
   // 帶去填檔案 + 安全認證
   redirect("/dashboard/profile");
 }
+
+// 面板上的接案狀態切換：公開（可被搜尋/應徵）或關閉接案
+export async function setProfilePublished(published: boolean) {
+  const session = await auth();
+  if (!session) return;
+
+  await db.tutorProfile.updateMany({
+    where: { userId: session.user.id },
+    data: { isPublished: published },
+  });
+
+  revalidatePath("/dashboard");
+  revalidatePath("/tutors");
+  revalidatePath("/");
+  revalidatePath(`/u/${session.user.id}`);
+}

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import { hasTutorProfile } from "@/lib/tutor";
+import { db } from "@/lib/db";
 import { becomeTutor } from "./actions";
+import PublishToggle from "@/components/PublishToggle";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -12,7 +13,11 @@ export default async function DashboardPage() {
   if (user.role === "ADMIN") redirect("/admin");
 
   // 能不能教學看「有沒有老師檔案」，不看 JWT role（升級後 JWT 不會即時更新）
-  const isTutor = await hasTutorProfile(user.id);
+  const profile = await db.tutorProfile.findUnique({
+    where: { userId: user.id },
+    select: { isPublished: true },
+  });
+  const isTutor = !!profile;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
@@ -66,20 +71,22 @@ export default async function DashboardPage() {
           <div className="space-y-4">
             {isTutor ? (
               <>
+                {/* 接案狀態一目瞭然，避免不接案了檔案還掛著公開 */}
+                <PublishToggle published={profile!.isPublished} />
                 <DashCard
                   href="/dashboard/profile"
                   title="編輯我的老師檔案"
                   desc="專長、時薪、自我介紹、公開化名與安全認證"
                 />
                 <DashCard
-                  href="/jobs"
-                  title="瀏覽家教需求"
-                  desc="尋找適合的案件並送出應徵"
-                />
-                <DashCard
                   href="/dashboard/applications"
                   title="我的應徵"
                   desc="查看你應徵過的案件與錄取狀態"
+                />
+                <DashCard
+                  href="/jobs"
+                  title="瀏覽家教需求"
+                  desc="尋找適合的案件並送出應徵"
                 />
               </>
             ) : (
