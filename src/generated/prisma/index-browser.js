@@ -164,6 +164,7 @@ exports.Prisma.FavoriteScalarFieldEnum = {
   userId: 'userId',
   tutorProfileId: 'tutorProfileId',
   jobId: 'jobId',
+  note: 'note',
   createdAt: 'createdAt'
 };
 
@@ -239,6 +240,14 @@ exports.Prisma.ApplicationScalarFieldEnum = {
   tutorId: 'tutorId',
   message: 'message',
   status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ApplicationReplyScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  authorId: 'authorId',
+  body: 'body',
   createdAt: 'createdAt'
 };
 
@@ -350,6 +359,7 @@ exports.Prisma.ModelName = {
   TutorProfile: 'TutorProfile',
   JobPost: 'JobPost',
   Application: 'Application',
+  ApplicationReply: 'ApplicationReply',
   Review: 'Review',
   RateLimit: 'RateLimit',
   ForumPost: 'ForumPost',

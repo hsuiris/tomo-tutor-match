@@ -64,6 +64,11 @@ export type JobPost = $Result.DefaultSelection<Prisma.$JobPostPayload>
  */
 export type Application = $Result.DefaultSelection<Prisma.$ApplicationPayload>
 /**
+ * Model ApplicationReply
+ * 
+ */
+export type ApplicationReply = $Result.DefaultSelection<Prisma.$ApplicationReplyPayload>
+/**
  * Model Review
  * 
  */
@@ -409,6 +414,16 @@ export class PrismaClient<
     * ```
     */
   get application(): Prisma.ApplicationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.applicationReply`: Exposes CRUD operations for the **ApplicationReply** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ApplicationReplies
+    * const applicationReplies = await prisma.applicationReply.findMany()
+    * ```
+    */
+  get applicationReply(): Prisma.ApplicationReplyDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.review`: Exposes CRUD operations for the **Review** model.
@@ -900,6 +915,7 @@ export namespace Prisma {
     TutorProfile: 'TutorProfile',
     JobPost: 'JobPost',
     Application: 'Application',
+    ApplicationReply: 'ApplicationReply',
     Review: 'Review',
     RateLimit: 'RateLimit',
     ForumPost: 'ForumPost',
@@ -922,7 +938,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "notification" | "passwordResetToken" | "favorite" | "verificationRequest" | "conversation" | "message" | "tutorProfile" | "jobPost" | "application" | "review" | "rateLimit" | "forumPost" | "forumReply"
+      modelProps: "user" | "notification" | "passwordResetToken" | "favorite" | "verificationRequest" | "conversation" | "message" | "tutorProfile" | "jobPost" | "application" | "applicationReply" | "review" | "rateLimit" | "forumPost" | "forumReply"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1666,6 +1682,80 @@ export namespace Prisma {
           }
         }
       }
+      ApplicationReply: {
+        payload: Prisma.$ApplicationReplyPayload<ExtArgs>
+        fields: Prisma.ApplicationReplyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ApplicationReplyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ApplicationReplyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>
+          }
+          findFirst: {
+            args: Prisma.ApplicationReplyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ApplicationReplyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>
+          }
+          findMany: {
+            args: Prisma.ApplicationReplyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>[]
+          }
+          create: {
+            args: Prisma.ApplicationReplyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>
+          }
+          createMany: {
+            args: Prisma.ApplicationReplyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ApplicationReplyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>[]
+          }
+          delete: {
+            args: Prisma.ApplicationReplyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>
+          }
+          update: {
+            args: Prisma.ApplicationReplyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>
+          }
+          deleteMany: {
+            args: Prisma.ApplicationReplyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ApplicationReplyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ApplicationReplyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>[]
+          }
+          upsert: {
+            args: Prisma.ApplicationReplyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ApplicationReplyPayload>
+          }
+          aggregate: {
+            args: Prisma.ApplicationReplyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateApplicationReply>
+          }
+          groupBy: {
+            args: Prisma.ApplicationReplyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationReplyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ApplicationReplyCountArgs<ExtArgs>
+            result: $Utils.Optional<ApplicationReplyCountAggregateOutputType> | number
+          }
+        }
+      }
       Review: {
         payload: Prisma.$ReviewPayload<ExtArgs>
         fields: Prisma.ReviewFieldRefs
@@ -2068,6 +2158,7 @@ export namespace Prisma {
     tutorProfile?: TutorProfileOmit
     jobPost?: JobPostOmit
     application?: ApplicationOmit
+    applicationReply?: ApplicationReplyOmit
     review?: ReviewOmit
     rateLimit?: RateLimitOmit
     forumPost?: ForumPostOmit
@@ -2164,6 +2255,7 @@ export namespace Prisma {
     forumReplies: number
     passwordResets: number
     notifications: number
+    applicationReplies: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2179,6 +2271,7 @@ export namespace Prisma {
     forumReplies?: boolean | UserCountOutputTypeCountForumRepliesArgs
     passwordResets?: boolean | UserCountOutputTypeCountPasswordResetsArgs
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+    applicationReplies?: boolean | UserCountOutputTypeCountApplicationRepliesArgs
   }
 
   // Custom InputTypes
@@ -2274,6 +2367,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountApplicationRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationReplyWhereInput
   }
 
 
@@ -2385,6 +2485,37 @@ export namespace Prisma {
    */
   export type JobPostCountOutputTypeCountFavoritedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FavoriteWhereInput
+  }
+
+
+  /**
+   * Count Type ApplicationCountOutputType
+   */
+
+  export type ApplicationCountOutputType = {
+    replies: number
+  }
+
+  export type ApplicationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    replies?: boolean | ApplicationCountOutputTypeCountRepliesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationCountOutputType
+     */
+    select?: ApplicationCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationCountOutputType without action
+   */
+  export type ApplicationCountOutputTypeCountRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationReplyWhereInput
   }
 
 
@@ -2696,6 +2827,7 @@ export namespace Prisma {
     forumReplies?: boolean | User$forumRepliesArgs<ExtArgs>
     passwordResets?: boolean | User$passwordResetsArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
+    applicationReplies?: boolean | User$applicationRepliesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2774,6 +2906,7 @@ export namespace Prisma {
     forumReplies?: boolean | User$forumRepliesArgs<ExtArgs>
     passwordResets?: boolean | User$passwordResetsArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
+    applicationReplies?: boolean | User$applicationRepliesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2795,6 +2928,7 @@ export namespace Prisma {
       forumReplies: Prisma.$ForumReplyPayload<ExtArgs>[]
       passwordResets: Prisma.$PasswordResetTokenPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      applicationReplies: Prisma.$ApplicationReplyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3221,6 +3355,7 @@ export namespace Prisma {
     forumReplies<T extends User$forumRepliesArgs<ExtArgs> = {}>(args?: Subset<T, User$forumRepliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForumReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     passwordResets<T extends User$passwordResetsArgs<ExtArgs> = {}>(args?: Subset<T, User$passwordResetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PasswordResetTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    applicationReplies<T extends User$applicationRepliesArgs<ExtArgs> = {}>(args?: Subset<T, User$applicationRepliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3959,6 +4094,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * User.applicationReplies
+   */
+  export type User$applicationRepliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    where?: ApplicationReplyWhereInput
+    orderBy?: ApplicationReplyOrderByWithRelationInput | ApplicationReplyOrderByWithRelationInput[]
+    cursor?: ApplicationReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationReplyScalarFieldEnum | ApplicationReplyScalarFieldEnum[]
   }
 
   /**
@@ -6137,6 +6296,7 @@ export namespace Prisma {
     userId: string | null
     tutorProfileId: string | null
     jobId: string | null
+    note: string | null
     createdAt: Date | null
   }
 
@@ -6145,6 +6305,7 @@ export namespace Prisma {
     userId: string | null
     tutorProfileId: string | null
     jobId: string | null
+    note: string | null
     createdAt: Date | null
   }
 
@@ -6153,6 +6314,7 @@ export namespace Prisma {
     userId: number
     tutorProfileId: number
     jobId: number
+    note: number
     createdAt: number
     _all: number
   }
@@ -6163,6 +6325,7 @@ export namespace Prisma {
     userId?: true
     tutorProfileId?: true
     jobId?: true
+    note?: true
     createdAt?: true
   }
 
@@ -6171,6 +6334,7 @@ export namespace Prisma {
     userId?: true
     tutorProfileId?: true
     jobId?: true
+    note?: true
     createdAt?: true
   }
 
@@ -6179,6 +6343,7 @@ export namespace Prisma {
     userId?: true
     tutorProfileId?: true
     jobId?: true
+    note?: true
     createdAt?: true
     _all?: true
   }
@@ -6260,6 +6425,7 @@ export namespace Prisma {
     userId: string
     tutorProfileId: string | null
     jobId: string | null
+    note: string | null
     createdAt: Date
     _count: FavoriteCountAggregateOutputType | null
     _min: FavoriteMinAggregateOutputType | null
@@ -6285,6 +6451,7 @@ export namespace Prisma {
     userId?: boolean
     tutorProfileId?: boolean
     jobId?: boolean
+    note?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     tutorProfile?: boolean | Favorite$tutorProfileArgs<ExtArgs>
@@ -6296,6 +6463,7 @@ export namespace Prisma {
     userId?: boolean
     tutorProfileId?: boolean
     jobId?: boolean
+    note?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     tutorProfile?: boolean | Favorite$tutorProfileArgs<ExtArgs>
@@ -6307,6 +6475,7 @@ export namespace Prisma {
     userId?: boolean
     tutorProfileId?: boolean
     jobId?: boolean
+    note?: boolean
     createdAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     tutorProfile?: boolean | Favorite$tutorProfileArgs<ExtArgs>
@@ -6318,10 +6487,11 @@ export namespace Prisma {
     userId?: boolean
     tutorProfileId?: boolean
     jobId?: boolean
+    note?: boolean
     createdAt?: boolean
   }
 
-  export type FavoriteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "tutorProfileId" | "jobId" | "createdAt", ExtArgs["result"]["favorite"]>
+  export type FavoriteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "tutorProfileId" | "jobId" | "note" | "createdAt", ExtArgs["result"]["favorite"]>
   export type FavoriteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     tutorProfile?: boolean | Favorite$tutorProfileArgs<ExtArgs>
@@ -6350,6 +6520,7 @@ export namespace Prisma {
       userId: string
       tutorProfileId: string | null
       jobId: string | null
+      note: string | null
       createdAt: Date
     }, ExtArgs["result"]["favorite"]>
     composites: {}
@@ -6781,6 +6952,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Favorite", 'String'>
     readonly tutorProfileId: FieldRef<"Favorite", 'String'>
     readonly jobId: FieldRef<"Favorite", 'String'>
+    readonly note: FieldRef<"Favorite", 'String'>
     readonly createdAt: FieldRef<"Favorite", 'DateTime'>
   }
     
@@ -13270,6 +13442,8 @@ export namespace Prisma {
     createdAt?: boolean
     job?: boolean | JobPostDefaultArgs<ExtArgs>
     tutor?: boolean | TutorProfileDefaultArgs<ExtArgs>
+    replies?: boolean | Application$repliesArgs<ExtArgs>
+    _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["application"]>
 
   export type ApplicationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -13307,6 +13481,8 @@ export namespace Prisma {
   export type ApplicationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job?: boolean | JobPostDefaultArgs<ExtArgs>
     tutor?: boolean | TutorProfileDefaultArgs<ExtArgs>
+    replies?: boolean | Application$repliesArgs<ExtArgs>
+    _count?: boolean | ApplicationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     job?: boolean | JobPostDefaultArgs<ExtArgs>
@@ -13322,6 +13498,7 @@ export namespace Prisma {
     objects: {
       job: Prisma.$JobPostPayload<ExtArgs>
       tutor: Prisma.$TutorProfilePayload<ExtArgs>
+      replies: Prisma.$ApplicationReplyPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -13726,6 +13903,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     job<T extends JobPostDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobPostDefaultArgs<ExtArgs>>): Prisma__JobPostClient<$Result.GetResult<Prisma.$JobPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     tutor<T extends TutorProfileDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TutorProfileDefaultArgs<ExtArgs>>): Prisma__TutorProfileClient<$Result.GetResult<Prisma.$TutorProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    replies<T extends Application$repliesArgs<ExtArgs> = {}>(args?: Subset<T, Application$repliesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14157,6 +14335,30 @@ export namespace Prisma {
   }
 
   /**
+   * Application.replies
+   */
+  export type Application$repliesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    where?: ApplicationReplyWhereInput
+    orderBy?: ApplicationReplyOrderByWithRelationInput | ApplicationReplyOrderByWithRelationInput[]
+    cursor?: ApplicationReplyWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ApplicationReplyScalarFieldEnum | ApplicationReplyScalarFieldEnum[]
+  }
+
+  /**
    * Application without action
    */
   export type ApplicationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -14172,6 +14374,1072 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ApplicationInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ApplicationReply
+   */
+
+  export type AggregateApplicationReply = {
+    _count: ApplicationReplyCountAggregateOutputType | null
+    _min: ApplicationReplyMinAggregateOutputType | null
+    _max: ApplicationReplyMaxAggregateOutputType | null
+  }
+
+  export type ApplicationReplyMinAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    authorId: string | null
+    body: string | null
+    createdAt: Date | null
+  }
+
+  export type ApplicationReplyMaxAggregateOutputType = {
+    id: string | null
+    applicationId: string | null
+    authorId: string | null
+    body: string | null
+    createdAt: Date | null
+  }
+
+  export type ApplicationReplyCountAggregateOutputType = {
+    id: number
+    applicationId: number
+    authorId: number
+    body: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ApplicationReplyMinAggregateInputType = {
+    id?: true
+    applicationId?: true
+    authorId?: true
+    body?: true
+    createdAt?: true
+  }
+
+  export type ApplicationReplyMaxAggregateInputType = {
+    id?: true
+    applicationId?: true
+    authorId?: true
+    body?: true
+    createdAt?: true
+  }
+
+  export type ApplicationReplyCountAggregateInputType = {
+    id?: true
+    applicationId?: true
+    authorId?: true
+    body?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ApplicationReplyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationReply to aggregate.
+     */
+    where?: ApplicationReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationReplies to fetch.
+     */
+    orderBy?: ApplicationReplyOrderByWithRelationInput | ApplicationReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ApplicationReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationReplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ApplicationReplies
+    **/
+    _count?: true | ApplicationReplyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ApplicationReplyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ApplicationReplyMaxAggregateInputType
+  }
+
+  export type GetApplicationReplyAggregateType<T extends ApplicationReplyAggregateArgs> = {
+        [P in keyof T & keyof AggregateApplicationReply]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateApplicationReply[P]>
+      : GetScalarType<T[P], AggregateApplicationReply[P]>
+  }
+
+
+
+
+  export type ApplicationReplyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ApplicationReplyWhereInput
+    orderBy?: ApplicationReplyOrderByWithAggregationInput | ApplicationReplyOrderByWithAggregationInput[]
+    by: ApplicationReplyScalarFieldEnum[] | ApplicationReplyScalarFieldEnum
+    having?: ApplicationReplyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ApplicationReplyCountAggregateInputType | true
+    _min?: ApplicationReplyMinAggregateInputType
+    _max?: ApplicationReplyMaxAggregateInputType
+  }
+
+  export type ApplicationReplyGroupByOutputType = {
+    id: string
+    applicationId: string
+    authorId: string
+    body: string
+    createdAt: Date
+    _count: ApplicationReplyCountAggregateOutputType | null
+    _min: ApplicationReplyMinAggregateOutputType | null
+    _max: ApplicationReplyMaxAggregateOutputType | null
+  }
+
+  type GetApplicationReplyGroupByPayload<T extends ApplicationReplyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ApplicationReplyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ApplicationReplyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ApplicationReplyGroupByOutputType[P]>
+            : GetScalarType<T[P], ApplicationReplyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ApplicationReplySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    authorId?: boolean
+    body?: boolean
+    createdAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationReply"]>
+
+  export type ApplicationReplySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    authorId?: boolean
+    body?: boolean
+    createdAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationReply"]>
+
+  export type ApplicationReplySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    applicationId?: boolean
+    authorId?: boolean
+    body?: boolean
+    createdAt?: boolean
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["applicationReply"]>
+
+  export type ApplicationReplySelectScalar = {
+    id?: boolean
+    applicationId?: boolean
+    authorId?: boolean
+    body?: boolean
+    createdAt?: boolean
+  }
+
+  export type ApplicationReplyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "applicationId" | "authorId" | "body" | "createdAt", ExtArgs["result"]["applicationReply"]>
+  export type ApplicationReplyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ApplicationReplyIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ApplicationReplyIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    application?: boolean | ApplicationDefaultArgs<ExtArgs>
+    author?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ApplicationReplyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ApplicationReply"
+    objects: {
+      application: Prisma.$ApplicationPayload<ExtArgs>
+      author: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      applicationId: string
+      authorId: string
+      body: string
+      createdAt: Date
+    }, ExtArgs["result"]["applicationReply"]>
+    composites: {}
+  }
+
+  type ApplicationReplyGetPayload<S extends boolean | null | undefined | ApplicationReplyDefaultArgs> = $Result.GetResult<Prisma.$ApplicationReplyPayload, S>
+
+  type ApplicationReplyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ApplicationReplyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ApplicationReplyCountAggregateInputType | true
+    }
+
+  export interface ApplicationReplyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ApplicationReply'], meta: { name: 'ApplicationReply' } }
+    /**
+     * Find zero or one ApplicationReply that matches the filter.
+     * @param {ApplicationReplyFindUniqueArgs} args - Arguments to find a ApplicationReply
+     * @example
+     * // Get one ApplicationReply
+     * const applicationReply = await prisma.applicationReply.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ApplicationReplyFindUniqueArgs>(args: SelectSubset<T, ApplicationReplyFindUniqueArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ApplicationReply that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ApplicationReplyFindUniqueOrThrowArgs} args - Arguments to find a ApplicationReply
+     * @example
+     * // Get one ApplicationReply
+     * const applicationReply = await prisma.applicationReply.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ApplicationReplyFindUniqueOrThrowArgs>(args: SelectSubset<T, ApplicationReplyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationReply that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationReplyFindFirstArgs} args - Arguments to find a ApplicationReply
+     * @example
+     * // Get one ApplicationReply
+     * const applicationReply = await prisma.applicationReply.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ApplicationReplyFindFirstArgs>(args?: SelectSubset<T, ApplicationReplyFindFirstArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ApplicationReply that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationReplyFindFirstOrThrowArgs} args - Arguments to find a ApplicationReply
+     * @example
+     * // Get one ApplicationReply
+     * const applicationReply = await prisma.applicationReply.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ApplicationReplyFindFirstOrThrowArgs>(args?: SelectSubset<T, ApplicationReplyFindFirstOrThrowArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ApplicationReplies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationReplyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ApplicationReplies
+     * const applicationReplies = await prisma.applicationReply.findMany()
+     * 
+     * // Get first 10 ApplicationReplies
+     * const applicationReplies = await prisma.applicationReply.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const applicationReplyWithIdOnly = await prisma.applicationReply.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ApplicationReplyFindManyArgs>(args?: SelectSubset<T, ApplicationReplyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ApplicationReply.
+     * @param {ApplicationReplyCreateArgs} args - Arguments to create a ApplicationReply.
+     * @example
+     * // Create one ApplicationReply
+     * const ApplicationReply = await prisma.applicationReply.create({
+     *   data: {
+     *     // ... data to create a ApplicationReply
+     *   }
+     * })
+     * 
+     */
+    create<T extends ApplicationReplyCreateArgs>(args: SelectSubset<T, ApplicationReplyCreateArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ApplicationReplies.
+     * @param {ApplicationReplyCreateManyArgs} args - Arguments to create many ApplicationReplies.
+     * @example
+     * // Create many ApplicationReplies
+     * const applicationReply = await prisma.applicationReply.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ApplicationReplyCreateManyArgs>(args?: SelectSubset<T, ApplicationReplyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ApplicationReplies and returns the data saved in the database.
+     * @param {ApplicationReplyCreateManyAndReturnArgs} args - Arguments to create many ApplicationReplies.
+     * @example
+     * // Create many ApplicationReplies
+     * const applicationReply = await prisma.applicationReply.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ApplicationReplies and only return the `id`
+     * const applicationReplyWithIdOnly = await prisma.applicationReply.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ApplicationReplyCreateManyAndReturnArgs>(args?: SelectSubset<T, ApplicationReplyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ApplicationReply.
+     * @param {ApplicationReplyDeleteArgs} args - Arguments to delete one ApplicationReply.
+     * @example
+     * // Delete one ApplicationReply
+     * const ApplicationReply = await prisma.applicationReply.delete({
+     *   where: {
+     *     // ... filter to delete one ApplicationReply
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ApplicationReplyDeleteArgs>(args: SelectSubset<T, ApplicationReplyDeleteArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ApplicationReply.
+     * @param {ApplicationReplyUpdateArgs} args - Arguments to update one ApplicationReply.
+     * @example
+     * // Update one ApplicationReply
+     * const applicationReply = await prisma.applicationReply.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ApplicationReplyUpdateArgs>(args: SelectSubset<T, ApplicationReplyUpdateArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ApplicationReplies.
+     * @param {ApplicationReplyDeleteManyArgs} args - Arguments to filter ApplicationReplies to delete.
+     * @example
+     * // Delete a few ApplicationReplies
+     * const { count } = await prisma.applicationReply.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ApplicationReplyDeleteManyArgs>(args?: SelectSubset<T, ApplicationReplyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationReplies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationReplyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ApplicationReplies
+     * const applicationReply = await prisma.applicationReply.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ApplicationReplyUpdateManyArgs>(args: SelectSubset<T, ApplicationReplyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ApplicationReplies and returns the data updated in the database.
+     * @param {ApplicationReplyUpdateManyAndReturnArgs} args - Arguments to update many ApplicationReplies.
+     * @example
+     * // Update many ApplicationReplies
+     * const applicationReply = await prisma.applicationReply.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ApplicationReplies and only return the `id`
+     * const applicationReplyWithIdOnly = await prisma.applicationReply.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ApplicationReplyUpdateManyAndReturnArgs>(args: SelectSubset<T, ApplicationReplyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ApplicationReply.
+     * @param {ApplicationReplyUpsertArgs} args - Arguments to update or create a ApplicationReply.
+     * @example
+     * // Update or create a ApplicationReply
+     * const applicationReply = await prisma.applicationReply.upsert({
+     *   create: {
+     *     // ... data to create a ApplicationReply
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ApplicationReply we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ApplicationReplyUpsertArgs>(args: SelectSubset<T, ApplicationReplyUpsertArgs<ExtArgs>>): Prisma__ApplicationReplyClient<$Result.GetResult<Prisma.$ApplicationReplyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ApplicationReplies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationReplyCountArgs} args - Arguments to filter ApplicationReplies to count.
+     * @example
+     * // Count the number of ApplicationReplies
+     * const count = await prisma.applicationReply.count({
+     *   where: {
+     *     // ... the filter for the ApplicationReplies we want to count
+     *   }
+     * })
+    **/
+    count<T extends ApplicationReplyCountArgs>(
+      args?: Subset<T, ApplicationReplyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ApplicationReplyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ApplicationReply.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationReplyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ApplicationReplyAggregateArgs>(args: Subset<T, ApplicationReplyAggregateArgs>): Prisma.PrismaPromise<GetApplicationReplyAggregateType<T>>
+
+    /**
+     * Group by ApplicationReply.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ApplicationReplyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ApplicationReplyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ApplicationReplyGroupByArgs['orderBy'] }
+        : { orderBy?: ApplicationReplyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ApplicationReplyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetApplicationReplyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ApplicationReply model
+   */
+  readonly fields: ApplicationReplyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ApplicationReply.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ApplicationReplyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    application<T extends ApplicationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ApplicationDefaultArgs<ExtArgs>>): Prisma__ApplicationClient<$Result.GetResult<Prisma.$ApplicationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    author<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ApplicationReply model
+   */
+  interface ApplicationReplyFieldRefs {
+    readonly id: FieldRef<"ApplicationReply", 'String'>
+    readonly applicationId: FieldRef<"ApplicationReply", 'String'>
+    readonly authorId: FieldRef<"ApplicationReply", 'String'>
+    readonly body: FieldRef<"ApplicationReply", 'String'>
+    readonly createdAt: FieldRef<"ApplicationReply", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ApplicationReply findUnique
+   */
+  export type ApplicationReplyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationReply to fetch.
+     */
+    where: ApplicationReplyWhereUniqueInput
+  }
+
+  /**
+   * ApplicationReply findUniqueOrThrow
+   */
+  export type ApplicationReplyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationReply to fetch.
+     */
+    where: ApplicationReplyWhereUniqueInput
+  }
+
+  /**
+   * ApplicationReply findFirst
+   */
+  export type ApplicationReplyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationReply to fetch.
+     */
+    where?: ApplicationReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationReplies to fetch.
+     */
+    orderBy?: ApplicationReplyOrderByWithRelationInput | ApplicationReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationReplies.
+     */
+    cursor?: ApplicationReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationReplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationReplies.
+     */
+    distinct?: ApplicationReplyScalarFieldEnum | ApplicationReplyScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationReply findFirstOrThrow
+   */
+  export type ApplicationReplyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationReply to fetch.
+     */
+    where?: ApplicationReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationReplies to fetch.
+     */
+    orderBy?: ApplicationReplyOrderByWithRelationInput | ApplicationReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ApplicationReplies.
+     */
+    cursor?: ApplicationReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationReplies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ApplicationReplies.
+     */
+    distinct?: ApplicationReplyScalarFieldEnum | ApplicationReplyScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationReply findMany
+   */
+  export type ApplicationReplyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * Filter, which ApplicationReplies to fetch.
+     */
+    where?: ApplicationReplyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ApplicationReplies to fetch.
+     */
+    orderBy?: ApplicationReplyOrderByWithRelationInput | ApplicationReplyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ApplicationReplies.
+     */
+    cursor?: ApplicationReplyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ApplicationReplies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ApplicationReplies.
+     */
+    skip?: number
+    distinct?: ApplicationReplyScalarFieldEnum | ApplicationReplyScalarFieldEnum[]
+  }
+
+  /**
+   * ApplicationReply create
+   */
+  export type ApplicationReplyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ApplicationReply.
+     */
+    data: XOR<ApplicationReplyCreateInput, ApplicationReplyUncheckedCreateInput>
+  }
+
+  /**
+   * ApplicationReply createMany
+   */
+  export type ApplicationReplyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ApplicationReplies.
+     */
+    data: ApplicationReplyCreateManyInput | ApplicationReplyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ApplicationReply createManyAndReturn
+   */
+  export type ApplicationReplyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * The data used to create many ApplicationReplies.
+     */
+    data: ApplicationReplyCreateManyInput | ApplicationReplyCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationReply update
+   */
+  export type ApplicationReplyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ApplicationReply.
+     */
+    data: XOR<ApplicationReplyUpdateInput, ApplicationReplyUncheckedUpdateInput>
+    /**
+     * Choose, which ApplicationReply to update.
+     */
+    where: ApplicationReplyWhereUniqueInput
+  }
+
+  /**
+   * ApplicationReply updateMany
+   */
+  export type ApplicationReplyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ApplicationReplies.
+     */
+    data: XOR<ApplicationReplyUpdateManyMutationInput, ApplicationReplyUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationReplies to update
+     */
+    where?: ApplicationReplyWhereInput
+    /**
+     * Limit how many ApplicationReplies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationReply updateManyAndReturn
+   */
+  export type ApplicationReplyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * The data used to update ApplicationReplies.
+     */
+    data: XOR<ApplicationReplyUpdateManyMutationInput, ApplicationReplyUncheckedUpdateManyInput>
+    /**
+     * Filter which ApplicationReplies to update
+     */
+    where?: ApplicationReplyWhereInput
+    /**
+     * Limit how many ApplicationReplies to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ApplicationReply upsert
+   */
+  export type ApplicationReplyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ApplicationReply to update in case it exists.
+     */
+    where: ApplicationReplyWhereUniqueInput
+    /**
+     * In case the ApplicationReply found by the `where` argument doesn't exist, create a new ApplicationReply with this data.
+     */
+    create: XOR<ApplicationReplyCreateInput, ApplicationReplyUncheckedCreateInput>
+    /**
+     * In case the ApplicationReply was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ApplicationReplyUpdateInput, ApplicationReplyUncheckedUpdateInput>
+  }
+
+  /**
+   * ApplicationReply delete
+   */
+  export type ApplicationReplyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
+    /**
+     * Filter which ApplicationReply to delete.
+     */
+    where: ApplicationReplyWhereUniqueInput
+  }
+
+  /**
+   * ApplicationReply deleteMany
+   */
+  export type ApplicationReplyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ApplicationReplies to delete
+     */
+    where?: ApplicationReplyWhereInput
+    /**
+     * Limit how many ApplicationReplies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ApplicationReply without action
+   */
+  export type ApplicationReplyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ApplicationReply
+     */
+    select?: ApplicationReplySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ApplicationReply
+     */
+    omit?: ApplicationReplyOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ApplicationReplyInclude<ExtArgs> | null
   }
 
 
@@ -18576,6 +19844,7 @@ export namespace Prisma {
     userId: 'userId',
     tutorProfileId: 'tutorProfileId',
     jobId: 'jobId',
+    note: 'note',
     createdAt: 'createdAt'
   };
 
@@ -18673,6 +19942,17 @@ export namespace Prisma {
   };
 
   export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
+
+
+  export const ApplicationReplyScalarFieldEnum: {
+    id: 'id',
+    applicationId: 'applicationId',
+    authorId: 'authorId',
+    body: 'body',
+    createdAt: 'createdAt'
+  };
+
+  export type ApplicationReplyScalarFieldEnum = (typeof ApplicationReplyScalarFieldEnum)[keyof typeof ApplicationReplyScalarFieldEnum]
 
 
   export const ReviewScalarFieldEnum: {
@@ -18964,6 +20244,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyListRelationFilter
     passwordResets?: PasswordResetTokenListRelationFilter
     notifications?: NotificationListRelationFilter
+    applicationReplies?: ApplicationReplyListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18997,6 +20278,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyOrderByRelationAggregateInput
     passwordResets?: PasswordResetTokenOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
+    applicationReplies?: ApplicationReplyOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -19033,6 +20315,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyListRelationFilter
     passwordResets?: PasswordResetTokenListRelationFilter
     notifications?: NotificationListRelationFilter
+    applicationReplies?: ApplicationReplyListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -19209,6 +20492,7 @@ export namespace Prisma {
     userId?: StringFilter<"Favorite"> | string
     tutorProfileId?: StringNullableFilter<"Favorite"> | string | null
     jobId?: StringNullableFilter<"Favorite"> | string | null
+    note?: StringNullableFilter<"Favorite"> | string | null
     createdAt?: DateTimeFilter<"Favorite"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     tutorProfile?: XOR<TutorProfileNullableScalarRelationFilter, TutorProfileWhereInput> | null
@@ -19220,6 +20504,7 @@ export namespace Prisma {
     userId?: SortOrder
     tutorProfileId?: SortOrderInput | SortOrder
     jobId?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     user?: UserOrderByWithRelationInput
     tutorProfile?: TutorProfileOrderByWithRelationInput
@@ -19236,6 +20521,7 @@ export namespace Prisma {
     userId?: StringFilter<"Favorite"> | string
     tutorProfileId?: StringNullableFilter<"Favorite"> | string | null
     jobId?: StringNullableFilter<"Favorite"> | string | null
+    note?: StringNullableFilter<"Favorite"> | string | null
     createdAt?: DateTimeFilter<"Favorite"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     tutorProfile?: XOR<TutorProfileNullableScalarRelationFilter, TutorProfileWhereInput> | null
@@ -19247,6 +20533,7 @@ export namespace Prisma {
     userId?: SortOrder
     tutorProfileId?: SortOrderInput | SortOrder
     jobId?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: FavoriteCountOrderByAggregateInput
     _max?: FavoriteMaxOrderByAggregateInput
@@ -19261,6 +20548,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Favorite"> | string
     tutorProfileId?: StringNullableWithAggregatesFilter<"Favorite"> | string | null
     jobId?: StringNullableWithAggregatesFilter<"Favorite"> | string | null
+    note?: StringNullableWithAggregatesFilter<"Favorite"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Favorite"> | Date | string
   }
 
@@ -19707,6 +20995,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Application"> | Date | string
     job?: XOR<JobPostScalarRelationFilter, JobPostWhereInput>
     tutor?: XOR<TutorProfileScalarRelationFilter, TutorProfileWhereInput>
+    replies?: ApplicationReplyListRelationFilter
   }
 
   export type ApplicationOrderByWithRelationInput = {
@@ -19718,6 +21007,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     job?: JobPostOrderByWithRelationInput
     tutor?: TutorProfileOrderByWithRelationInput
+    replies?: ApplicationReplyOrderByRelationAggregateInput
   }
 
   export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
@@ -19733,6 +21023,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Application"> | Date | string
     job?: XOR<JobPostScalarRelationFilter, JobPostWhereInput>
     tutor?: XOR<TutorProfileScalarRelationFilter, TutorProfileWhereInput>
+    replies?: ApplicationReplyListRelationFilter
   }, "id" | "jobId_tutorId">
 
   export type ApplicationOrderByWithAggregationInput = {
@@ -19757,6 +21048,64 @@ export namespace Prisma {
     message?: StringWithAggregatesFilter<"Application"> | string
     status?: EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
     createdAt?: DateTimeWithAggregatesFilter<"Application"> | Date | string
+  }
+
+  export type ApplicationReplyWhereInput = {
+    AND?: ApplicationReplyWhereInput | ApplicationReplyWhereInput[]
+    OR?: ApplicationReplyWhereInput[]
+    NOT?: ApplicationReplyWhereInput | ApplicationReplyWhereInput[]
+    id?: StringFilter<"ApplicationReply"> | string
+    applicationId?: StringFilter<"ApplicationReply"> | string
+    authorId?: StringFilter<"ApplicationReply"> | string
+    body?: StringFilter<"ApplicationReply"> | string
+    createdAt?: DateTimeFilter<"ApplicationReply"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ApplicationReplyOrderByWithRelationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    authorId?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+    application?: ApplicationOrderByWithRelationInput
+    author?: UserOrderByWithRelationInput
+  }
+
+  export type ApplicationReplyWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ApplicationReplyWhereInput | ApplicationReplyWhereInput[]
+    OR?: ApplicationReplyWhereInput[]
+    NOT?: ApplicationReplyWhereInput | ApplicationReplyWhereInput[]
+    applicationId?: StringFilter<"ApplicationReply"> | string
+    authorId?: StringFilter<"ApplicationReply"> | string
+    body?: StringFilter<"ApplicationReply"> | string
+    createdAt?: DateTimeFilter<"ApplicationReply"> | Date | string
+    application?: XOR<ApplicationScalarRelationFilter, ApplicationWhereInput>
+    author?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ApplicationReplyOrderByWithAggregationInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    authorId?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+    _count?: ApplicationReplyCountOrderByAggregateInput
+    _max?: ApplicationReplyMaxOrderByAggregateInput
+    _min?: ApplicationReplyMinOrderByAggregateInput
+  }
+
+  export type ApplicationReplyScalarWhereWithAggregatesInput = {
+    AND?: ApplicationReplyScalarWhereWithAggregatesInput | ApplicationReplyScalarWhereWithAggregatesInput[]
+    OR?: ApplicationReplyScalarWhereWithAggregatesInput[]
+    NOT?: ApplicationReplyScalarWhereWithAggregatesInput | ApplicationReplyScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ApplicationReply"> | string
+    applicationId?: StringWithAggregatesFilter<"ApplicationReply"> | string
+    authorId?: StringWithAggregatesFilter<"ApplicationReply"> | string
+    body?: StringWithAggregatesFilter<"ApplicationReply"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ApplicationReply"> | Date | string
   }
 
   export type ReviewWhereInput = {
@@ -20041,6 +21390,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -20074,6 +21424,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUpdateInput = {
@@ -20107,6 +21458,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -20140,6 +21492,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -20328,6 +21681,7 @@ export namespace Prisma {
 
   export type FavoriteCreateInput = {
     id?: string
+    note?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutFavoritesInput
     tutorProfile?: TutorProfileCreateNestedOneWithoutFavoritedByInput
@@ -20339,11 +21693,13 @@ export namespace Prisma {
     userId: string
     tutorProfileId?: string | null
     jobId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
   export type FavoriteUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
     tutorProfile?: TutorProfileUpdateOneWithoutFavoritedByNestedInput
@@ -20355,6 +21711,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     tutorProfileId?: NullableStringFieldUpdateOperationsInput | string | null
     jobId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20363,11 +21720,13 @@ export namespace Prisma {
     userId: string
     tutorProfileId?: string | null
     jobId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
   export type FavoriteUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20376,6 +21735,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     tutorProfileId?: NullableStringFieldUpdateOperationsInput | string | null
     jobId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20861,6 +22221,7 @@ export namespace Prisma {
     createdAt?: Date | string
     job: JobPostCreateNestedOneWithoutApplicationsInput
     tutor: TutorProfileCreateNestedOneWithoutApplicationsInput
+    replies?: ApplicationReplyCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateInput = {
@@ -20870,6 +22231,7 @@ export namespace Prisma {
     message: string
     status?: $Enums.ApplicationStatus
     createdAt?: Date | string
+    replies?: ApplicationReplyUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUpdateInput = {
@@ -20879,6 +22241,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     job?: JobPostUpdateOneRequiredWithoutApplicationsNestedInput
     tutor?: TutorProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    replies?: ApplicationReplyUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateInput = {
@@ -20888,6 +22251,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: ApplicationReplyUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationCreateManyInput = {
@@ -20912,6 +22276,60 @@ export namespace Prisma {
     tutorId?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationReplyCreateInput = {
+    id?: string
+    body: string
+    createdAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutRepliesInput
+    author: UserCreateNestedOneWithoutApplicationRepliesInput
+  }
+
+  export type ApplicationReplyUncheckedCreateInput = {
+    id?: string
+    applicationId: string
+    authorId: string
+    body: string
+    createdAt?: Date | string
+  }
+
+  export type ApplicationReplyUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutRepliesNestedInput
+    author?: UserUpdateOneRequiredWithoutApplicationRepliesNestedInput
+  }
+
+  export type ApplicationReplyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationReplyCreateManyInput = {
+    id?: string
+    applicationId: string
+    authorId: string
+    body: string
+    createdAt?: Date | string
+  }
+
+  export type ApplicationReplyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationReplyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21291,6 +22709,12 @@ export namespace Prisma {
     none?: NotificationWhereInput
   }
 
+  export type ApplicationReplyListRelationFilter = {
+    every?: ApplicationReplyWhereInput
+    some?: ApplicationReplyWhereInput
+    none?: ApplicationReplyWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -21333,6 +22757,10 @@ export namespace Prisma {
   }
 
   export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ApplicationReplyOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -21553,6 +22981,7 @@ export namespace Prisma {
     userId?: SortOrder
     tutorProfileId?: SortOrder
     jobId?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -21561,6 +22990,7 @@ export namespace Prisma {
     userId?: SortOrder
     tutorProfileId?: SortOrder
     jobId?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -21569,6 +22999,7 @@ export namespace Prisma {
     userId?: SortOrder
     tutorProfileId?: SortOrder
     jobId?: SortOrder
+    note?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -22049,6 +23480,35 @@ export namespace Prisma {
     _max?: NestedEnumApplicationStatusFilter<$PrismaModel>
   }
 
+  export type ApplicationScalarRelationFilter = {
+    is?: ApplicationWhereInput
+    isNot?: ApplicationWhereInput
+  }
+
+  export type ApplicationReplyCountOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    authorId?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApplicationReplyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    authorId?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ApplicationReplyMinOrderByAggregateInput = {
+    id?: SortOrder
+    applicationId?: SortOrder
+    authorId?: SortOrder
+    body?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type ReviewRevieweeIdAuthorIdRevieweeAsTutorCompoundUniqueInput = {
     revieweeId: string
     authorId: string
@@ -22291,6 +23751,13 @@ export namespace Prisma {
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
+  export type ApplicationReplyCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<ApplicationReplyCreateWithoutAuthorInput, ApplicationReplyUncheckedCreateWithoutAuthorInput> | ApplicationReplyCreateWithoutAuthorInput[] | ApplicationReplyUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutAuthorInput | ApplicationReplyCreateOrConnectWithoutAuthorInput[]
+    createMany?: ApplicationReplyCreateManyAuthorInputEnvelope
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+  }
+
   export type TutorProfileUncheckedCreateNestedOneWithoutUserInput = {
     create?: XOR<TutorProfileCreateWithoutUserInput, TutorProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: TutorProfileCreateOrConnectWithoutUserInput
@@ -22379,6 +23846,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
     createMany?: NotificationCreateManyUserInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput = {
+    create?: XOR<ApplicationReplyCreateWithoutAuthorInput, ApplicationReplyUncheckedCreateWithoutAuthorInput> | ApplicationReplyCreateWithoutAuthorInput[] | ApplicationReplyUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutAuthorInput | ApplicationReplyCreateOrConnectWithoutAuthorInput[]
+    createMany?: ApplicationReplyCreateManyAuthorInputEnvelope
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -22583,6 +24057,20 @@ export namespace Prisma {
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
+  export type ApplicationReplyUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<ApplicationReplyCreateWithoutAuthorInput, ApplicationReplyUncheckedCreateWithoutAuthorInput> | ApplicationReplyCreateWithoutAuthorInput[] | ApplicationReplyUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutAuthorInput | ApplicationReplyCreateOrConnectWithoutAuthorInput[]
+    upsert?: ApplicationReplyUpsertWithWhereUniqueWithoutAuthorInput | ApplicationReplyUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: ApplicationReplyCreateManyAuthorInputEnvelope
+    set?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    disconnect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    delete?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    update?: ApplicationReplyUpdateWithWhereUniqueWithoutAuthorInput | ApplicationReplyUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: ApplicationReplyUpdateManyWithWhereWithoutAuthorInput | ApplicationReplyUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: ApplicationReplyScalarWhereInput | ApplicationReplyScalarWhereInput[]
+  }
+
   export type TutorProfileUncheckedUpdateOneWithoutUserNestedInput = {
     create?: XOR<TutorProfileCreateWithoutUserInput, TutorProfileUncheckedCreateWithoutUserInput>
     connectOrCreate?: TutorProfileCreateOrConnectWithoutUserInput
@@ -22759,6 +24247,20 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput = {
+    create?: XOR<ApplicationReplyCreateWithoutAuthorInput, ApplicationReplyUncheckedCreateWithoutAuthorInput> | ApplicationReplyCreateWithoutAuthorInput[] | ApplicationReplyUncheckedCreateWithoutAuthorInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutAuthorInput | ApplicationReplyCreateOrConnectWithoutAuthorInput[]
+    upsert?: ApplicationReplyUpsertWithWhereUniqueWithoutAuthorInput | ApplicationReplyUpsertWithWhereUniqueWithoutAuthorInput[]
+    createMany?: ApplicationReplyCreateManyAuthorInputEnvelope
+    set?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    disconnect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    delete?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    update?: ApplicationReplyUpdateWithWhereUniqueWithoutAuthorInput | ApplicationReplyUpdateWithWhereUniqueWithoutAuthorInput[]
+    updateMany?: ApplicationReplyUpdateManyWithWhereWithoutAuthorInput | ApplicationReplyUpdateManyWithWhereWithoutAuthorInput[]
+    deleteMany?: ApplicationReplyScalarWhereInput | ApplicationReplyScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutNotificationsInput = {
@@ -23226,6 +24728,20 @@ export namespace Prisma {
     connect?: TutorProfileWhereUniqueInput
   }
 
+  export type ApplicationReplyCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationReplyCreateWithoutApplicationInput, ApplicationReplyUncheckedCreateWithoutApplicationInput> | ApplicationReplyCreateWithoutApplicationInput[] | ApplicationReplyUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutApplicationInput | ApplicationReplyCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationReplyCreateManyApplicationInputEnvelope
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+  }
+
+  export type ApplicationReplyUncheckedCreateNestedManyWithoutApplicationInput = {
+    create?: XOR<ApplicationReplyCreateWithoutApplicationInput, ApplicationReplyUncheckedCreateWithoutApplicationInput> | ApplicationReplyCreateWithoutApplicationInput[] | ApplicationReplyUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutApplicationInput | ApplicationReplyCreateOrConnectWithoutApplicationInput[]
+    createMany?: ApplicationReplyCreateManyApplicationInputEnvelope
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+  }
+
   export type EnumApplicationStatusFieldUpdateOperationsInput = {
     set?: $Enums.ApplicationStatus
   }
@@ -23244,6 +24760,62 @@ export namespace Prisma {
     upsert?: TutorProfileUpsertWithoutApplicationsInput
     connect?: TutorProfileWhereUniqueInput
     update?: XOR<XOR<TutorProfileUpdateToOneWithWhereWithoutApplicationsInput, TutorProfileUpdateWithoutApplicationsInput>, TutorProfileUncheckedUpdateWithoutApplicationsInput>
+  }
+
+  export type ApplicationReplyUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationReplyCreateWithoutApplicationInput, ApplicationReplyUncheckedCreateWithoutApplicationInput> | ApplicationReplyCreateWithoutApplicationInput[] | ApplicationReplyUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutApplicationInput | ApplicationReplyCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationReplyUpsertWithWhereUniqueWithoutApplicationInput | ApplicationReplyUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationReplyCreateManyApplicationInputEnvelope
+    set?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    disconnect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    delete?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    update?: ApplicationReplyUpdateWithWhereUniqueWithoutApplicationInput | ApplicationReplyUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationReplyUpdateManyWithWhereWithoutApplicationInput | ApplicationReplyUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationReplyScalarWhereInput | ApplicationReplyScalarWhereInput[]
+  }
+
+  export type ApplicationReplyUncheckedUpdateManyWithoutApplicationNestedInput = {
+    create?: XOR<ApplicationReplyCreateWithoutApplicationInput, ApplicationReplyUncheckedCreateWithoutApplicationInput> | ApplicationReplyCreateWithoutApplicationInput[] | ApplicationReplyUncheckedCreateWithoutApplicationInput[]
+    connectOrCreate?: ApplicationReplyCreateOrConnectWithoutApplicationInput | ApplicationReplyCreateOrConnectWithoutApplicationInput[]
+    upsert?: ApplicationReplyUpsertWithWhereUniqueWithoutApplicationInput | ApplicationReplyUpsertWithWhereUniqueWithoutApplicationInput[]
+    createMany?: ApplicationReplyCreateManyApplicationInputEnvelope
+    set?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    disconnect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    delete?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    connect?: ApplicationReplyWhereUniqueInput | ApplicationReplyWhereUniqueInput[]
+    update?: ApplicationReplyUpdateWithWhereUniqueWithoutApplicationInput | ApplicationReplyUpdateWithWhereUniqueWithoutApplicationInput[]
+    updateMany?: ApplicationReplyUpdateManyWithWhereWithoutApplicationInput | ApplicationReplyUpdateManyWithWhereWithoutApplicationInput[]
+    deleteMany?: ApplicationReplyScalarWhereInput | ApplicationReplyScalarWhereInput[]
+  }
+
+  export type ApplicationCreateNestedOneWithoutRepliesInput = {
+    create?: XOR<ApplicationCreateWithoutRepliesInput, ApplicationUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutRepliesInput
+    connect?: ApplicationWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutApplicationRepliesInput = {
+    create?: XOR<UserCreateWithoutApplicationRepliesInput, UserUncheckedCreateWithoutApplicationRepliesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutApplicationRepliesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ApplicationUpdateOneRequiredWithoutRepliesNestedInput = {
+    create?: XOR<ApplicationCreateWithoutRepliesInput, ApplicationUncheckedCreateWithoutRepliesInput>
+    connectOrCreate?: ApplicationCreateOrConnectWithoutRepliesInput
+    upsert?: ApplicationUpsertWithoutRepliesInput
+    connect?: ApplicationWhereUniqueInput
+    update?: XOR<XOR<ApplicationUpdateToOneWithWhereWithoutRepliesInput, ApplicationUpdateWithoutRepliesInput>, ApplicationUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutApplicationRepliesNestedInput = {
+    create?: XOR<UserCreateWithoutApplicationRepliesInput, UserUncheckedCreateWithoutApplicationRepliesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutApplicationRepliesInput
+    upsert?: UserUpsertWithoutApplicationRepliesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutApplicationRepliesInput, UserUpdateWithoutApplicationRepliesInput>, UserUncheckedUpdateWithoutApplicationRepliesInput>
   }
 
   export type UserCreateNestedOneWithoutReviewsReceivedInput = {
@@ -23976,6 +25548,7 @@ export namespace Prisma {
 
   export type FavoriteCreateWithoutUserInput = {
     id?: string
+    note?: string | null
     createdAt?: Date | string
     tutorProfile?: TutorProfileCreateNestedOneWithoutFavoritedByInput
     job?: JobPostCreateNestedOneWithoutFavoritedByInput
@@ -23985,6 +25558,7 @@ export namespace Prisma {
     id?: string
     tutorProfileId?: string | null
     jobId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
@@ -24105,6 +25679,30 @@ export namespace Prisma {
 
   export type NotificationCreateManyUserInputEnvelope = {
     data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ApplicationReplyCreateWithoutAuthorInput = {
+    id?: string
+    body: string
+    createdAt?: Date | string
+    application: ApplicationCreateNestedOneWithoutRepliesInput
+  }
+
+  export type ApplicationReplyUncheckedCreateWithoutAuthorInput = {
+    id?: string
+    applicationId: string
+    body: string
+    createdAt?: Date | string
+  }
+
+  export type ApplicationReplyCreateOrConnectWithoutAuthorInput = {
+    where: ApplicationReplyWhereUniqueInput
+    create: XOR<ApplicationReplyCreateWithoutAuthorInput, ApplicationReplyUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ApplicationReplyCreateManyAuthorInputEnvelope = {
+    data: ApplicationReplyCreateManyAuthorInput | ApplicationReplyCreateManyAuthorInput[]
     skipDuplicates?: boolean
   }
 
@@ -24369,6 +25967,7 @@ export namespace Prisma {
     userId?: StringFilter<"Favorite"> | string
     tutorProfileId?: StringNullableFilter<"Favorite"> | string | null
     jobId?: StringNullableFilter<"Favorite"> | string | null
+    note?: StringNullableFilter<"Favorite"> | string | null
     createdAt?: DateTimeFilter<"Favorite"> | Date | string
   }
 
@@ -24486,6 +26085,33 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Notification"> | Date | string
   }
 
+  export type ApplicationReplyUpsertWithWhereUniqueWithoutAuthorInput = {
+    where: ApplicationReplyWhereUniqueInput
+    update: XOR<ApplicationReplyUpdateWithoutAuthorInput, ApplicationReplyUncheckedUpdateWithoutAuthorInput>
+    create: XOR<ApplicationReplyCreateWithoutAuthorInput, ApplicationReplyUncheckedCreateWithoutAuthorInput>
+  }
+
+  export type ApplicationReplyUpdateWithWhereUniqueWithoutAuthorInput = {
+    where: ApplicationReplyWhereUniqueInput
+    data: XOR<ApplicationReplyUpdateWithoutAuthorInput, ApplicationReplyUncheckedUpdateWithoutAuthorInput>
+  }
+
+  export type ApplicationReplyUpdateManyWithWhereWithoutAuthorInput = {
+    where: ApplicationReplyScalarWhereInput
+    data: XOR<ApplicationReplyUpdateManyMutationInput, ApplicationReplyUncheckedUpdateManyWithoutAuthorInput>
+  }
+
+  export type ApplicationReplyScalarWhereInput = {
+    AND?: ApplicationReplyScalarWhereInput | ApplicationReplyScalarWhereInput[]
+    OR?: ApplicationReplyScalarWhereInput[]
+    NOT?: ApplicationReplyScalarWhereInput | ApplicationReplyScalarWhereInput[]
+    id?: StringFilter<"ApplicationReply"> | string
+    applicationId?: StringFilter<"ApplicationReply"> | string
+    authorId?: StringFilter<"ApplicationReply"> | string
+    body?: StringFilter<"ApplicationReply"> | string
+    createdAt?: DateTimeFilter<"ApplicationReply"> | Date | string
+  }
+
   export type UserCreateWithoutNotificationsInput = {
     id?: string
     email: string
@@ -24516,6 +26142,7 @@ export namespace Prisma {
     forumPosts?: ForumPostCreateNestedManyWithoutAuthorInput
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -24548,6 +26175,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUncheckedCreateNestedManyWithoutAuthorInput
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -24596,6 +26224,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUpdateManyWithoutAuthorNestedInput
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -24628,6 +26257,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUncheckedUpdateManyWithoutAuthorNestedInput
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateWithoutPasswordResetsInput = {
@@ -24660,6 +26290,7 @@ export namespace Prisma {
     forumPosts?: ForumPostCreateNestedManyWithoutAuthorInput
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutPasswordResetsInput = {
@@ -24692,6 +26323,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUncheckedCreateNestedManyWithoutAuthorInput
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutPasswordResetsInput = {
@@ -24740,6 +26372,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUpdateManyWithoutAuthorNestedInput
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPasswordResetsInput = {
@@ -24772,6 +26405,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUncheckedUpdateManyWithoutAuthorNestedInput
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateWithoutFavoritesInput = {
@@ -24804,6 +26438,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -24836,6 +26471,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -24976,6 +26612,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -25008,6 +26645,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type TutorProfileUpsertWithoutFavoritedByInput = {
@@ -25144,6 +26782,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutVerificationRequestsInput = {
@@ -25176,6 +26815,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutVerificationRequestsInput = {
@@ -25224,6 +26864,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutVerificationRequestsInput = {
@@ -25256,6 +26897,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateWithoutConversationsAInput = {
@@ -25288,6 +26930,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutConversationsAInput = {
@@ -25320,6 +26963,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutConversationsAInput = {
@@ -25357,6 +27001,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutConversationsBInput = {
@@ -25389,6 +27034,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutConversationsBInput = {
@@ -25461,6 +27107,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationsAInput = {
@@ -25493,6 +27140,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUpsertWithoutConversationsBInput = {
@@ -25536,6 +27184,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutConversationsBInput = {
@@ -25568,6 +27217,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -25637,6 +27287,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutMessagesSentInput = {
@@ -25669,6 +27320,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutMessagesSentInput = {
@@ -25744,6 +27396,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMessagesSentInput = {
@@ -25776,6 +27429,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateWithoutTutorProfileInput = {
@@ -25808,6 +27462,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutTutorProfileInput = {
@@ -25840,6 +27495,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutTutorProfileInput = {
@@ -25853,6 +27509,7 @@ export namespace Prisma {
     status?: $Enums.ApplicationStatus
     createdAt?: Date | string
     job: JobPostCreateNestedOneWithoutApplicationsInput
+    replies?: ApplicationReplyCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutTutorInput = {
@@ -25861,6 +27518,7 @@ export namespace Prisma {
     message: string
     status?: $Enums.ApplicationStatus
     createdAt?: Date | string
+    replies?: ApplicationReplyUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutTutorInput = {
@@ -25875,6 +27533,7 @@ export namespace Prisma {
 
   export type FavoriteCreateWithoutTutorProfileInput = {
     id?: string
+    note?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutFavoritesInput
     job?: JobPostCreateNestedOneWithoutFavoritedByInput
@@ -25884,6 +27543,7 @@ export namespace Prisma {
     id?: string
     userId: string
     jobId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
@@ -25938,6 +27598,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutTutorProfileInput = {
@@ -25970,6 +27631,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type ApplicationUpsertWithWhereUniqueWithoutTutorInput = {
@@ -26046,6 +27708,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutJobPostsInput = {
@@ -26078,6 +27741,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutJobPostsInput = {
@@ -26091,6 +27755,7 @@ export namespace Prisma {
     status?: $Enums.ApplicationStatus
     createdAt?: Date | string
     tutor: TutorProfileCreateNestedOneWithoutApplicationsInput
+    replies?: ApplicationReplyCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationUncheckedCreateWithoutJobInput = {
@@ -26099,6 +27764,7 @@ export namespace Prisma {
     message: string
     status?: $Enums.ApplicationStatus
     createdAt?: Date | string
+    replies?: ApplicationReplyUncheckedCreateNestedManyWithoutApplicationInput
   }
 
   export type ApplicationCreateOrConnectWithoutJobInput = {
@@ -26113,6 +27779,7 @@ export namespace Prisma {
 
   export type FavoriteCreateWithoutJobInput = {
     id?: string
+    note?: string | null
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutFavoritesInput
     tutorProfile?: TutorProfileCreateNestedOneWithoutFavoritedByInput
@@ -26122,6 +27789,7 @@ export namespace Prisma {
     id?: string
     userId: string
     tutorProfileId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
@@ -26176,6 +27844,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutJobPostsInput = {
@@ -26208,6 +27877,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type ApplicationUpsertWithWhereUniqueWithoutJobInput = {
@@ -26334,6 +28004,30 @@ export namespace Prisma {
     create: XOR<TutorProfileCreateWithoutApplicationsInput, TutorProfileUncheckedCreateWithoutApplicationsInput>
   }
 
+  export type ApplicationReplyCreateWithoutApplicationInput = {
+    id?: string
+    body: string
+    createdAt?: Date | string
+    author: UserCreateNestedOneWithoutApplicationRepliesInput
+  }
+
+  export type ApplicationReplyUncheckedCreateWithoutApplicationInput = {
+    id?: string
+    authorId: string
+    body: string
+    createdAt?: Date | string
+  }
+
+  export type ApplicationReplyCreateOrConnectWithoutApplicationInput = {
+    where: ApplicationReplyWhereUniqueInput
+    create: XOR<ApplicationReplyCreateWithoutApplicationInput, ApplicationReplyUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationReplyCreateManyApplicationInputEnvelope = {
+    data: ApplicationReplyCreateManyApplicationInput | ApplicationReplyCreateManyApplicationInput[]
+    skipDuplicates?: boolean
+  }
+
   export type JobPostUpsertWithoutApplicationsInput = {
     update: XOR<JobPostUpdateWithoutApplicationsInput, JobPostUncheckedUpdateWithoutApplicationsInput>
     create: XOR<JobPostCreateWithoutApplicationsInput, JobPostUncheckedCreateWithoutApplicationsInput>
@@ -26438,6 +28132,222 @@ export namespace Prisma {
     favoritedBy?: FavoriteUncheckedUpdateManyWithoutTutorProfileNestedInput
   }
 
+  export type ApplicationReplyUpsertWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationReplyWhereUniqueInput
+    update: XOR<ApplicationReplyUpdateWithoutApplicationInput, ApplicationReplyUncheckedUpdateWithoutApplicationInput>
+    create: XOR<ApplicationReplyCreateWithoutApplicationInput, ApplicationReplyUncheckedCreateWithoutApplicationInput>
+  }
+
+  export type ApplicationReplyUpdateWithWhereUniqueWithoutApplicationInput = {
+    where: ApplicationReplyWhereUniqueInput
+    data: XOR<ApplicationReplyUpdateWithoutApplicationInput, ApplicationReplyUncheckedUpdateWithoutApplicationInput>
+  }
+
+  export type ApplicationReplyUpdateManyWithWhereWithoutApplicationInput = {
+    where: ApplicationReplyScalarWhereInput
+    data: XOR<ApplicationReplyUpdateManyMutationInput, ApplicationReplyUncheckedUpdateManyWithoutApplicationInput>
+  }
+
+  export type ApplicationCreateWithoutRepliesInput = {
+    id?: string
+    message: string
+    status?: $Enums.ApplicationStatus
+    createdAt?: Date | string
+    job: JobPostCreateNestedOneWithoutApplicationsInput
+    tutor: TutorProfileCreateNestedOneWithoutApplicationsInput
+  }
+
+  export type ApplicationUncheckedCreateWithoutRepliesInput = {
+    id?: string
+    jobId: string
+    tutorId: string
+    message: string
+    status?: $Enums.ApplicationStatus
+    createdAt?: Date | string
+  }
+
+  export type ApplicationCreateOrConnectWithoutRepliesInput = {
+    where: ApplicationWhereUniqueInput
+    create: XOR<ApplicationCreateWithoutRepliesInput, ApplicationUncheckedCreateWithoutRepliesInput>
+  }
+
+  export type UserCreateWithoutApplicationRepliesInput = {
+    id?: string
+    email: string
+    passwordHash: string
+    name: string
+    displayName?: string | null
+    role?: $Enums.Role
+    gender?: $Enums.Gender
+    avatarUrl?: string | null
+    idVerified?: boolean
+    bgCheckVerified?: boolean
+    eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
+    disabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tutorProfile?: TutorProfileCreateNestedOneWithoutUserInput
+    jobPosts?: JobPostCreateNestedManyWithoutStudentInput
+    reviewsAuthored?: ReviewCreateNestedManyWithoutAuthorInput
+    reviewsReceived?: ReviewCreateNestedManyWithoutRevieweeInput
+    conversationsA?: ConversationCreateNestedManyWithoutUserAInput
+    conversationsB?: ConversationCreateNestedManyWithoutUserBInput
+    messagesSent?: MessageCreateNestedManyWithoutSenderInput
+    verificationRequests?: VerificationRequestCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    forumPosts?: ForumPostCreateNestedManyWithoutAuthorInput
+    forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
+    passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutApplicationRepliesInput = {
+    id?: string
+    email: string
+    passwordHash: string
+    name: string
+    displayName?: string | null
+    role?: $Enums.Role
+    gender?: $Enums.Gender
+    avatarUrl?: string | null
+    idVerified?: boolean
+    bgCheckVerified?: boolean
+    eduVerified?: boolean
+    emailNotifications?: boolean
+    notifyJobUpdates?: boolean
+    notifyMessages?: boolean
+    disabled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tutorProfile?: TutorProfileUncheckedCreateNestedOneWithoutUserInput
+    jobPosts?: JobPostUncheckedCreateNestedManyWithoutStudentInput
+    reviewsAuthored?: ReviewUncheckedCreateNestedManyWithoutAuthorInput
+    reviewsReceived?: ReviewUncheckedCreateNestedManyWithoutRevieweeInput
+    conversationsA?: ConversationUncheckedCreateNestedManyWithoutUserAInput
+    conversationsB?: ConversationUncheckedCreateNestedManyWithoutUserBInput
+    messagesSent?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    verificationRequests?: VerificationRequestUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    forumPosts?: ForumPostUncheckedCreateNestedManyWithoutAuthorInput
+    forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
+    passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutApplicationRepliesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutApplicationRepliesInput, UserUncheckedCreateWithoutApplicationRepliesInput>
+  }
+
+  export type ApplicationUpsertWithoutRepliesInput = {
+    update: XOR<ApplicationUpdateWithoutRepliesInput, ApplicationUncheckedUpdateWithoutRepliesInput>
+    create: XOR<ApplicationCreateWithoutRepliesInput, ApplicationUncheckedCreateWithoutRepliesInput>
+    where?: ApplicationWhereInput
+  }
+
+  export type ApplicationUpdateToOneWithWhereWithoutRepliesInput = {
+    where?: ApplicationWhereInput
+    data: XOR<ApplicationUpdateWithoutRepliesInput, ApplicationUncheckedUpdateWithoutRepliesInput>
+  }
+
+  export type ApplicationUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    job?: JobPostUpdateOneRequiredWithoutApplicationsNestedInput
+    tutor?: TutorProfileUpdateOneRequiredWithoutApplicationsNestedInput
+  }
+
+  export type ApplicationUncheckedUpdateWithoutRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    jobId?: StringFieldUpdateOperationsInput | string
+    tutorId?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUpsertWithoutApplicationRepliesInput = {
+    update: XOR<UserUpdateWithoutApplicationRepliesInput, UserUncheckedUpdateWithoutApplicationRepliesInput>
+    create: XOR<UserCreateWithoutApplicationRepliesInput, UserUncheckedCreateWithoutApplicationRepliesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutApplicationRepliesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutApplicationRepliesInput, UserUncheckedUpdateWithoutApplicationRepliesInput>
+  }
+
+  export type UserUpdateWithoutApplicationRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    idVerified?: BoolFieldUpdateOperationsInput | boolean
+    bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
+    eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tutorProfile?: TutorProfileUpdateOneWithoutUserNestedInput
+    jobPosts?: JobPostUpdateManyWithoutStudentNestedInput
+    reviewsAuthored?: ReviewUpdateManyWithoutAuthorNestedInput
+    reviewsReceived?: ReviewUpdateManyWithoutRevieweeNestedInput
+    conversationsA?: ConversationUpdateManyWithoutUserANestedInput
+    conversationsB?: ConversationUpdateManyWithoutUserBNestedInput
+    messagesSent?: MessageUpdateManyWithoutSenderNestedInput
+    verificationRequests?: VerificationRequestUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    forumPosts?: ForumPostUpdateManyWithoutAuthorNestedInput
+    forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
+    passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutApplicationRepliesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    gender?: EnumGenderFieldUpdateOperationsInput | $Enums.Gender
+    avatarUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    idVerified?: BoolFieldUpdateOperationsInput | boolean
+    bgCheckVerified?: BoolFieldUpdateOperationsInput | boolean
+    eduVerified?: BoolFieldUpdateOperationsInput | boolean
+    emailNotifications?: BoolFieldUpdateOperationsInput | boolean
+    notifyJobUpdates?: BoolFieldUpdateOperationsInput | boolean
+    notifyMessages?: BoolFieldUpdateOperationsInput | boolean
+    disabled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tutorProfile?: TutorProfileUncheckedUpdateOneWithoutUserNestedInput
+    jobPosts?: JobPostUncheckedUpdateManyWithoutStudentNestedInput
+    reviewsAuthored?: ReviewUncheckedUpdateManyWithoutAuthorNestedInput
+    reviewsReceived?: ReviewUncheckedUpdateManyWithoutRevieweeNestedInput
+    conversationsA?: ConversationUncheckedUpdateManyWithoutUserANestedInput
+    conversationsB?: ConversationUncheckedUpdateManyWithoutUserBNestedInput
+    messagesSent?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    verificationRequests?: VerificationRequestUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    forumPosts?: ForumPostUncheckedUpdateManyWithoutAuthorNestedInput
+    forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
+    passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutReviewsReceivedInput = {
     id?: string
     email: string
@@ -26468,6 +28378,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutReviewsReceivedInput = {
@@ -26500,6 +28411,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutReviewsReceivedInput = {
@@ -26537,6 +28449,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutReviewsAuthoredInput = {
@@ -26569,6 +28482,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutReviewsAuthoredInput = {
@@ -26617,6 +28531,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsReceivedInput = {
@@ -26649,6 +28564,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUpsertWithoutReviewsAuthoredInput = {
@@ -26692,6 +28608,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewsAuthoredInput = {
@@ -26724,6 +28641,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserCreateWithoutForumPostsInput = {
@@ -26756,6 +28674,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutForumPostsInput = {
@@ -26788,6 +28707,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutForumPostsInput = {
@@ -26862,6 +28782,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutForumPostsInput = {
@@ -26894,6 +28815,7 @@ export namespace Prisma {
     forumReplies?: ForumReplyUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type ForumReplyUpsertWithWhereUniqueWithoutPostInput = {
@@ -26969,6 +28891,7 @@ export namespace Prisma {
     forumPosts?: ForumPostCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyCreateNestedManyWithoutAuthorInput
   }
 
   export type UserUncheckedCreateWithoutForumRepliesInput = {
@@ -27001,6 +28924,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUncheckedCreateNestedManyWithoutAuthorInput
     passwordResets?: PasswordResetTokenUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    applicationReplies?: ApplicationReplyUncheckedCreateNestedManyWithoutAuthorInput
   }
 
   export type UserCreateOrConnectWithoutForumRepliesInput = {
@@ -27082,6 +29006,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUpdateManyWithoutAuthorNestedInput
   }
 
   export type UserUncheckedUpdateWithoutForumRepliesInput = {
@@ -27114,6 +29039,7 @@ export namespace Prisma {
     forumPosts?: ForumPostUncheckedUpdateManyWithoutAuthorNestedInput
     passwordResets?: PasswordResetTokenUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    applicationReplies?: ApplicationReplyUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type JobPostCreateManyStudentInput = {
@@ -27186,6 +29112,7 @@ export namespace Prisma {
     id?: string
     tutorProfileId?: string | null
     jobId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
@@ -27220,6 +29147,13 @@ export namespace Prisma {
     body: string
     href?: string | null
     read?: boolean
+    createdAt?: Date | string
+  }
+
+  export type ApplicationReplyCreateManyAuthorInput = {
+    id?: string
+    applicationId: string
+    body: string
     createdAt?: Date | string
   }
 
@@ -27431,6 +29365,7 @@ export namespace Prisma {
 
   export type FavoriteUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutorProfile?: TutorProfileUpdateOneWithoutFavoritedByNestedInput
     job?: JobPostUpdateOneWithoutFavoritedByNestedInput
@@ -27440,6 +29375,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     tutorProfileId?: NullableStringFieldUpdateOperationsInput | string | null
     jobId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -27447,6 +29383,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     tutorProfileId?: NullableStringFieldUpdateOperationsInput | string | null
     jobId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -27554,6 +29491,27 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ApplicationReplyUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    application?: ApplicationUpdateOneRequiredWithoutRepliesNestedInput
+  }
+
+  export type ApplicationReplyUncheckedUpdateWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationReplyUncheckedUpdateManyWithoutAuthorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    applicationId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MessageCreateManyConversationInput = {
     id?: string
     senderId: string
@@ -27594,6 +29552,7 @@ export namespace Prisma {
     id?: string
     userId: string
     jobId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
@@ -27603,6 +29562,7 @@ export namespace Prisma {
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     job?: JobPostUpdateOneRequiredWithoutApplicationsNestedInput
+    replies?: ApplicationReplyUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutTutorInput = {
@@ -27611,6 +29571,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: ApplicationReplyUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutTutorInput = {
@@ -27623,6 +29584,7 @@ export namespace Prisma {
 
   export type FavoriteUpdateWithoutTutorProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
     job?: JobPostUpdateOneWithoutFavoritedByNestedInput
@@ -27632,6 +29594,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     jobId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -27639,6 +29602,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     jobId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -27654,6 +29618,7 @@ export namespace Prisma {
     id?: string
     userId: string
     tutorProfileId?: string | null
+    note?: string | null
     createdAt?: Date | string
   }
 
@@ -27663,6 +29628,7 @@ export namespace Prisma {
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tutor?: TutorProfileUpdateOneRequiredWithoutApplicationsNestedInput
+    replies?: ApplicationReplyUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateWithoutJobInput = {
@@ -27671,6 +29637,7 @@ export namespace Prisma {
     message?: StringFieldUpdateOperationsInput | string
     status?: EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    replies?: ApplicationReplyUncheckedUpdateManyWithoutApplicationNestedInput
   }
 
   export type ApplicationUncheckedUpdateManyWithoutJobInput = {
@@ -27683,6 +29650,7 @@ export namespace Prisma {
 
   export type FavoriteUpdateWithoutJobInput = {
     id?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutFavoritesNestedInput
     tutorProfile?: TutorProfileUpdateOneWithoutFavoritedByNestedInput
@@ -27692,6 +29660,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     tutorProfileId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -27699,6 +29668,35 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     tutorProfileId?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationReplyCreateManyApplicationInput = {
+    id?: string
+    authorId: string
+    body: string
+    createdAt?: Date | string
+  }
+
+  export type ApplicationReplyUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneRequiredWithoutApplicationRepliesNestedInput
+  }
+
+  export type ApplicationReplyUncheckedUpdateWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ApplicationReplyUncheckedUpdateManyWithoutApplicationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    authorId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
