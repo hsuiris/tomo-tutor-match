@@ -33,7 +33,6 @@ export async function updateProfile(
     mode: formData.get("mode")?.toString(),
     gender: formData.get("gender")?.toString(),
     avatarUrl: avatarRaw || undefined,
-    isPublished: formData.get("isPublished") === "on",
   };
 
   const parsed = profileSchema.safeParse(raw);

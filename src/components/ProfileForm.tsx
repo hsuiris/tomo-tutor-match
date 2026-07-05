@@ -29,7 +29,6 @@ export type ProfileInitial = {
   mode: TeachingMode;
   gender: Gender;
   avatarUrl: string;
-  isPublished: boolean;
 };
 
 const initialState: ActionState = {};
@@ -46,7 +45,6 @@ export default function ProfileForm({
   const [subjects, setSubjects] = useState<string[]>(initial.subjects);
   const [levels, setLevels] = useState<string[]>(initial.levels);
   const [regions, setRegions] = useState<string[]>(initial.regions);
-  const [published, setPublished] = useState(initial.isPublished);
   const [gender, setGender] = useState<Gender>(initial.gender);
   const [avatar, setAvatar] = useState<string>(initial.avatarUrl);
   const [avatarError, setAvatarError] = useState<string>("");
@@ -155,23 +153,6 @@ export default function ProfileForm({
           ))}
         </div>
       </div>
-
-      {/* 發佈開關 */}
-      <label className="flex items-center justify-between rounded-xl border border-line bg-sun-soft/30 p-4">
-        <div>
-          <span className="font-medium text-ink">公開我的檔案</span>
-          <p className="text-xs text-ink/60">
-            開啟後,學生才能在「找家教」列表中看到你
-          </p>
-        </div>
-        <input
-          type="checkbox"
-          name="isPublished"
-          checked={published}
-          onChange={(e) => setPublished(e.target.checked)}
-          className="h-5 w-5 accent-ink"
-        />
-      </label>
 
       {/* 科目 */}
       <fieldset>
@@ -375,7 +356,6 @@ export default function ProfileForm({
       {state.success && (
         <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm text-emerald-600">
           {state.success} ✓
-          {!published && "（記得開啟上方「公開我的檔案」才會發佈到找老師）"}
         </p>
       )}
 
@@ -387,9 +367,7 @@ export default function ProfileForm({
           儲存檔案
         </button>
         <p className="text-center text-xs text-ink/50">
-          {published
-            ? "存檔後會更新在「找老師」頁面。"
-            : "提醒：需開啟「公開我的檔案」，存檔後才會出現在「找老師」。"}
+          接案開關在「面板 → 我要教學」，開啟後才會出現在「找老師」。
         </p>
       </div>
       </form>

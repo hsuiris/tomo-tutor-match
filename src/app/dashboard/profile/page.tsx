@@ -49,7 +49,6 @@ export default async function ProfileEditPage() {
     mode: profile.mode as TeachingMode,
     gender: profile.user.gender as ProfileInitial["gender"],
     avatarUrl: profile.user.avatarUrl ?? "",
-    isPublished: profile.isPublished,
   };
 
   return (
