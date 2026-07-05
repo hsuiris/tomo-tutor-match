@@ -28,6 +28,12 @@ export default async function ChatRoomPage({
 
   if (!convo || (convo.userAId !== me && convo.userBId !== me)) notFound();
 
+  // 開啟對話即把對方傳來的訊息標為已讀（未讀紅點消掉）
+  await db.message.updateMany({
+    where: { conversationId: id, senderId: { not: me }, readAt: null },
+    data: { readAt: new Date() },
+  });
+
   const other = convo.userA.id === me ? convo.userB : convo.userA;
 
   // 對方相對於我的身分（依已媒合關係，反轉時兩種都標）

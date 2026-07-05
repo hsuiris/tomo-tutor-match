@@ -201,7 +201,8 @@ exports.Prisma.MessageScalarFieldEnum = {
   conversationId: 'conversationId',
   senderId: 'senderId',
   body: 'body',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  readAt: 'readAt'
 };
 
 exports.Prisma.TutorProfileScalarFieldEnum = {

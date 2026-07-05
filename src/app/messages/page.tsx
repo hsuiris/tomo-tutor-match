@@ -19,6 +19,12 @@ export default async function MessagesPage() {
       userA: { select: { id: true, name: true, displayName: true, avatarUrl: true } },
       userB: { select: { id: true, name: true, displayName: true, avatarUrl: true } },
       messages: { orderBy: { createdAt: "desc" }, take: 1 },
+      // 對方傳來、我還沒讀的訊息數（未讀紅點）
+      _count: {
+        select: {
+          messages: { where: { senderId: { not: me }, readAt: null } },
+        },
+      },
     },
   });
 
@@ -117,6 +123,7 @@ export default async function MessagesPage() {
           {conversations.map((c) => {
             const other = c.userA.id === me ? c.userB : c.userA;
             const last = c.messages[0];
+            const unreadMsgs = c._count.messages;
             const hat = relationLabel(
               myTutorIds.has(other.id),
               myStudentIds.has(other.id)
@@ -125,7 +132,9 @@ export default async function MessagesPage() {
               <li key={c.id}>
                 <Link
                   href={`/messages/${c.id}`}
-                  className="flex items-center gap-3 p-4 transition hover:bg-sun-soft/40"
+                  className={`flex items-center gap-3 p-4 transition hover:bg-sun-soft/40 ${
+                    unreadMsgs > 0 ? "bg-sun-soft/25" : ""
+                  }`}
                 >
                   <Avatar
                     name={publicName(other)}
@@ -135,12 +144,21 @@ export default async function MessagesPage() {
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
                       <span className="flex min-w-0 items-center gap-1.5">
-                        <span className="truncate font-medium text-ink">
+                        <span
+                          className={`truncate text-ink ${
+                            unreadMsgs > 0 ? "font-bold" : "font-medium"
+                          }`}
+                        >
                           {publicName(other)}
                         </span>
                         {hat && (
                           <span className="shrink-0 rounded-full bg-sun-soft/60 px-1.5 py-0.5 text-[10px] font-medium text-ink/60">
                             {hat}
+                          </span>
+                        )}
+                        {unreadMsgs > 0 && (
+                          <span className="shrink-0 rounded-full bg-sun px-1.5 py-0.5 text-[10px] font-bold text-paper">
+                            {unreadMsgs}
                           </span>
                         )}
                       </span>
@@ -150,7 +168,11 @@ export default async function MessagesPage() {
                         </span>
                       )}
                     </div>
-                    <p className="truncate text-sm text-ink/60">
+                    <p
+                      className={`truncate text-sm ${
+                        unreadMsgs > 0 ? "font-medium text-ink/80" : "text-ink/60"
+                      }`}
+                    >
                       {last
                         ? `${last.senderId === me ? "你：" : ""}${last.body}`
                         : "開始你們的對話"}

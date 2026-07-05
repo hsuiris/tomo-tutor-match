@@ -212,6 +212,7 @@ model Message {
   sender         User         @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
   body           String
   createdAt      DateTime     @default(now())
+  readAt         DateTime? // 收訊方開啟對話的時間；null = 未讀（未讀數與紅點用）
 
   @@index([conversationId])
 }
