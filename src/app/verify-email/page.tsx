@@ -71,10 +71,15 @@ export default async function VerifyEmailPage({
         請驗證你的 Email
       </h1>
       <p className="mt-2 leading-relaxed text-ink/60">
-        我們已寄出驗證信，請到信箱點擊驗證連結（含垃圾郵件匣）。
+        我們已寄出驗證信，請到信箱點擊驗證連結。
         完成驗證前，發案、應徵、私訊等功能會暫時無法使用。
       </p>
-      <div className="mt-8 flex justify-center">
+      <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-left text-sm text-amber-800">
+        <span className="font-bold">📁 沒收到信？</span>{" "}
+        請到<span className="font-bold">垃圾郵件／促銷內容匣</span>找找看，
+        並把它標記為「非垃圾郵件」，之後的通知就會正常進到收件匣。仍找不到可按下方重寄。
+      </div>
+      <div className="mt-6 flex justify-center">
         {session ? (
           <ResendVerificationButton />
         ) : (

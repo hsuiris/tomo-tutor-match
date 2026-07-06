@@ -7,7 +7,7 @@ import { db } from "@/lib/db";
 import { signIn } from "@/auth";
 import { registerSchema, loginSchema } from "@/lib/validations";
 import { rateLimit, clientIp } from "@/lib/rate-limit";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, emailButton } from "@/lib/email";
 import { siteUrl } from "@/lib/site";
 import { auth } from "@/auth";
 import {
@@ -187,9 +187,9 @@ export async function requestPasswordReset(
   const link = `${siteUrl}/reset-password?token=${raw}`;
   await sendEmail({
     to: email,
-    subject: "Tomo：重設你的密碼",
-    html: `<p>你要求重設 Tomo 密碼。點擊以下連結設定新密碼（1 小時內有效，僅能使用一次）：</p>
-<p><a href="${link}">${link}</a></p>
+    subject: "重設你的 Tomo 密碼",
+    html: `<p>我們收到你重設 Tomo 密碼的請求。請點擊下方按鈕設定新密碼（連結 1 小時內有效，僅能使用一次）：</p>
+${emailButton(link, "重設我的密碼")}
 <p>若不是你本人操作，請忽略這封信，你的密碼不會變動。</p>`,
   });
 
