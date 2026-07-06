@@ -1,13 +1,17 @@
 import crypto from "crypto";
 import { db } from "@/lib/db";
-import { sendEmail } from "@/lib/email";
+import { sendEmail, emailButton } from "@/lib/email";
 import { siteUrl } from "@/lib/site";
 
 const sha256 = (s: string) => crypto.createHash("sha256").update(s).digest("hex");
 
 // Email 服務是否已設定（未設定時註冊直接視為已驗證，避免把整個環境鎖死）
+// 支援 Resend（自有網域）或 Gmail SMTP（過渡）任一
 export function emailServiceConfigured(): boolean {
-  return !!(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD);
+  return !!(
+    process.env.RESEND_API_KEY ||
+    (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD)
+  );
 }
 
 // 使用者是否已完成 Email 驗證
@@ -34,10 +38,10 @@ export async function sendVerificationEmail(
   const link = `${siteUrl}/verify-email?token=${raw}`;
   await sendEmail({
     to: email,
-    subject: "Tomo：請驗證你的 Email",
-    html: `<p>感謝註冊 Tomo！點擊以下連結完成 Email 驗證（24 小時內有效）：</p>
-<p><a href="${link}">${link}</a></p>
-<p>驗證完成前，將無法使用發案、應徵、私訊等功能。若這不是你本人操作，請忽略這封信。</p>`,
+    subject: "請驗證你的 Tomo 帳號 Email",
+    html: `<p>感謝你註冊 Tomo 家教媒合平台。請點擊下方按鈕完成 Email 驗證（連結 24 小時內有效）：</p>
+${emailButton(link, "驗證我的 Email")}
+<p>完成驗證後即可使用發案、應徵、私訊等功能。若這不是你本人操作，請忽略這封信。</p>`,
   });
 }
 

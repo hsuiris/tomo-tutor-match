@@ -45,17 +45,33 @@ Project → Settings → Environment Variables，**Production 與 Preview 都要
 | `DATABASE_URL`       | Neon**pooled** 連線字串（建議 `?sslmode=require&pgbouncer=true`）        |
 | `DIRECT_URL`         | Neon**direct（非 pooler）** 連線字串，供 `prisma migrate deploy` 用      |
 | `AUTH_SECRET`        | `openssl rand -base64 33` 產生的**全新**金鑰                             |
-| `GMAIL_USER`         | （選用）Email 通知寄件帳號，如`tomoocustomer@gmail.com`                        |
-| `GMAIL_APP_PASSWORD` | （選用）Gmail**應用程式密碼**（16 碼，非帳號密碼）；需與 GMAIL_USER 一起設 |
+| `RESEND_API_KEY`     | （建議）Resend API 金鑰；設了就優先用 Resend 寄信（送達率高、不進垃圾匣） |
+| `EMAIL_FROM`         | （Resend 用）寄件人，如`Tomo 家教媒合 <noreply@你的網域>`；網域需在 Resend 驗證通過 |
+| `GMAIL_USER`         | （過渡／備援）Email 通知寄件帳號，如`tomoocustomer@gmail.com`                  |
+| `GMAIL_APP_PASSWORD` | （過渡／備援）Gmail**應用程式密碼**（16 碼，非帳號密碼）；需與 GMAIL_USER 一起設 |
 | `NEXT_PUBLIC_SITE_URL` | （選用）自訂網域完整網址（如 `https://tomo.tw`）；sitemap／OG／重設密碼信的絕對網址用它，未設時退回 Vercel 正式網域 |
 | `NEXT_PUBLIC_GA_ID` | （選用）GA4 評估 ID（`G-XXXXXXX`）；未設不載入 GA |
 | `NEXT_PUBLIC_GSC_VERIFICATION` | （選用）Google Search Console 的 meta 驗證碼；未設不輸出 |
 
-> 📧 **Email 通知**：使用者可在「帳號與安全 → 通知設定」開啟 Email 通知（新應徵、媒合結果、新訊息）。
-> 採 **Gmail SMTP**（免自有網域）：設 `GMAIL_USER` 與 `GMAIL_APP_PASSWORD` 即可寄送。
-> 取得應用程式密碼：Google 帳號 → **安全性** → 開啟兩步驟驗證 → **應用程式密碼** → 產生 16 碼貼上。
-> 兩者未設時程式會**略過寄送、不報錯**（見 `src/lib/email.ts`）。每日寄送上限約 500 封；
-> 量大或要自訂寄件網域再換 Resend/SES。
+> 📧 **Email 通知**：使用者可在「帳號與安全 → 通知設定」開啟；驗證信與重設密碼信一律會寄。
+> 寄信優先序（見 `src/lib/email.ts`）：`RESEND_API_KEY` → Gmail SMTP → 都沒設則略過不報錯。
+>
+> **建議：用 Resend + 自有網域（解決驗證信被歸垃圾郵件）**
+> 1. 準備一個網域（Cloudflare / Namecheap 註冊，`.com` 一年約 300–500 元）。
+> 2. 註冊 [resend.com](https://resend.com) → Domains → Add Domain 輸入你的網域。
+> 3. Resend 會給你數筆 **DNS 記錄**，到網域商後台一一新增：
+>    - **SPF**：一筆 `TXT`，`v=spf1 include:...`（授權 Resend 代寄）
+>    - **DKIM**：一至數筆 `TXT`／`CNAME`（Resend 提供的簽章金鑰）
+>    - **DMARC**：一筆 `TXT`，名稱 `_dmarc`，值如 `v=DMARC1; p=none; rua=mailto:你@網域`
+>    - （Resend 頁面會逐筆列出「名稱／類型／值」，照抄即可）
+> 4. 等 Resend 顯示網域 **Verified**（DNS 生效約數分鐘～數小時）。
+> 5. Resend → API Keys 建一把金鑰 → Vercel 設 `RESEND_API_KEY`；
+>    `EMAIL_FROM` 設為 `Tomo 家教媒合 <noreply@你的網域>`（網域須與驗證的一致）。
+> 6. Redeploy。之後寄信自動走 Resend，SPF/DKIM/DMARC 通過，大幅降低進垃圾匣的機率。
+>
+> **過渡（還沒有網域）**：先設 `GMAIL_USER` + `GMAIL_APP_PASSWORD` 用 Gmail SMTP。
+> 取得應用程式密碼：Google 帳號 → **安全性** → 開啟兩步驟驗證 → **應用程式密碼** → 產生 16 碼。
+> Gmail 個人帳號寄系統信較易進垃圾匣，`/verify-email` 頁已提示使用者到垃圾郵件匣尋找。
 
 ⚠️ **重要**：
 
