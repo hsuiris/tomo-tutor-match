@@ -21,9 +21,8 @@
   --color-blushbg: #f6ece2; /* 淺暖橘區段底 */
 
   /* 字型 */
-  --font-serif: var(--font-playfair), var(--font-serif-tc), "Noto Serif TC",
-    serif;
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-serif: var(--font-huninn), serif;
+  --font-sans: var(--font-huninn), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
 
   /* 卡片柔陰影 */

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Serif_TC, Playfair_Display } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import Link from "next/link";
 import Script from "next/script";
@@ -8,31 +8,19 @@ import Navbar from "@/components/Navbar";
 import GoBack from "@/components/GoBack";
 import CookieNotice from "@/components/CookieNotice";
 import { siteUrl } from "@/lib/site";
+import localFont from "next/font/local";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+// 全站字型：粉圓體（jf open 粉圓，自架）。CJK 字檔大，用 swap 先系統字頂著、載完換上。
+const huninn = localFont({
+  src: "./fonts/jf-openhuninn-2.1.woff2",
+  variable: "--font-huninn",
+  display: "swap",
+  fallback: ["PingFang TC", "Microsoft JhengHei", "sans-serif"],
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-// 編輯風 serif：Latin 用 Playfair Display，中文用 Noto Serif TC
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-});
-
-const notoSerifTC = Noto_Serif_TC({
-  variable: "--font-serif-tc",
-  weight: ["500", "600", "700", "900"],
-  // CJK 字檔大、無法 preload。用 swap（而非 optional）：下載完成後一定會套用，
-  // 不會像 optional 那樣「來不及就整頁放棄」。載入前先用系統宋體/黑體頂著。
-  display: "swap",
-  fallback: ["Songti TC", "Noto Serif CJK TC", "PingFang TC", "serif"],
 });
 
 const SITE_NAME = "Tomo 家教媒合平台";
@@ -72,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-TW"
-      className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${notoSerifTC.variable} h-full antialiased`}
+      className={`${huninn.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink">
         <Navbar />
