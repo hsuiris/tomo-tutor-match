@@ -76,8 +76,8 @@ export default async function HomePage() {
             適合你的老師
           </h1>
           <p className="mt-5 max-w-md text-base font-medium leading-relaxed text-ink/80">
-            說出需求，智能匹配立刻幫你算出最契合的老師，
-            還告訴你「為什麼推薦」，讓媒合不再靠運氣。
+            輸入你的需求，快速找到符合條件的老師，
+            透過完整履歷、驗證資訊與真實評價，輕鬆做出安心的選擇。
           </p>
 
           {/* 快速配對表單 */}

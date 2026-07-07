@@ -172,8 +172,12 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 
 ### 🟠 Phase 1 — 建議修（已完成）
 
-- [X] 登入/註冊速率限制
-- [X] `avatarUrl` 只接受 `data:image/`
+- [X] 登入/註冊/重設密碼、發文/回覆/私訊/開對話/評價/應徵討論皆有速率限制
+- [X] 密碼政策至少 8 字元含英數
+- [X] 註冊需完成 Email 驗證才能使用互動功能（既有帳號 backfill 為已驗證）
+- [X] 重設/驗證連結用固定站台網址（防 host header poisoning）
+- [X] seed 含示範帳號，對 production 執行會直接 throw
+- [X] `avatarUrl`／檔案照片只接受 `data:image/`
 - [X] 證件影像審核後即清除（PII 最小化）
 
 ### 🟡 Phase 2 — 環境與部署
@@ -191,7 +195,11 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
 - [ ] 開啟 DB **自動備份**（在 DB 供應商設定，確認可還原）
 - [X] 設定監控與告警：程式碼訊號已埋（`<Analytics />`、`[login-failure]` log）；儀表板告警設定見 [MONITORING.md](./MONITORING.md)
 - [X] 補上**隱私權政策 / 個資蒐集同意 / 證件保存期限**：`/privacy` 頁（繁中初稿，**待法務覆核**）、註冊頁同意勾選、證件審核後立即刪除已落實；聯絡窗口 `tomoocustomer@gmail.com`
+- [ ] **接 Resend + 自有網域**（設 SPF/DKIM/DMARC）解決驗證信進垃圾匣，見第 2 節「Email 通知」
+- [X] 服務條款 `/terms`（初稿，**待法務覆核**）、Cookie 告知、SEO（robots/sitemap/OG/metadata）
 - [ ] 規劃 CSP（在 `proxy.ts` 串 nonce 後啟用）
+- [ ] 至少 ADMIN 帳號導入 2FA
+- [ ] 圖片（頭像/照片）改物件儲存（Vercel Blob / S3），降低 DB payload
 - [ ] 排程清理：過期的 `RateLimit` 列、超過 N 天未審核的 PENDING 證件 `docUrl`
 
 ---
