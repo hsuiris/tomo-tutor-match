@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { becomeTutor } from "./actions";
 import PublishToggle from "@/components/PublishToggle";
+import { getMode } from "@/lib/mode";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -18,6 +19,7 @@ export default async function DashboardPage() {
     select: { isPublished: true },
   });
   const isTutor = !!profile;
+  const mode = await getMode();
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
@@ -28,6 +30,9 @@ export default async function DashboardPage() {
             嗨，{user.name} 👋
           </h1>
           <div className="mt-2 h-1 w-14 bg-sun" />
+          <p className="mt-3 text-sm font-bold text-ink/50">
+            目前以「{mode === "parent" ? "家長（找老師）" : "老師（找學生）"}」身份使用 · 從上方切換身份
+          </p>
         </div>
         <Link
           href="/dashboard/account"
@@ -37,58 +42,60 @@ export default async function DashboardPage() {
         </Link>
       </div>
 
-      {/* 兩欄：左＝我要學習、右＝我要教學，各自一直列 */}
-      <div className="mt-10 grid items-start gap-6 sm:grid-cols-2">
-        {/* 學習：發需求找老師（所有人都能用） */}
-        <section>
-          <h2 className="mb-3 font-serif text-lg font-bold text-ink/80">
-            🎒 我要學習（找老師）
-          </h2>
-          <div className="space-y-4">
-            <DashCard
-              href="/jobs/new"
-              title="發布學習需求"
-              desc="描述你的需求,讓老師主動應徵"
-            />
-            <DashCard
-              href="/dashboard/jobs"
-              title="我發布的需求"
-              desc="管理你的案件、查看應徵者並完成配對"
-            />
-            <DashCard
-              href="/dashboard/tutors"
-              title="過去的老師"
-              desc="成交過的老師紀錄，可回頭評價與保持紀錄"
-            />
-          </div>
-        </section>
-
-        {/* 教學：應徵需求找學生（要有老師檔案才開放） */}
-        <section>
-          <h2 className="mb-3 font-serif text-lg font-bold text-ink/80">
-            📚 我要教學（找學生）
-          </h2>
-          <div className="space-y-4">
+      {/* 依身份只顯示一邊，避免兩邊入口同時出現造成混亂 */}
+      <div className="mt-10">
+        {mode === "parent" ? (
+          /* 學習：發需求找老師 */
+          <section>
+            <h2 className="mb-4 font-serif text-lg font-bold text-ink/80">
+              🎒 我要學習（找老師）
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <DashCard
+                href="/jobs/new"
+                title="發布學習需求"
+                desc="描述你的需求,讓老師主動應徵"
+              />
+              <DashCard
+                href="/dashboard/jobs"
+                title="我發布的需求"
+                desc="管理你的案件、查看應徵者並完成配對"
+              />
+              <DashCard
+                href="/dashboard/tutors"
+                title="過去的老師"
+                desc="成交過的老師紀錄，可回頭評價與保持紀錄"
+              />
+            </div>
+          </section>
+        ) : (
+          /* 教學：應徵需求找學生（要有老師檔案才開放） */
+          <section>
+            <h2 className="mb-4 font-serif text-lg font-bold text-ink/80">
+              📚 我要教學（找學生）
+            </h2>
             {isTutor ? (
-              <>
+              <div className="space-y-4">
                 {/* 接案狀態一目瞭然，避免不接案了檔案還掛著公開 */}
                 <PublishToggle published={profile!.isPublished} />
-                <DashCard
-                  href="/dashboard/profile"
-                  title="編輯我的老師檔案"
-                  desc="專長、時薪、自我介紹、公開化名與安全認證"
-                />
-                <DashCard
-                  href="/dashboard/applications"
-                  title="我的應徵"
-                  desc="查看你應徵過的案件與錄取狀態"
-                />
-                <DashCard
-                  href="/dashboard/students"
-                  title="我的學生"
-                  desc="成交過的學生與家長紀錄，可回頭評價"
-                />
-              </>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <DashCard
+                    href="/dashboard/profile"
+                    title="編輯我的老師檔案"
+                    desc="專長、時薪、自我介紹、公開化名與安全認證"
+                  />
+                  <DashCard
+                    href="/dashboard/applications"
+                    title="我的應徵"
+                    desc="查看你應徵過的案件與錄取狀態"
+                  />
+                  <DashCard
+                    href="/dashboard/students"
+                    title="我的學生"
+                    desc="成交過的學生與家長紀錄，可回頭評價"
+                  />
+                </div>
+              </div>
             ) : (
               <form action={becomeTutor}>
                 <button
@@ -107,8 +114,8 @@ export default async function DashboardPage() {
                 </button>
               </form>
             )}
-          </div>
-        </section>
+          </section>
+        )}
       </div>
     </div>
   );

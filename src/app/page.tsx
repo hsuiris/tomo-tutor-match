@@ -71,9 +71,7 @@ export default async function HomePage() {
             智能家教媒合
           </span>
           <h1 className="mt-6 font-serif text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-5xl">
-            找到真正
-            <br />
-            適合你的老師
+            找到真正適合你的老師
           </h1>
           <p className="mt-5 max-w-md text-base font-medium leading-relaxed text-ink/80">
             輸入你的需求，快速找到符合條件的老師，

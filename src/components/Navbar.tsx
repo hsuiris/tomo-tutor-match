@@ -2,10 +2,13 @@ import Link from "next/link";
 import { auth, signOut } from "@/auth";
 import { db } from "@/lib/db";
 import HeartIcon from "@/components/HeartIcon";
+import ModeSwitch from "@/components/ModeSwitch";
+import { getMode } from "@/lib/mode";
 
 export default async function Navbar() {
   const session = await auth();
   const user = session?.user;
+  const mode = await getMode();
 
   // 未讀數（訊息紅點）：對方傳來未讀的私訊 + 未讀系統通知
   let unread = 0;
@@ -29,20 +32,26 @@ export default async function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
-        <Link
-          href="/"
-          className="font-serif text-2xl font-extrabold tracking-tight text-ink"
-        >
-          Tomo
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            className="font-serif text-2xl font-extrabold tracking-tight text-ink"
+          >
+            Tomo
+          </Link>
+          <ModeSwitch />
+        </div>
 
         <div className="hidden items-center gap-7 text-sm font-bold text-ink sm:flex">
-          <Link href="/tutors" className="transition hover:text-cobalt">
-            找老師
-          </Link>
-          <Link href="/jobs" className="transition hover:text-cobalt">
-            找學生
-          </Link>
+          {mode === "parent" ? (
+            <Link href="/tutors" className="transition hover:text-cobalt">
+              找老師
+            </Link>
+          ) : (
+            <Link href="/jobs" className="transition hover:text-cobalt">
+              找學生
+            </Link>
+          )}
           <Link href="/stats" className="transition hover:text-cobalt">
             行情統計
           </Link>
