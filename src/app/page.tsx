@@ -5,6 +5,10 @@ import { db } from "@/lib/db";
 import MatchForm from "@/components/MatchForm";
 import TutorCard, { type TutorCardData } from "@/components/TutorCard";
 import { SUBJECTS } from "@/lib/constants";
+import { Noto_Serif_TC } from "next/font/google";
+
+// 首頁主標題用明體（思源宋體）：端莊氣質。只在首頁載入，display: swap 先系統字頂著
+const displaySerif = Noto_Serif_TC({ weight: ["900"], display: "swap" });
 
 // 首頁熱門科目（取常見幾科當入口）
 const POPULAR_SUBJECTS = ["數學", "英文", "國文", "物理", "化學", "程式設計", "鋼琴", "美術"];
@@ -70,7 +74,7 @@ export default async function HomePage() {
             <span className="h-2 w-2 rounded-full bg-cobalt" />
             智能家教媒合
           </span>
-          <h1 className="mt-6 font-serif text-4xl font-extrabold leading-tight tracking-tight text-ink sm:text-5xl">
+          <h1 className={`${displaySerif.className} mt-6 text-4xl font-black leading-tight text-ink sm:text-5xl`}>
             找到真正適合你的老師
           </h1>
           <p className="mt-5 max-w-md text-base font-medium leading-relaxed text-ink/80">
