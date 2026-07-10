@@ -6,16 +6,7 @@ import { Prisma } from "@/generated/prisma";
 import { expandRegions } from "@/lib/regions";
 import TutorCard from "@/components/TutorCard";
 import TutorFilters from "@/components/TutorFilters";
-import MatchForm from "@/components/MatchForm";
-import MatchCard from "@/components/MatchCard";
-import ModeTabs from "@/components/ModeTabs";
-import { PAGE_SIZE, MATCH_PRIORITIES } from "@/lib/constants";
-import {
-  rankTutors,
-  type MatchCriteria,
-  type MatchPriority,
-  type MatchTutor,
-} from "@/lib/match";
+import { PAGE_SIZE } from "@/lib/constants";
 
 export const metadata = {
   title: "找老師",
@@ -52,7 +43,6 @@ export default async function TutorsPage({
   searchParams: SearchParams;
 }) {
   const sp = await searchParams;
-  const isMatch = str(sp.view) === "match";
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
@@ -61,7 +51,7 @@ export default async function TutorsPage({
           <h1 className="font-serif text-4xl font-extrabold text-ink">找老師</h1>
           <div className="mt-2 h-1 w-14 bg-sun" />
           <p className="mt-3 text-sm font-bold text-ink/60">
-            用條件篩選，或讓系統依你在意的重點智能配對。
+            用科目、學制、地區、時薪等條件，篩選並比較老師。
           </p>
         </div>
         <Link
@@ -72,16 +62,7 @@ export default async function TutorsPage({
         </Link>
       </div>
 
-      <div className="mt-6">
-        <ModeTabs
-          base="/tutors"
-          active={isMatch ? "match" : "browse"}
-          browseLabel="篩選瀏覽"
-          matchLabel="✨ 智能配對"
-        />
-      </div>
-
-      {isMatch ? <MatchMode sp={sp} /> : <BrowseMode sp={sp} />}
+      <BrowseMode sp={sp} />
     </div>
   );
 }
@@ -267,176 +248,5 @@ async function BrowseMode({
         </div>
       )}
     </>
-  );
-}
-
-// ── 智能配對 ─────────────────────────────────────────────
-const RESULT_LIMIT = 12;
-const POOL_LIMIT = 80; // 評分前先抓進記憶體的候選上限
-
-// 配對需要的老師欄位
-const TUTOR_SELECT = {
-  id: true,
-  bio: true,
-  subjects: true,
-  levels: true,
-  regions: true,
-  hourlyRate: true,
-  hourlyRateMax: true,
-  mode: true,
-  university: true,
-  eduLevel: true,
-  experience: true,
-  ratingAvg: true,
-  ratingCount: true,
-  user: {
-    select: {
-      id: true,
-      name: true,
-      displayName: true,
-      avatarUrl: true,
-      gender: true,
-      idVerified: true,
-      bgCheckVerified: true,
-      eduVerified: true,
-    },
-  },
-} satisfies Prisma.TutorProfileSelect;
-
-async function MatchMode({ sp }: { sp: Awaited<SearchParams> }) {
-  const subject = str(sp.subject);
-  const level = str(sp.level);
-  const region = str(sp.region);
-  const budgetNum = parseInt(str(sp.budget));
-  const teachMode = str(sp.mode); // 授課方式（頁面模式用 view 參數，不衝突）
-  const gender = str(sp.gender);
-  const priorityRaw = str(sp.priority) || "balanced";
-  const priority = (MATCH_PRIORITIES.some((p) => p.value === priorityRaw)
-    ? priorityRaw
-    : "balanced") as MatchPriority;
-
-  const criteria: MatchCriteria = {
-    subject: subject || undefined,
-    level: level || undefined,
-    region: region || undefined,
-    budget: Number.isNaN(budgetNum) ? undefined : budgetNum,
-    mode: (teachMode as MatchCriteria["mode"]) || "",
-    gender: (gender as MatchCriteria["gender"]) || "",
-    priority,
-  };
-
-  const hasQuery = Boolean(
-    subject || level || region || !Number.isNaN(budgetNum)
-  );
-
-  const defaults = {
-    subject,
-    level,
-    region,
-    budget: Number.isNaN(budgetNum) ? "" : String(budgetNum),
-    mode: teachMode,
-    gender,
-    priority: priorityRaw,
-  };
-
-  return (
-    <>
-      <p className="mt-5 max-w-2xl text-sm font-medium leading-relaxed text-ink/65">
-        依科目、學制、地區、預算與你最在意的重點，計算每位老師的
-        <span className="font-bold text-ink">契合度</span>，並告訴你
-        <span className="font-bold text-ink">為什麼推薦</span>。
-      </p>
-
-      <div className="mt-4">
-        <MatchForm variant="full" defaults={defaults} />
-      </div>
-
-      {hasQuery ? <MatchResults criteria={criteria} /> : <MatchEmptyState />}
-    </>
-  );
-}
-
-async function MatchResults({ criteria }: { criteria: MatchCriteria }) {
-  // 排除自己的老師檔案（自己不能洽談自己）
-  const session = await auth();
-  const me = session?.user.id;
-  // 先以科目縮小候選；若科目沒有任何老師則放寬（讓評分挑出相近的）
-  let where: Prisma.TutorProfileWhereInput = { isPublished: true };
-  let broadened = false;
-  if (criteria.subject) {
-    const count = await db.tutorProfile.count({
-      where: { isPublished: true, subjects: { has: criteria.subject } },
-    });
-    if (count > 0) {
-      where = { isPublished: true, subjects: { has: criteria.subject } };
-    } else {
-      broadened = true;
-    }
-  }
-
-  const pool = (await db.tutorProfile.findMany({
-    where: { ...where, ...(me ? { userId: { not: me } } : {}) },
-    take: POOL_LIMIT,
-    orderBy: { ratingAvg: "desc" },
-    select: TUTOR_SELECT,
-  })) as MatchTutor[];
-
-  const ranked = rankTutors(pool, criteria, RESULT_LIMIT);
-  const favTutorIds = await favoriteTutorIds();
-
-  if (ranked.length === 0) {
-    return (
-      <div className="mt-10 rounded-2xl border border-line bg-paper p-10 text-center">
-        <p className="text-lg font-bold text-ink">目前沒有符合的老師</p>
-        <p className="mt-2 text-sm text-ink/60">
-          試著放寬預算或地區，或
-          <Link href="/tutors" className="font-bold text-cobalt underline">
-            瀏覽全部老師
-          </Link>
-          。
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="mt-10">
-      <h2 className="font-serif text-2xl font-bold text-ink">
-        為你推薦 {ranked.length} 位老師
-      </h2>
-      {broadened && (
-        <p className="mt-2 rounded-xl border border-dashed border-line/20 bg-blushbg/50 px-4 py-2 text-sm font-bold text-ink/70">
-          目前沒有完全教授「{criteria.subject}」的老師，以下為條件相近的推薦。
-        </p>
-      )}
-      <div className="mt-5 grid gap-5 sm:grid-cols-2">
-        {ranked.map((r, i) => (
-          <MatchCard
-            key={r.tutor.id}
-            result={r}
-            rank={i + 1}
-            favorited={favTutorIds.has(r.tutor.id)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MatchEmptyState() {
-  return (
-    <div className="mt-8 grid gap-4 sm:grid-cols-3">
-      {[
-        { icon: "📝", title: "描述需求", desc: "選科目、學制、地區與預算，再挑你最在意的重點。" },
-        { icon: "🎯", title: "契合度排序", desc: "系統算出每位老師的契合度，由高到低排列。" },
-        { icon: "💬", title: "直接洽談", desc: "看到合適的老師，一鍵發起預約洽談。" },
-      ].map((s) => (
-        <div key={s.title} className="rounded-2xl border border-line bg-paper p-6">
-          <div className="text-3xl">{s.icon}</div>
-          <h3 className="mt-3 font-serif text-lg font-bold text-ink">{s.title}</h3>
-          <p className="mt-1.5 text-sm leading-relaxed text-ink/65">{s.desc}</p>
-        </div>
-      ))}
-    </div>
   );
 }

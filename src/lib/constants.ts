@@ -96,13 +96,3 @@ export const SORT_OPTIONS = [
 export type SortValue = (typeof SORT_OPTIONS)[number]["value"];
 
 export const PAGE_SIZE = 9;
-
-// 智能匹配：使用者最在意的重點（會動態調整配對權重）
-export const MATCH_PRIORITIES = [
-  { value: "balanced", label: "綜合最佳", hint: "各項條件均衡評估" },
-  { value: "budget", label: "預算優先", hint: "優先符合預算的老師" },
-  { value: "rating", label: "評價優先", hint: "優先口碑高的老師" },
-  { value: "credentials", label: "學歷認證優先", hint: "優先已通過認證的老師" },
-] as const;
-
-export type MatchPriorityValue = (typeof MATCH_PRIORITIES)[number]["value"];
