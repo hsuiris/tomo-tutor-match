@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
-import MatchForm from "@/components/MatchForm";
+import TutorQuickSearch from "@/components/TutorQuickSearch";
 import TutorCard, { type TutorCardData } from "@/components/TutorCard";
 import { SUBJECTS } from "@/lib/constants";
 import { Noto_Serif_TC } from "next/font/google";
@@ -63,7 +63,7 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-6 sm:py-10">
-      {/* Hero：智能匹配為核心 */}
+      {/* Hero：搜尋為核心 */}
       <section className="relative overflow-hidden rounded-3xl border border-line bg-gradient-to-br from-sun-soft via-paper to-blushbg px-6 py-14 shadow-card sm:px-14 sm:py-20">
         <span className="absolute -right-16 -top-10 hidden h-56 w-56 rounded-full bg-mint/40 blur-2xl sm:block" />
         <span className="absolute right-32 top-44 hidden h-24 w-24 rounded-full bg-blush/30 blur-xl sm:block" />
@@ -72,7 +72,7 @@ export default async function HomePage() {
         <div className="relative max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-line bg-paper px-4 py-1 text-xs font-bold tracking-wide text-ink">
             <span className="h-2 w-2 rounded-full bg-cobalt" />
-            智能家教媒合
+            家教媒合平台
           </span>
           <h1 className={`${displaySerif.className} mt-6 text-4xl font-black leading-tight text-ink sm:text-5xl`}>
             找到真正適合你的老師
@@ -82,15 +82,15 @@ export default async function HomePage() {
             透過完整履歷、驗證資訊與真實評價，輕鬆做出安心的選擇。
           </p>
 
-          {/* 快速配對表單 */}
+          {/* 快速搜尋表單 */}
           <div className="mt-7">
-            <MatchForm variant="compact" />
+            <TutorQuickSearch />
           </div>
 
           <p className="mt-3 text-xs font-bold text-ink/60">
-            想設定更多條件？
-            <Link href="/tutors?view=match" className="underline underline-offset-2 hover:text-ink">
-              前往完整智能配對 →
+            想要更多篩選條件？
+            <Link href="/tutors" className="underline underline-offset-2 hover:text-ink">
+              前往完整篩選 →
             </Link>
           </p>
         </div>
@@ -112,7 +112,7 @@ export default async function HomePage() {
             (s) => (
               <Link
                 key={s}
-                href={`/tutors?view=match&subject=${encodeURIComponent(s)}`}
+                href={`/tutors?subject=${encodeURIComponent(s)}`}
                 className="rounded-full border border-line bg-paper px-5 py-2 text-sm font-bold text-ink transition hover:bg-sun"
               >
                 {s}
@@ -151,7 +151,7 @@ export default async function HomePage() {
         />
         <div className="mt-8 grid gap-5 sm:grid-cols-4">
           {[
-            { title: "智能匹配", desc: "依需求算契合度並解釋推薦原因，省去大海撈針。" },
+            { title: "透明比較", desc: "科目、時薪、學經歷、評價一次看清，好做決定。" },
             { title: "嚴格審核", desc: "實名、良民證、學歷三重認證，身分看得見。" },
             { title: "化名保護", desc: "對外只顯示化名，本名不外流，互動更安心。" },
             { title: "雙向評分", desc: "完成媒合後互相評分，真實口碑累積信任。" },
@@ -172,8 +172,8 @@ export default async function HomePage() {
         <SectionHeading title="如何運作" />
         <div className="mt-8 grid gap-5 sm:grid-cols-3">
           {[
-            { step: "01", title: "描述需求", desc: "選科目、學制、地區、預算，並選你最在意的重點。", dot: "bg-sun" },
-            { step: "02", title: "智能配對", desc: "系統算出契合度排序，並說明為什麼推薦每位老師。", dot: "bg-cobalt" },
+            { step: "01", title: "設定條件", desc: "選科目、學制、地區與預算。", dot: "bg-sun" },
+            { step: "02", title: "篩選比較", desc: "依條件篩出人選，比較檔案、驗證資訊與評價。", dot: "bg-cobalt" },
             { step: "03", title: "預約洽談", desc: "看到合適的老師，一鍵發起私訊預約，開始上課。", dot: "bg-cobalt" },
           ].map((item) => (
             <div
