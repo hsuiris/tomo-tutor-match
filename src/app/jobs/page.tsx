@@ -132,6 +132,11 @@ async function BrowseMode({ sp }: { sp: Awaited<SearchParams> }) {
 
   const totalPages = Math.ceil(total / JOBS_PAGE_SIZE);
 
+  // 區分「這組篩選沒結果」與「平台還沒有案件（冷啟動）」
+  const hasFilters = Boolean(
+    subjects.length || levels.length || regions.length || gender
+  );
+
   // 分頁連結：保留目前查詢參數
   function pageHref(p: number) {
     const params = new URLSearchParams();
@@ -157,9 +162,31 @@ async function BrowseMode({ sp }: { sp: Awaited<SearchParams> }) {
       </div>
 
       {jobs.length === 0 ? (
-        <div className="mt-16 text-center font-bold text-ink/40">
-          目前沒有符合條件的案件。
-        </div>
+        hasFilters ? (
+          <div className="mt-16 text-center">
+            <p className="font-bold text-ink/50">目前沒有符合條件的案件</p>
+            <Link
+              href="/jobs"
+              className="mt-3 inline-block text-sm font-bold text-cobalt underline underline-offset-2 hover:text-ink"
+            >
+              清除篩選，看全部案件 →
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-16 rounded-2xl border border-dashed border-line bg-paper/60 px-6 py-12 text-center">
+            <p className="text-3xl">🌱</p>
+            <p className="mt-3 text-lg font-bold text-ink">還沒有徵求中的案件</p>
+            <p className="mt-2 text-sm font-medium text-ink/60">
+              早鳥福利：先把老師檔案填好，新需求一進來你就能搶先應徵。
+            </p>
+            <Link
+              href="/dashboard/profile"
+              className="mt-6 inline-block rounded-full border border-line bg-sun px-6 py-2.5 text-sm font-bold text-paper transition hover:bg-sun-dark"
+            >
+              完善老師檔案 →
+            </Link>
+          </div>
+        )
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {jobs.map((j) => (

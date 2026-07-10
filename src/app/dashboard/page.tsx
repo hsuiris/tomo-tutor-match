@@ -4,6 +4,8 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { becomeTutor } from "./actions";
 import PublishToggle from "@/components/PublishToggle";
+import ProfileChecklist from "@/components/ProfileChecklist";
+import { profileChecklist } from "@/lib/tutor-publish";
 import { getMode } from "@/lib/mode";
 
 export default async function DashboardPage() {
@@ -16,10 +18,33 @@ export default async function DashboardPage() {
   // 能不能教學看「有沒有老師檔案」，不看 JWT role（升級後 JWT 不會即時更新）
   const profile = await db.tutorProfile.findUnique({
     where: { userId: user.id },
-    select: { isPublished: true },
+    select: {
+      isPublished: true,
+      subjects: true,
+      hourlyRate: true,
+      bio: true,
+      experience: true,
+      education: true,
+      university: true,
+      user: { select: { idVerified: true } },
+    },
   });
   const isTutor = !!profile;
   const mode = await getMode();
+
+  // 老師檔案完成度：未完整時在面板顯示引導
+  const checklist = profile
+    ? profileChecklist({
+        subjects: profile.subjects,
+        hourlyRate: profile.hourlyRate,
+        bio: profile.bio,
+        experience: profile.experience,
+        education: profile.education,
+        university: profile.university,
+        idVerified: profile.user.idVerified,
+      })
+    : [];
+  const profileIncomplete = checklist.some((i) => !i.done);
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
@@ -76,6 +101,8 @@ export default async function DashboardPage() {
             </h2>
             {isTutor ? (
               <div className="space-y-4">
+                {/* 檔案未完整時給完成度引導，讓新手知道要補什麼才能上架 */}
+                {profileIncomplete && <ProfileChecklist items={checklist} />}
                 {/* 接案狀態一目瞭然，避免不接案了檔案還掛著公開 */}
                 <PublishToggle published={profile!.isPublished} />
                 <div className="grid gap-4 sm:grid-cols-2">

@@ -169,6 +169,19 @@ async function BrowseMode({
   const favTutorIds = await favoriteTutorIds();
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
+  // 區分「這組篩選沒結果」與「平台還沒有老師（冷啟動）」，空狀態給不同引導
+  const hasFilters = Boolean(
+    q ||
+      subjects.length ||
+      levels.length ||
+      regions.length ||
+      eduLevels.length ||
+      university ||
+      !Number.isNaN(min) ||
+      !Number.isNaN(max) ||
+      gender
+  );
+
   // 分頁連結：保留目前查詢參數
   function pageHref(p: number) {
     const params = new URLSearchParams();
@@ -200,9 +213,31 @@ async function BrowseMode({
       </div>
 
       {tutors.length === 0 ? (
-        <div className="mt-16 text-center font-bold text-ink/40">
-          找不到符合條件的老師,試試調整篩選條件。
-        </div>
+        hasFilters ? (
+          <div className="mt-16 text-center">
+            <p className="font-bold text-ink/50">找不到符合條件的老師</p>
+            <Link
+              href="/tutors"
+              className="mt-3 inline-block text-sm font-bold text-cobalt underline underline-offset-2 hover:text-ink"
+            >
+              清除篩選，看全部老師 →
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-16 rounded-2xl border border-dashed border-line bg-paper/60 px-6 py-12 text-center">
+            <p className="text-3xl">🌱</p>
+            <p className="mt-3 text-lg font-bold text-ink">首批老師招募中</p>
+            <p className="mt-2 text-sm font-medium text-ink/60">
+              平台正在招募老師。先發布你的需求，老師上線後就能立刻媒合。
+            </p>
+            <Link
+              href="/jobs/new"
+              className="mt-6 inline-block rounded-full border border-line bg-sun px-6 py-2.5 text-sm font-bold text-paper transition hover:bg-sun-dark"
+            >
+              發布學習需求 +
+            </Link>
+          </div>
+        )
       ) : (
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {tutors.map((t) => (
