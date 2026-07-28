@@ -101,7 +101,7 @@ export async function updatePhotos(
   const session = await auth();
   if (!session) return { error: "請先登入" };
 
-  if (photos.length > 3) return { error: "最多 3 張照片" };
+  if (photos.length > 5) return { error: "最多 5 張照片" };
   for (const p of photos) {
     if (!p.startsWith("data:image/")) return { error: "照片格式不正確" };
     if (p.length > 1_200_000) return { error: "每張照片請小於 800KB" };
@@ -117,37 +117,36 @@ export async function updatePhotos(
   return {};
 }
 
-// 送出安全認證申請（上傳證件）
-export async function submitVerification(
+// 送出安全認證申請（一次可上傳多種證件，由安全認證區底部按鈕送出）
+export async function submitVerifications(
   _prev: ActionState,
   formData: FormData
 ): Promise<ActionState> {
   const session = await auth();
   if (!session) return { error: "請先登入" };
 
-  const type = formData.get("type")?.toString();
-  const docUrl = formData.get("docUrl")?.toString() ?? "";
+  let sent = 0;
+  for (const type of ["IDENTITY", "EDUCATION"] as const) {
+    const docUrl = formData.get(`doc_${type}`)?.toString() ?? "";
+    if (!docUrl) continue;
+    if (!docUrl.startsWith("data:image/")) return { error: "請上傳證件圖片" };
+    if (docUrl.length > 4_000_000) return { error: "圖片過大,請小於 3MB" };
 
-  if (type !== "IDENTITY" && type !== "BACKGROUND" && type !== "EDUCATION") {
-    return { error: "認證類型錯誤" };
-  }
-  if (!docUrl.startsWith("data:image/")) {
-    return { error: "請上傳證件圖片" };
-  }
-  if (docUrl.length > 4_000_000) {
-    return { error: "圖片過大,請小於 3MB" };
+    // 已有待審核的同類型申請就不重複
+    const pending = await db.verificationRequest.findFirst({
+      where: { userId: session.user.id, type, status: "PENDING" },
+    });
+    if (pending) continue;
+
+    await db.verificationRequest.create({
+      data: { userId: session.user.id, type, docUrl },
+    });
+    sent++;
   }
 
-  // 已有待審核的同類型申請就不重複
-  const pending = await db.verificationRequest.findFirst({
-    where: { userId: session.user.id, type, status: "PENDING" },
-  });
-  if (pending) return { error: "你已有一筆審核中的申請" };
-
-  await db.verificationRequest.create({
-    data: { userId: session.user.id, type, docUrl },
-  });
+  if (!sent) return { error: "請先選擇要上傳的證件" };
 
   revalidatePath("/dashboard/account");
+  revalidatePath("/dashboard/profile");
   return { success: "已送出,我們會盡快審核" };
 }

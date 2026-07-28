@@ -7,7 +7,8 @@ import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
 
-export default function AliasForm({
+// 純欄位（radio + 化名輸入），可嵌進任何 form；老師檔案頁由主表單「儲存檔案」一併保存
+export function AliasFields({
   displayName,
   realName,
   placeholder = "例如：思涵老師、Coach Chen",
@@ -16,14 +17,13 @@ export default function AliasForm({
   realName: string;
   placeholder?: string;
 }) {
-  const [state, formAction] = useActionState(updateAlias, initialState);
   // 化名剛好等於本名時視為「使用本名」
   const [mode, setMode] = useState<"alias" | "real">(
     displayName && displayName === realName ? "real" : "alias"
   );
 
   return (
-    <form action={formAction} className="space-y-3">
+    <div className="space-y-3">
       <div className="flex gap-5 text-sm text-ink/70">
         <label className="flex items-center gap-2">
           <input
@@ -65,6 +65,21 @@ export default function AliasForm({
           你的本名「{realName}」將公開顯示於平台上。
         </p>
       )}
+    </div>
+  );
+}
+
+// 獨立表單版（發案頁等沒有主表單的地方使用）
+export default function AliasForm(props: {
+  displayName: string;
+  realName: string;
+  placeholder?: string;
+}) {
+  const [state, formAction] = useActionState(updateAlias, initialState);
+
+  return (
+    <form action={formAction} className="space-y-3">
+      <AliasFields {...props} />
       {state.error && <p className="text-sm text-red-500">{state.error}</p>}
       {state.success && (
         <p className="text-sm text-emerald-600">{state.success} ✓</p>

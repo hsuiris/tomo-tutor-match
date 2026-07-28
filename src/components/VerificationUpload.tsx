@@ -1,20 +1,36 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { submitVerification } from "@/app/dashboard/account/actions";
+import { submitVerifications } from "@/app/dashboard/account/actions";
 import { SubmitButton } from "@/components/ui/form";
 import type { ActionState } from "@/lib/types";
 
 const initialState: ActionState = {};
 
+// 整個安全認證區共用一個表單：各列選好檔案後，由底部按鈕一次送出
+export function VerificationForm({ children }: { children: React.ReactNode }) {
+  const [state, formAction] = useActionState(submitVerifications, initialState);
+
+  return (
+    <form action={formAction} className="space-y-4">
+      {children}
+      {state.error && <p className="text-sm text-red-500">{state.error}</p>}
+      {state.success && (
+        <p className="text-sm text-emerald-600">{state.success} ✓</p>
+      )}
+      <SubmitButton fullWidth={false}>儲存並上傳檢驗</SubmitButton>
+    </form>
+  );
+}
+
+// 單一證件選擇器（不含表單）：選好的圖片放進 hidden input，由外層表單一併送出
 export default function VerificationUpload({
   type,
   label,
 }: {
-  type: "IDENTITY" | "BACKGROUND" | "EDUCATION";
+  type: "IDENTITY" | "EDUCATION";
   label: string;
 }) {
-  const [state, formAction] = useActionState(submitVerification, initialState);
   const [doc, setDoc] = useState("");
   const [err, setErr] = useState("");
 
@@ -29,18 +45,9 @@ export default function VerificationUpload({
     r.readAsDataURL(file);
   }
 
-  if (state.success) {
-    return (
-      <p className="rounded-lg bg-amber-50 px-3 py-2 text-sm text-amber-700">
-        審核中 ⏳ {state.success}
-      </p>
-    );
-  }
-
   return (
-    <form action={formAction} className="space-y-2">
-      <input type="hidden" name="type" value={type} />
-      <input type="hidden" name="docUrl" value={doc} />
+    <div className="space-y-2">
+      <input type="hidden" name={`doc_${type}`} value={doc} />
       <label className="inline-block cursor-pointer rounded-full border border-line px-3 py-1.5 text-sm font-medium text-ink/80 hover:bg-sun-soft/40">
         {doc ? "已選擇檔案,可重新選擇" : `上傳${label}`}
         <input
@@ -59,8 +66,6 @@ export default function VerificationUpload({
         />
       )}
       {err && <p className="text-xs text-red-500">{err}</p>}
-      {state.error && <p className="text-xs text-red-500">{state.error}</p>}
-      {doc && <SubmitButton>送出審核</SubmitButton>}
-    </form>
+    </div>
   );
 }

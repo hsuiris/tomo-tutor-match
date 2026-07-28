@@ -8,9 +8,10 @@ const nextConfig: NextConfig = {
     root: path.resolve(process.cwd()),
   },
   experimental: {
-    // 頭像以 base64 data URL 透過 server action 上傳，放寬 body 上限
+    // 頭像／檔案照片以 base64 data URL 透過 server action 上傳，放寬 body 上限
+    // （檔案照片最多 5 張 × 800KB，base64 後約 5.3MB）
     serverActions: {
-      bodySizeLimit: "4mb",
+      bodySizeLimit: "8mb",
     },
   },
   // 安全標頭，套用到所有路由。

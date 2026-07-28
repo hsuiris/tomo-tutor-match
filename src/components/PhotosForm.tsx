@@ -3,8 +3,8 @@
 import { useState, useTransition } from "react";
 import { updatePhotos } from "@/app/dashboard/account/actions";
 
-const MAX_PHOTOS = 3;
-const MAX_FILE = 800 * 1024; // 800KB／張（base64 後約 1MB，3 張仍在 server action 上限內）
+const MAX_PHOTOS = 5;
+const MAX_FILE = 800 * 1024; // 800KB／張（base64 後約 1MB，5 張仍在 server action 上限內）
 
 // 檔案照片牆：家長與老師共用（帳號頁／老師檔案頁），照片顯示在公開檔案
 export default function PhotosForm({ initial }: { initial: string[] }) {
@@ -82,7 +82,7 @@ export default function PhotosForm({ initial }: { initial: string[] }) {
         最多 {MAX_PHOTOS} 張、每張 800KB 內；會顯示在你的公開檔案頁（如教學環境、證書、成果照）。
       </p>
       {error && <p className="text-xs text-red-500">{error}</p>}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-center gap-2">
         <button
           type="button"
           disabled={pending}

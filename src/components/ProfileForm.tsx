@@ -124,11 +124,11 @@ export default function ProfileForm({
         </div>
       </div>
 
-      {/* 公開化名（緊接大頭照下面） */}
-      {aliasSlot && <div className="mt-6">{aliasSlot}</div>}
-
       <form action={formAction} className="mt-6 space-y-6">
         <input type="hidden" name="avatarUrl" value={avatar} />
+
+      {/* 公開化名（緊接大頭照下面），隨「儲存檔案」一併保存 */}
+      {aliasSlot}
 
       {/* 性別 */}
       <div>

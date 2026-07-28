@@ -66,6 +66,22 @@ export async function updateProfile(
 
   const { gender, avatarUrl, ...profileData } = parsed.data;
 
+  // 公開顯示名稱（欄位嵌在主表單裡，隨「儲存檔案」一併保存）
+  let displayName: string | null | undefined;
+  const nameMode = formData.get("nameMode")?.toString();
+  if (nameMode === "real") {
+    const me = await db.user.findUnique({
+      where: { id: session.user.id },
+      select: { name: true },
+    });
+    displayName = me?.name;
+  } else if (nameMode === "alias") {
+    displayName = formData.get("displayName")?.toString().trim() || null;
+    if (displayName && displayName.length > 30) {
+      return { fieldErrors: { displayName: ["化名過長（最多 30 字）"] } };
+    }
+  }
+
   // 詳細欄位（成績/客製時薪/上課時間）：解析並正規化後存 Json
   const exams = parseExams(safeJson(formData.get("exams")));
   const rateRules = parseRateRules(safeJson(formData.get("rateRules"))).filter(
@@ -79,6 +95,7 @@ export async function updateProfile(
     data: {
       gender,
       ...(avatarUrl !== undefined ? { avatarUrl } : {}),
+      ...(displayName !== undefined ? { displayName } : {}),
     },
   });
   await db.tutorProfile.update({

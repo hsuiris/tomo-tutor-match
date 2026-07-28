@@ -1,66 +1,68 @@
-import VerificationUpload from "@/components/VerificationUpload";
+import VerificationUpload, {
+  VerificationForm,
+} from "@/components/VerificationUpload";
 import TrustBadges from "@/components/TrustBadges";
 
 type Req = { type: string; status: string; note: string | null };
 
 export default function VerificationSection({
   idVerified,
-  bgCheckVerified,
   eduVerified,
   requests,
   showEducation,
   intro,
 }: {
   idVerified: boolean;
-  bgCheckVerified: boolean;
+  // ponytail: 無犯罪紀錄查驗已下架，保留 prop 讓舊呼叫處不用改
+  bgCheckVerified?: boolean;
   eduVerified: boolean;
   requests: Req[];
   showEducation: boolean;
   intro: string;
 }) {
-  const latest = (type: "IDENTITY" | "BACKGROUND" | "EDUCATION") =>
+  const latest = (type: "IDENTITY" | "EDUCATION") =>
     requests.find((r) => r.type === type);
+
+  const canUpload = (type: "IDENTITY" | "EDUCATION", verified: boolean) =>
+    !verified && latest(type)?.status !== "PENDING";
+
+  // 任一列還能上傳，就用共用表單包起來並顯示底部送出鈕
+  const anyUpload =
+    canUpload("IDENTITY", idVerified) ||
+    (showEducation && canUpload("EDUCATION", eduVerified));
+
+  const rows = (
+    <div className="space-y-5">
+      <VerifyRow
+        title="實名認證"
+        desc="上傳身分證件,確認你的真實身分"
+        verified={idVerified}
+        req={latest("IDENTITY")}
+        type="IDENTITY"
+        label="身分證件"
+      />
+      {showEducation && (
+        <VerifyRow
+          title="學歷與成績證明"
+          desc="上傳畢業證書或成績單,證明你的學歷與學業表現"
+          verified={eduVerified}
+          req={latest("EDUCATION")}
+          type="EDUCATION"
+          label="畢業證書／成績單"
+        />
+      )}
+    </div>
+  );
 
   return (
     <section className="rounded-2xl border border-ink/10 bg-white p-6 shadow-sm">
       <div className="mb-1 flex items-center justify-between">
         <h2 className="font-bold text-ink">安全認證</h2>
-        <TrustBadges
-          idVerified={idVerified}
-          bgCheckVerified={bgCheckVerified}
-          eduVerified={eduVerified}
-        />
+        <TrustBadges idVerified={idVerified} eduVerified={eduVerified} />
       </div>
       <p className="mb-5 text-xs text-ink/40">{intro}</p>
 
-      <div className="space-y-5">
-        <VerifyRow
-          title="實名認證"
-          desc="上傳身分證件,確認你的真實身分"
-          verified={idVerified}
-          req={latest("IDENTITY")}
-          type="IDENTITY"
-          label="身分證件"
-        />
-        <VerifyRow
-          title="無犯罪紀錄查驗"
-          desc="上傳警察刷局核發的良民證（無犯罪紀錄證明）"
-          verified={bgCheckVerified}
-          req={latest("BACKGROUND")}
-          type="BACKGROUND"
-          label="良民證"
-        />
-        {showEducation && (
-          <VerifyRow
-            title="學歷與成績證明"
-            desc="上傳畢業證書或成績單,證明你的學歷與學業表現"
-            verified={eduVerified}
-            req={latest("EDUCATION")}
-            type="EDUCATION"
-            label="畢業證書／成績單"
-          />
-        )}
-      </div>
+      {anyUpload ? <VerificationForm>{rows}</VerificationForm> : rows}
     </section>
   );
 }
@@ -77,7 +79,7 @@ function VerifyRow({
   desc: string;
   verified: boolean;
   req?: Req;
-  type: "IDENTITY" | "BACKGROUND" | "EDUCATION";
+  type: "IDENTITY" | "EDUCATION";
   label: string;
 }) {
   return (

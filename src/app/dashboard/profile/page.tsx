@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import ProfileForm, { type ProfileInitial } from "@/components/ProfileForm";
-import AliasForm from "@/components/AliasForm";
+import { AliasFields } from "@/components/AliasForm";
 import VerificationSection from "@/components/VerificationSection";
 import PhotosForm from "@/components/PhotosForm";
 import {
@@ -88,7 +88,7 @@ export default async function ProfileEditPage() {
               <p className="mb-3 text-xs text-ink/40">
                 可選擇對外顯示化名或本名。
               </p>
-              <AliasForm
+              <AliasFields
                 displayName={profile.user.displayName ?? ""}
                 realName={profile.user.name}
               />
