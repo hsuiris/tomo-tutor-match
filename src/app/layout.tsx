@@ -10,10 +10,10 @@ import CookieNotice from "@/components/CookieNotice";
 import { siteUrl } from "@/lib/site";
 import localFont from "next/font/local";
 
-// 全站字型：粉圓體（jf open 粉圓，自架）。CJK 字檔大，用 swap 先系統字頂著、載完換上。
-const huninn = localFont({
-  src: "./fonts/jf-openhuninn-2.1.woff2",
-  variable: "--font-huninn",
+// 全站字型：思源柔黑體（GenJyuuGothic，自架）。CJK 字檔大，用 swap 先系統字頂著、載完換上。
+const genJyuu = localFont({
+  src: "./fonts/GenJyuuGothic-Regular.woff2",
+  variable: "--font-gen-jyuu",
   display: "swap",
   fallback: ["PingFang TC", "Microsoft JhengHei", "sans-serif"],
 });
@@ -60,7 +60,7 @@ export default function RootLayout({
   return (
     <html
       lang="zh-TW"
-      className={`${huninn.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${genJyuu.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-canvas text-ink">
         <Navbar />
