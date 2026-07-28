@@ -15,11 +15,11 @@ function avg(nums: number[]): number {
 
 // 學制對應的主題色
 const LEVEL_COLORS: Record<string, string> = {
-  國小: "from-cyan-400 to-sky-400",
-  國中: "from-sky-400 to-sky-500",
-  高中: "from-blue-400 to-blue-500",
-  大學: "from-blue-500 to-blue-600",
-  成人: "from-blue-600 to-blue-700",
+  國小: "from-[#b9d2ae] to-[#a3c295]",
+  國中: "from-[#a3c295] to-[#8fae7c]",
+  高中: "from-[#8fae7c] to-sun",
+  大學: "from-sun to-sun-dark",
+  成人: "from-sun-dark to-cobalt",
   // 技能類程度
   入門: "from-emerald-400 to-teal-400",
   初階: "from-teal-400 to-teal-500",

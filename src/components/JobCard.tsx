@@ -22,7 +22,7 @@ export type JobCardData = {
 
 const STATUS_LABEL: Record<JobCardData["status"], { text: string; cls: string }> =
   {
-    OPEN: { text: "徵求中", cls: "bg-mint text-ink" },
+    OPEN: { text: "徵求中", cls: "bg-amber-200 text-ink" },
     MATCHED: { text: "已配對", cls: "bg-paper text-ink/60" },
     CLOSED: { text: "已結束", cls: "bg-paper text-ink/60" },
   };

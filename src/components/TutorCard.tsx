@@ -41,13 +41,13 @@ export default function TutorCard({
   mine?: boolean;
 }) {
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <div className="absolute right-2 top-2 z-10">
         <FavoriteButton type="tutor" targetId={tutor.id} initial={favorited} />
       </div>
       <Link
         href={`/tutors/${tutor.id}`}
-        className="flex flex-col rounded-xl border border-line bg-paper p-5 transition hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(60,55,45,0.10)]"
+        className="flex h-full flex-col rounded-xl border border-line bg-paper p-5 transition hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(60,55,45,0.10)]"
       >
         <div className="flex items-start gap-3 pr-8">
         <div className="shrink-0">
@@ -101,24 +101,18 @@ export default function TutorCard({
 
       <div className="mt-3 flex flex-wrap gap-1.5">
         {tutor.subjects.map((s) => (
-          <span
-            key={s}
-            className="tag-pill rounded-full bg-[#e09a1e] px-2.5 py-0.5 text-sm font-bold text-paper"
-          >
+          <span key={s} className="tag-pill text-sm font-medium text-ink/50">
             {s}
           </span>
         ))}
         {tutor.levels.map((lv) => (
-          <span
-            key={lv}
-            className="tag-pill rounded-full bg-[#d97a2a] px-2.5 py-0.5 text-sm font-bold text-paper"
-          >
+          <span key={lv} className="tag-pill text-sm font-medium text-ink/50">
             {lv}
           </span>
         ))}
       </div>
 
-      <div className="mt-2 text-sm text-ink/50">
+      <div className="mt-auto pt-2 text-sm text-ink/50">
         📍 {tutor.regions.join("、")}
       </div>
       </Link>
